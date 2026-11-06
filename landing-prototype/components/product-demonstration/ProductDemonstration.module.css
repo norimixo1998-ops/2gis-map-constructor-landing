@@ -51,6 +51,11 @@
 
 @media (min-width: 700px) and (max-width: 899px) {
   .section { margin-bottom: 120px; }
+  :global(#main-values) + .withoutTitle .content { padding-top: 56px; }
+}
+
+@media (min-width: 900px) and (max-width: 1199px) {
+  :global(#main-values) + .withoutTitle .content { padding-top: 0; }
 }
 
 @media (max-width: 699px) {
