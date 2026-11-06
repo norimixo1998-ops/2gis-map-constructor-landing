@@ -1,0 +1,65 @@
+.section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 0 16px;
+  background: #192025;
+  color: #fff;
+  font-family: var(--font-suisse), Arial, sans-serif;
+}
+
+.background { position: absolute; z-index: -1; inset: 0; overflow: hidden; pointer-events: none; }
+.background img { position: absolute; top: 0; left: 50%; display: block; width: 1440px; max-width: none; height: auto; transform: translateX(-50%); }
+
+.content { position: relative; width: min(100%, var(--content-width)); margin: 0 auto; }
+.withoutTitle .content { padding-top: 116px; }
+.headingArea { display: flex; min-height: 68px; align-items: flex-end; margin-bottom: 48px; }
+.heading { max-width: 1000px; margin: 0; font-size: 44px; font-weight: 500; line-height: 52px; letter-spacing: -0.01em; }
+
+.screen {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1168 / 725;
+  padding: 12px;
+  border: 1px solid rgb(185 203 191 / 25%);
+  border-radius: 32px;
+  background: rgb(49 58 63 / 74%);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 6%);
+}
+.screen::after {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 14px rgb(255 255 255 / 10%);
+  content: "";
+  pointer-events: none;
+}
+.screenInset {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  place-items: center;
+  border-radius: 20px;
+  background: rgb(50 58 64 / 88%);
+  backdrop-filter: blur(28px);
+}
+.screenInset picture { display: block; width: 100%; height: 100%; }
+.image { display: block; width: 100%; height: 100%; object-fit: cover; }
+.placeholder { color: #b4bec2; font-size: 16px; line-height: 24px; }
+
+@media (min-width: 700px) and (max-width: 899px) {
+  .section { margin-bottom: 120px; }
+}
+
+@media (max-width: 699px) {
+  .background img { top: 0; right: -85px; left: auto; width: 663px; transform: none; }
+  .withoutTitle .content { padding-top: 74px; }
+  .headingArea { min-height: 38px; align-items: flex-start; margin-bottom: 36px; }
+  .heading { font-size: 30px; line-height: 38px; }
+  .screen { aspect-ratio: 340 / 450; padding: 5px; border-color: rgb(255 255 255 / 16%); border-radius: 9px; box-shadow: none; }
+  .screen::after { display: none; }
+  .screenInset { border-radius: 4px; }
+  .placeholder { font-size: 14px; }
+}

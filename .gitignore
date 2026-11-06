@@ -1,0 +1,8 @@
+.pnpm-store/
+**/node_modules/
+**/.next/
+**/.next-pages/
+**/out/
+**/*.tsbuildinfo
+landing-prototype/preview-checks/
+*.log

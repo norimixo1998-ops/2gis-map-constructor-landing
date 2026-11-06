@@ -1,0 +1,103 @@
+.footer {
+  --footer-hover: #22aa27;
+  color: #fff;
+  background: #273238;
+  font-family: var(--font-suisse), Arial, sans-serif;
+}
+
+.main { background: #273238; }
+.desktopContent {
+  display: grid;
+  grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.1fr);
+  column-gap: 32px;
+  width: min(calc(100% - 32px), var(--content-width));
+  margin-inline: auto;
+  padding: 32px 0 64px;
+}
+.desktopBrand { grid-column: 1 / -1; margin-bottom: 48px; }
+.desktopBrand img { display: block; width: 132px; height: auto; }
+.desktopColumn { min-width: 0; }
+.desktopColumn h2, .group h3, .subscribe h3, .contacts h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+}
+.desktopColumn h2 { margin-bottom: 24px; }
+.group h3, .subscribe h3, .contacts h3 { color: rgb(255 255 255 / 64%); }
+.productColumns { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; }
+.group + .group, .links + .group, .subscribe { margin-top: 32px; }
+.links, .directLinks, .subscribe ul { display: grid; gap: 8px; margin: 20px 0 0; padding: 0; list-style: none; }
+.links a, .links span, .directLinks a, .directLinks span, .subscribe a, .subscribe span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgb(255 255 255 / 36%);
+  font-size: 14px;
+  line-height: 24px;
+  text-decoration: none;
+}
+.links a:hover, .directLinks a:hover, .subscribe a:hover { color: var(--footer-hover); }
+.links a:focus-visible, .directLinks a:focus-visible, .subscribe a:focus-visible, .contactLinks a:focus-visible, .accordion summary:focus-visible { outline: 2px solid #fff; outline-offset: 4px; border-radius: 2px; }
+.directLinks { gap: 8px; margin-top: 24px; }
+.directLinks a { color: rgb(255 255 255 / 64%); font-size: 16px; font-weight: 500; }
+.directLinks img { display: block; width: 20px; height: 20px; opacity: .64; }
+.productColumns > div:last-child .directLinks { gap: 20px; margin-top: 36px; }
+.subscribe h3 { display: flex; align-items: center; gap: 8px; }
+.subscribe h3 img { display: block; width: 24px; height: 24px; }
+.subscribe ul { margin-top: 16px; }
+.mobileContent { display: none; }
+.contactBar { background: #39464f; }
+.contactInner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  width: min(calc(100% - 32px), var(--content-width));
+  min-height: 116px;
+  margin-inline: auto;
+}
+.copyright { margin: 0; color: rgb(255 255 255 / 52%); font-size: 14px; line-height: 20px; }
+.contacts h3 { margin-bottom: 8px; }
+.contactLinks { display: flex; flex-wrap: wrap; gap: 12px; }
+.contactLinks a { display: inline-flex; align-items: center; gap: 4px; color: rgb(255 255 255 / 52%); font-size: 14px; line-height: 20px; text-decoration: none; }
+.contactLinks a:hover { color: var(--footer-hover); }
+.contactLinks img { display: block; width: 20px; height: 20px; }
+
+@media (max-width: 991px) {
+  .desktopContent { column-gap: 20px; }
+  .productColumns { gap: 16px; }
+  .desktopColumn h2, .group h3, .subscribe h3, .contacts h3 { font-size: 14px; line-height: 20px; }
+  .links a, .links span, .subscribe a, .subscribe span { font-size: 12px; line-height: 18px; }
+  .directLinks a { font-size: 14px; line-height: 20px; }
+}
+
+@media (max-width: 899px) {
+  .desktopContent { display: none; }
+  .mobileContent { display: block; width: min(calc(100% - 32px), 375px); margin-inline: auto; padding: 24px 0 32px; }
+  .mobileLogo { display: block; width: 121px; height: auto; margin-bottom: 40px; }
+  .accordion { margin: 0; }
+  .accordion summary { display: flex; min-height: 40px; align-items: center; justify-content: space-between; gap: 12px; cursor: pointer; list-style: none; font-size: 16px; font-weight: 500; line-height: 24px; }
+  .accordion summary::-webkit-details-marker { display: none; }
+  .accordion summary img { display: block; width: 24px; height: 24px; flex: none; }
+  .accordion .chevronUp, .accordion[open] .chevronDown { display: none; }
+  .accordion[open] .chevronUp { display: block; }
+  .accordionBody { padding: 4px 0 16px 6px; }
+  .compact .accordionBody { padding-top: 0; }
+  .compact .accordionBody > .links:first-child { gap: 8px; margin-top: 16px; }
+  .compact .accordionBody > .links + .group { margin-top: 20px; }
+  .group h3 { margin: 0; font-size: 14px; font-weight: 500; line-height: 24px; }
+  .group .links { gap: 8px; margin-top: 8px; }
+  .links a, .links span, .subscribe a, .subscribe span { font-size: 14px; line-height: 24px; }
+  .directLinks a { font-size: 14px; line-height: 24px; }
+  .group + .group { margin-top: 20px; }
+  .directLinks { gap: 8px; margin-top: 16px; }
+  .subscribe { margin-top: 32px; }
+  .subscribe h3 { font-size: 14px; line-height: 24px; }
+  .subscribe ul { margin-top: 16px; }
+  .contactInner { display: flex; flex-direction: column; align-items: stretch; gap: 0; width: min(calc(100% - 32px), 375px); min-height: 0; padding: 24px 0 32px; }
+  .contacts { order: 0; }
+  .contacts h3 { margin-bottom: 16px; font-size: 14px; line-height: 20px; }
+  .contactLinks { display: grid; gap: 8px; }
+  .copyright { order: 1; margin-top: 32px; font-size: 14px; line-height: 20px; }
+}

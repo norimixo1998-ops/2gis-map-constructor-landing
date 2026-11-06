@@ -1,0 +1,7 @@
+.preview { padding-block: 120px; }
+.preview > section + section { margin-top: 120px; }
+
+@media (max-width: 699px) {
+  .preview { padding-block: 64px; }
+  .preview > section + section { margin-top: 64px; }
+}

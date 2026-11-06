@@ -1,0 +1,113 @@
+.section {
+  width: min(calc(100% - 32px), var(--content-width));
+  margin: 120px auto;
+  color: #fff;
+  font-family: var(--font-suisse), Arial, sans-serif;
+}
+
+.card {
+  overflow: hidden;
+  padding: 48px 48px 0;
+  border-radius: 20px;
+  background: #20282c;
+}
+
+.copy {
+  position: relative;
+  z-index: 1;
+  max-width: 970px;
+}
+
+.copy h2 {
+  margin: 0;
+  font-size: 44px;
+  font-weight: 500;
+  line-height: 52px;
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+}
+
+.copy p {
+  margin: 16px 0 0;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+}
+
+.media {
+  position: relative;
+  display: block;
+  width: 100%;
+  overflow: visible;
+  margin-top: 36px;
+}
+
+.media picture {
+  display: block;
+  width: 100%;
+}
+
+.media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 497px;
+  object-fit: contain;
+  object-position: left top;
+}
+
+.showcase {
+  aspect-ratio: 1072 / 497;
+}
+
+.showcase picture {
+  position: absolute;
+  top: 10px;
+  left: -6.82%;
+  width: 116.44%;
+  height: 136.1%;
+  transform: translateY(-26.53%);
+}
+
+.showcase img {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.placeholder {
+  display: grid;
+  height: 100%;
+  place-items: center;
+  color: rgb(255 255 255 / 36%);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+@media (max-width: 699px) {
+  .section { margin-block: 64px; }
+  .card { padding: 20px 20px 0; border-radius: 20px; }
+  .copy { max-width: 303px; }
+  .copy h2 { font-size: 30px; line-height: 38px; }
+  .copy p { margin-top: 20px; }
+  .media img { max-height: min(320px, 85vw); }
+  .showcase { aspect-ratio: 303 / 239; }
+  .showcase.withGlow::before {
+    content: "";
+    position: absolute;
+    inset: -52px -20px 0;
+    background: radial-gradient(ellipse 75% 65% at 65% 58%, var(--ambient-glow), transparent 100%);
+  }
+  .showcase picture { top: -52px; left: -20px; width: calc(100% + 40px); height: calc(100% + 164px); transform: none; }
+  .showcase img {
+    max-height: none;
+    object-position: calc(50% + 12px) top;
+    transform: scaleX(.985);
+    transform-origin: left center;
+  }
+  .showcase.withGlow img { mask-image: linear-gradient(to right, #000 0 93%, transparent 100%); }
+  .placeholder { font-size: 14px; }
+}
