@@ -1,5 +1,5 @@
 .hero {
-  --hero-bottom-space: 174px;
+  --hero-bottom-space: 120px;
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -72,7 +72,7 @@
   .visual { margin-top: 48px; }
 }
 @media (max-width: 767px) {
-  .hero { --hero-bottom-space: 80px; padding-top: 40px; }
+  .hero { --hero-bottom-space: 64px; padding-top: 40px; }
   .copy { width: 100%; margin-inline: 0; text-align: left; }
   .copy h1 { font-size: 40px; line-height: 44px; }
   .copy p { margin-top: 16px; font-size: 14px; line-height: 20px; }
