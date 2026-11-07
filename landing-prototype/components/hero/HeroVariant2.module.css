@@ -76,9 +76,9 @@
   .copy { width: 100%; margin-inline: 0; text-align: left; }
   .copy h1 { font-size: 40px; line-height: 44px; }
   .copy p { margin-top: 16px; font-size: 14px; line-height: 20px; }
-  .actions { order: 2; flex-direction: column; width: min(100%, 343px); margin: 24px auto 0; gap: 10px; }
+  .actions { order: 2; flex-direction: column; width: 100%; margin: 24px auto 0; gap: 10px; }
   .action { width: 100%; }
-  .visual { order: 1; width: min(100%, 343px); height: 325px; margin: 24px auto 0; }
+  .visual { order: 1; width: 100%; aspect-ratio: 343 / 325; height: auto; margin: 24px auto 0; }
   .grid, .glow { display: none; }
   .mobileBackground {
     display: block;
