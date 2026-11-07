@@ -1,6 +1,6 @@
 import type { HeroProps } from "../components/hero/Hero";
+import type { HeroVariant2Props } from "../components/hero/HeroVariant2";
 import type { MainValuesProps } from "../components/main-values/MainValues";
-import type { ProductDemonstrationProps } from "../components/product-demonstration/ProductDemonstration";
 import type { SolvedTasksProps } from "../components/solved-tasks/SolvedTasks";
 import type { IntermediateCtaProps } from "../components/intermediate-cta/IntermediateCta";
 import type { TechnicalDemonstrationProps } from "../components/technical-demonstration/TechnicalDemonstration";
@@ -9,14 +9,15 @@ import type { FaqProps } from "../components/faq/Faq";
 import type { LeadFormProps } from "../components/lead-form/LeadForm";
 
 const constructorUrl = "https://makemap.2gis.ru/";
+const heroTitle = "Конструктор карт 2ГИС для сайтов";
+const heroDescription = "Карта с метками, линиями и областями для встраивания на сайт. Бесплатно и без программирования.";
+const createMapAction = { kind: "primary", label: "Создать карту", href: constructorUrl } as const;
+const documentationAction = { kind: "secondary", label: "Документация", href: "https://docs.2gis.com/" } as const;
 
 export const hero: HeroProps = {
-  title: "Конструктор карт 2ГИС для сайтов",
-  description: "Карта с метками, линиями и областями для встраивания на сайт. Бесплатно и без программирования.",
-  actions: [
-    { kind: "primary", label: "Создать карту", href: constructorUrl },
-    { kind: "secondary", label: "Документация", href: "https://docs.2gis.com/" },
-  ],
+  title: heroTitle,
+  description: heroDescription,
+  actions: [createMapAction, documentationAction],
   media: {
     kind: "meaningful",
     alt: "Объёмная иллюстрация карты с метками и маршрутами",
@@ -26,6 +27,15 @@ export const hero: HeroProps = {
   },
 };
 
+export const heroVariant2: HeroVariant2Props = {
+  title: heroTitle,
+  description: heroDescription,
+  actions: [documentationAction, createMapAction],
+  gridSrc: "/images/hero/variant-2/grid.png",
+  glowSrc: "/images/hero/variant-2/light.png",
+  mobileBackgroundSrc: "/images/hero/variant-2/mobile/grid-glow.png",
+};
+
 export const mainValues: MainValuesProps = {
   title: "Покажите на карте всё, что нужно вашим клиентам и посетителям",
   items: [
@@ -33,18 +43,6 @@ export const mainValues: MainValuesProps = {
     { title: "Как пройти или проехать", description: "Нарисуйте маршрут от остановки, обозначьте вход, парковку или место встречи на карте", iconSrc: "/images/benefits/main-values/constructor_3.png" },
     { title: "Территории и зоны", description: "Выделите зону обслуживания, территорию мероприятия или нужный участок с помощью фигур", iconSrc: "/images/benefits/main-values/constructor_1.png" },
   ],
-};
-
-export const productDemonstration: ProductDemonstrationProps = {
-  background: {
-    desktop: "/images/product-demonstration/light_desktop.png",
-    mobile: "/images/product-demonstration/Light_mobile.png",
-  },
-  image: {
-    desktop: "/images/product-demonstration/Illustration%20work_desktop.png",
-    mobile: "/images/product-demonstration/Illustration%20work_mobile.png",
-    alt: "Конструктор карт 2ГИС: карта с метками, линиями и областями",
-  },
 };
 
 export const solvedTasks: SolvedTasksProps = {

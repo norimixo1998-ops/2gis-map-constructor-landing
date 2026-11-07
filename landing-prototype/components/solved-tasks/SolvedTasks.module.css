@@ -6,6 +6,7 @@
 }
 
 :global(#product-demonstration) + .section { margin-top: 120px; }
+:global(#main-values) + .section { margin-top: 120px; }
 
 .heading {
   margin: 0 0 48px;
@@ -81,6 +82,7 @@
 @media (max-width: 699px) {
   .section { margin-block: 64px; }
   :global(#product-demonstration) + .section { margin-top: 64px; }
+  :global(#main-values) + .section { margin-top: 64px; }
   .heading { margin-bottom: 32px; font-size: 30px; line-height: 38px; }
   .grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
   .media { aspect-ratio: 328 / 220; }

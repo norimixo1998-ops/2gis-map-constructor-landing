@@ -1,12 +1,14 @@
 # Рабочий прототип лендинга Dev2GIS
 
+На главной странице `/` первым экраном служит `HeroVariant2`: тексты и ссылки Конструктора карт сохранены, в раме пока заглушка для будущего изображения. После блока преимуществ сразу расположен блок «Все инструменты для создания карты». Компоненты `Hero` и `ProductDemonstration` остаются в библиотеке и на страницах предпросмотра.
+
 ## Техническая демонстрация
 
 Адаптивный блок с H2, описанием и готовой иллюстрацией находится в `components/technical-demonstration/` и показан на общем лендинге `/` после «Как начать работу». Его спецификация — [`../specs/technical-demonstration-spec.md`](../specs/technical-demonstration-spec.md). Макетные тексты и пути к двум изображениям задаются в `content/geoflow-logistics-preview.ts` через `technicalDemonstration`. Файлы лежат в `public/images/technical-demonstration/`; схема подключения описана в README этой папки. `node check-technical-demonstration.mjs` проверяет блок на странице при ширинах 1440 и 375 px.
 
 ## Демонстрация продукта
 
-Блок после «Решаемых задач» реализован в `components/product-demonstration/`. Его спецификация — [`../specs/product-demonstration-spec.md`](../specs/product-demonstration-spec.md). В `content/geoflow-logistics-preview.ts` сейчас задан шаблон с заголовком «Заголовок» и пустой областью «Изображение»; заголовок можно опустить. `/product-demonstration-preview` показывает оба варианта. Для конкретного продукта файлы кладутся в `public/images/product-demonstration/` и передаются через необязательный объект `image` с полями `desktop`, `mobile`, `alt`; формат путей и пропорции описаны в README этой папки.
+Блок реализован в `components/product-demonstration/` и не используется на главной странице. Его спецификация — [`../specs/product-demonstration-spec.md`](../specs/product-demonstration-spec.md). В `content/geoflow-logistics-preview.ts` задан шаблон с заголовком «Заголовок» и пустой областью «Изображение»; заголовок можно опустить. `/product-demonstration-preview` показывает оба варианта. Для другого продукта файлы кладутся в `public/images/product-demonstration/` и передаются через необязательный объект `image` с полями `desktop`, `mobile`, `alt`; формат путей и пропорции описаны в README этой папки.
 
 Запечённый декоративный слой `Light` передаётся через `background.desktop` и `background.mobile`; экран продукта — отдельно через `image.desktop` и `image.mobile`. Полупрозрачная рамка размывает фон на `18px`, а внутренняя область — на `28px`. Экспортированные файлы `light_desktop.png` и `Light_mobile.png` лежат в `public/images/product-demonstration/`. Цвет фона секции совпадает с общим фоном страницы `#192025`. `node check-product-demonstration.mjs` проверяет ширины 375, 768 и 1440 px при работающем `pnpm dev` и сохраняет снимки в `preview-checks/`.
 
