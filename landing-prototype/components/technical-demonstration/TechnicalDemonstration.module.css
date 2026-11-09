@@ -111,3 +111,6 @@
   .showcase.withGlow img { mask-image: linear-gradient(to right, #000 0 93%, transparent 100%); }
   .placeholder { font-size: 14px; }
 }
+@media (min-width: 768px) and (max-width: 1079px) {
+  .copy h2 { font-size: clamp(32px, calc(3.846vw + 2.46px), 44px); line-height: clamp(40px, calc(3.846vw + 10.46px), 52px); }
+}

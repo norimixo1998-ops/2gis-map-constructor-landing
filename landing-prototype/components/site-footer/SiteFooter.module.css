@@ -101,3 +101,7 @@
   .contactLinks { display: grid; gap: 8px; }
   .copyright { order: 1; margin-top: 32px; font-size: 14px; line-height: 20px; }
 }
+@media (min-width: 768px) and (max-width: 899px) {
+  .mobileContent, .contactInner { width: calc(100% - 32px); }
+  .accordion summary img { margin-left: auto; }
+}

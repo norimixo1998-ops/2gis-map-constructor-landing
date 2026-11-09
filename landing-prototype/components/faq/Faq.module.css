@@ -80,3 +80,9 @@
 @media (prefers-reduced-motion: reduce) {
   .chevron, .question, .answer { transition: none; }
 }
+@media (min-width: 768px) and (max-width: 1079px) {
+  .section h2 { font-size: clamp(32px, calc(3.846vw + 2.46px), 44px); line-height: clamp(40px, calc(3.846vw + 10.46px), 52px); }
+}
+@media (min-width: 768px) and (max-width: 899px) {
+  .section { margin-block: 120px; }
+}

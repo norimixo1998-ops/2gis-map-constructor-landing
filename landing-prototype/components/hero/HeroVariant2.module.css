@@ -62,11 +62,12 @@
   backdrop-filter: blur(40px);
 }
 .imageSlot { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 20px; background: #323b40; }
+.imageSlot picture { display: block; width: 100%; height: 100%; }
 .imageSlot img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .imageSlot span { display: grid; width: 100%; height: 100%; place-items: center; color: rgb(255 255 255 / 56%); font-size: 16px; }
 @media (min-width: 768px) and (max-width: 1199px) {
   .hero { --hero-bottom-space: 96px; }
-  .copy h1 { font-size: clamp(40px, 4.2vw, 56px); line-height: 1.2; }
+  .copy h1 { font-size: clamp(40px, calc(5.13vw + 0.6px), 56px); line-height: 1.2; }
   .copy p { margin-top: 20px; }
   .actions { margin-top: 32px; }
   .visual { margin-top: 48px; }

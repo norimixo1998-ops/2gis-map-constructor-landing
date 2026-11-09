@@ -31,6 +31,11 @@ export const heroVariant2: HeroVariant2Props = {
   title: heroTitle,
   description: heroDescription,
   actions: [documentationAction, createMapAction],
+  image: {
+    src: "/images/hero/variant-2/desktop.png",
+    mobileSrc: "/images/hero/variant-2/mobile/mobile.png",
+    alt: "Карта с отмеченными областями и инструментами Конструктора карт",
+  },
   gridSrc: "/images/hero/variant-2/grid.png",
   glowSrc: "/images/hero/variant-2/light.png",
   mobileBackgroundSrc: "/images/hero/variant-2/mobile/grid-glow.png",

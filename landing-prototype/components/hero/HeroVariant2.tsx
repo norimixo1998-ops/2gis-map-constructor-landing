@@ -7,7 +7,7 @@ export type HeroVariant2Props = {
   title: string;
   description: string;
   actions: [HeroAction<"primary">] | [HeroAction<"secondary">, HeroAction<"primary">];
-  image?: { src: string; alt: string };
+  image?: { src: string; mobileSrc?: string; alt: string };
   gridSrc?: string;
   glowSrc?: string;
   mobileBackgroundSrc?: string;
@@ -34,7 +34,12 @@ export function HeroVariant2({ title, description, actions, image, gridSrc, glow
         <div className={styles.visual}>
           <div className={styles.frame}>
             <div className={styles.imageSlot}>
-              {image ? <img src={publicAsset(image.src)} alt={image.alt} /> : <span>Изображение</span>}
+              {image ? (
+                <picture>
+                  {image.mobileSrc && <source media="(max-width: 767px)" srcSet={publicAsset(image.mobileSrc)} />}
+                  <img src={publicAsset(image.src)} alt={image.alt} />
+                </picture>
+              ) : <span>Изображение</span>}
             </div>
           </div>
         </div>
