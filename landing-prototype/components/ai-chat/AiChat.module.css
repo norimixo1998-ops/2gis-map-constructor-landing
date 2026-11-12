@@ -23,10 +23,10 @@
 .suggestion { padding: 8px 12px; border: 0; border-radius: 12px; background: rgb(255 255 255 / 12%); color: #fff; font: 400 14px/20px var(--font-suisse), Arial, sans-serif; cursor: pointer; }
 .suggestion:hover { background: rgb(255 255 255 / 20%); }
 .messages { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
-.message { max-width: 284px; padding: 12px; border-radius: 12px; background: rgb(255 255 255 / 12%); font-size: 14px; line-height: 20px; overflow-wrap: anywhere; }
+.message { padding: 12px; border-radius: 12px; background: rgb(255 255 255 / 12%); font-size: 14px; line-height: 20px; overflow-wrap: anywhere; }
 .message p { margin: 0; }
-.user { align-self: flex-end; background: #12951a; }
-.assistant { align-self: flex-start; }
+.user { align-self: stretch; margin-left: 32px; background: #12951a; }
+.assistant { align-self: stretch; margin-right: 32px; }
 .answerLinks { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
 .answerLinks a { display: block; padding: 10px 12px; border-radius: 12px; background: rgb(255 255 255 / 12%); color: #fff; text-decoration: none; }
 .answerLinks a:hover { background: rgb(255 255 255 / 20%); }
