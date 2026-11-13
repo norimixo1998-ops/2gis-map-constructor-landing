@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { publicAsset } from "../../lib/public-asset";
 import type { HeroAction } from "./Hero";
+import { actionLinkProps } from "../../lib/action-link";
 import styles from "./HeroVariant2.module.css";
 
 export type HeroVariant2Props = {
@@ -49,8 +50,7 @@ export function HeroVariant2({ title, description, actions, image, gridSrc, glow
               key={action.kind}
               className={`${styles.action} ${action.kind === "primary" ? styles.primary : styles.secondary}`}
               href={action.href}
-              target={action.target ?? "_self"}
-              rel={action.target === "_blank" ? "noopener noreferrer" : undefined}
+              {...actionLinkProps(action.href, action.target)}
             >
               {action.label}
             </a>

@@ -1,5 +1,6 @@
 import styles from "./SolvedTasks.module.css";
 import { publicAsset } from "../../lib/public-asset";
+import { actionLinkProps } from "../../lib/action-link";
 
 export type SolvedTaskItem = {
   title: string;
@@ -37,7 +38,7 @@ export function SolvedTasks({ id, title, items }: SolvedTasksProps) {
               <h3>{item.title}</h3>
               <p>{item.description}</p>
               {item.action ? (
-                <a className={styles.action} href={item.action.href} target={item.action.target ?? "_self"} rel={item.action.target === "_blank" ? "noopener noreferrer" : undefined}>
+                <a className={styles.action} href={item.action.href} {...actionLinkProps(item.action.href, item.action.target)}>
                   {item.action.label}
                 </a>
               ) : null}

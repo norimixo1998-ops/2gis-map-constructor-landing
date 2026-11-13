@@ -1,6 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
+import { actionLinkProps } from "../../lib/action-link";
 import { useCardCarousel } from "../card-carousel/useCardCarousel";
 import styles from "./StartWork.module.css";
 
@@ -55,8 +56,7 @@ export function StartWork({ title, items, id = "start-work", action }: StartWork
                   <a
                     className={styles.action}
                     href={item.action.href}
-                    target={item.action.target}
-                    rel={item.action.target === "_blank" ? "noopener noreferrer" : undefined}
+                    {...actionLinkProps(item.action.href, item.action.target)}
                   >
                     {item.action.label}
                   </a>
@@ -67,7 +67,7 @@ export function StartWork({ title, items, id = "start-work", action }: StartWork
         ))}
       </ul>
       {action ? (
-        <a className={styles.sectionAction} href={action.href} target={action.target} rel={action.target === "_blank" ? "noopener noreferrer" : undefined}>
+        <a className={styles.sectionAction} href={action.href} {...actionLinkProps(action.href, action.target)}>
           {action.label}
         </a>
       ) : null}

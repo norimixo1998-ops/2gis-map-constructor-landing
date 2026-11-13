@@ -1,5 +1,6 @@
 import styles from "./IntermediateCta.module.css";
 import { publicAsset } from "../../lib/public-asset";
+import { actionLinkProps } from "../../lib/action-link";
 
 export type IntermediateCtaAction = {
   label: string;
@@ -43,11 +44,11 @@ export function IntermediateCta({
           )}
         </div>
         <div className={styles.actions}>
-          <a className={`${styles.action} ${styles.primary}`} href={primaryAction.href} target={primaryAction.target ?? "_self"} rel={primaryAction.target === "_blank" ? "noopener noreferrer" : undefined}>
+          <a className={`${styles.action} ${styles.primary}`} href={primaryAction.href} {...actionLinkProps(primaryAction.href, primaryAction.target)}>
             <span className={styles.desktopLabel}>{primaryAction.label}</span>
             <span className={styles.mobileLabel}>{primaryAction.mobileLabel ?? primaryAction.label}</span>
           </a>
-          {secondaryAction && <a className={`${styles.action} ${styles.secondary}`} href={secondaryAction.href} target={secondaryAction.target ?? "_self"} rel={secondaryAction.target === "_blank" ? "noopener noreferrer" : undefined}>
+          {secondaryAction && <a className={`${styles.action} ${styles.secondary}`} href={secondaryAction.href} {...actionLinkProps(secondaryAction.href, secondaryAction.target)}>
             {secondaryAction.label}
           </a>}
         </div>

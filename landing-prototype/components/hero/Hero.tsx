@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { publicAsset } from "../../lib/public-asset";
+import { actionLinkProps } from "../../lib/action-link";
 import styles from "./Hero.module.css";
 
 export type HeroAction<Kind extends "primary" | "secondary"> = {
@@ -83,8 +84,7 @@ export function Hero({ title, titleBreakAfter, description, actions, media }: He
                 key={action.kind}
                 className={`${styles.action} ${action.kind === "primary" ? styles.primary : styles.secondary}`}
                 href={action.href}
-                target={action.target ?? "_self"}
-                rel={action.target === "_blank" ? "noopener noreferrer" : undefined}
+                {...actionLinkProps(action.href, action.target)}
               >
                 {action.label}
               </a>
