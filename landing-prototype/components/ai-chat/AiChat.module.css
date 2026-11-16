@@ -20,7 +20,7 @@
 .greeting { margin: 0 0 16px; font-size: 18px; font-weight: 500; line-height: 28px; letter-spacing: -.18px; }
 .suggestionLabel { margin: 0 0 16px; color: rgb(255 255 255 / 64%); font-size: 16px; line-height: 24px; letter-spacing: -.16px; }
 .suggestions { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
-.suggestion { padding: 8px 12px; border: 0; border-radius: 12px; background: rgb(255 255 255 / 12%); color: #fff; font: 500 16px/24px var(--font-suisse), Arial, sans-serif; cursor: pointer; }
+.suggestion { padding: 8px 12px; border: 0; border-radius: 12px; background: rgb(255 255 255 / 12%); color: #fff; font: 400 14px/20px var(--font-suisse), Arial, sans-serif; cursor: pointer; }
 .suggestion:hover { background: var(--button-secondary-hover); color: #fff; }
 .messages { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
 .message { padding: 12px; border-radius: 12px; background: rgb(255 255 255 / 12%); font-size: 14px; line-height: 20px; overflow-wrap: anywhere; }
