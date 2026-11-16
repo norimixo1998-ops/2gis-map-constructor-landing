@@ -66,7 +66,7 @@ export function AiChat() {
   return (
     <div className={styles.dock}>
       {open && (
-        <section className={styles.panel} aria-label="Чат с AI-ассистентом">
+        <section className={styles.panel} aria-label="Чат с ИИ-ассистентом">
           <div className={styles.conversation} ref={scrollRef} aria-live="polite">
             {messages.length === 0 ? (
               <div className={styles.intro}>
@@ -101,7 +101,7 @@ export function AiChat() {
           <div className={styles.panelHeader}>
             <div className={styles.headerTitle}>
               <img className={styles.headerIcon} src={publicAsset("/icons/ai-chat/logo-assistent_icon.svg")} alt="" aria-hidden="true" />
-              <span>AI-ассистент</span>
+              <span>ИИ-ассистент</span>
             </div>
             <button className={styles.close} type="button" aria-label="Закрыть чат" onClick={() => setOpen(false)}>
               <img src={publicAsset("/icons/ai-chat/close.svg")} alt="" />
@@ -131,11 +131,11 @@ export function AiChat() {
                 {thinking ? <span className={styles.spinner} aria-hidden="true" /> : <img src={publicAsset(draft.trim() ? "/icons/ai-chat/send-active.svg" : "/icons/ai-chat/send.svg")} alt="" />}
               </button>
             </div>
-            <p className={styles.disclaimer}>AI-ассистент может ошибаться. Проверяйте важную информацию.</p>
+            <p className={styles.disclaimer}>ИИ-ассистент может ошибаться. Проверяйте важную информацию.</p>
           </form>
         </section>
       )}
-      <button className={styles.launcher} type="button" aria-label={open ? "Закрыть чат" : "Открыть чат с AI-ассистентом"} aria-expanded={open} onClick={() => setOpen((current) => !current)}>
+      <button className={styles.launcher} type="button" aria-label={open ? "Закрыть чат" : "Открыть чат с ИИ-ассистентом"} aria-expanded={open} onClick={() => setOpen((current) => !current)}>
         <ChatLauncherIcon />
       </button>
     </div>

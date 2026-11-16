@@ -12,7 +12,7 @@ try {
     const errors = [];
     page.on("pageerror", (error) => errors.push(error.message));
     await page.goto("http://127.0.0.1:3000/", { waitUntil: "load" });
-    const launcher = page.getByRole("button", { name: "Открыть чат с AI-ассистентом" });
+    const launcher = page.getByRole("button", { name: "Открыть чат с ИИ-ассистентом" });
     if (await launcher.locator("svg").count() !== 1) throw new Error("Animated launcher SVG missing");
     await launcher.hover();
     await page.waitForTimeout(180);
@@ -26,7 +26,7 @@ try {
       await launcher.screenshot({ path: "preview-checks/ai-chat-launcher-hover.png" });
       await launcher.evaluate((element) => element.getAnimations({ subtree: true }).forEach((animation) => animation.play()));
     }
-    await page.getByRole("button", { name: "Открыть чат с AI-ассистентом" }).click();
+    await page.getByRole("button", { name: "Открыть чат с ИИ-ассистентом" }).click();
     const inputBar = page.locator('[data-state="default"]');
     await inputBar.waitFor();
     await inputBar.hover();
@@ -37,7 +37,7 @@ try {
       if (!loaded) throw new Error(`Chat asset did not load: ${asset}`);
     }
     const geometry = await page.evaluate(() => {
-      const panel = document.querySelector('[aria-label="Чат с AI-ассистентом"]');
+      const panel = document.querySelector('[aria-label="Чат с ИИ-ассистентом"]');
       const header = document.querySelector("header");
       const rect = panel.getBoundingClientRect();
       const headerLayer = panel.querySelector('[class*="panelHeader"]');
@@ -48,10 +48,10 @@ try {
     }
     if (height === 900) {
       await page.evaluate(() => window.scrollTo(0, 420));
-      await page.locator('[aria-label="Чат с AI-ассистентом"]').evaluate((element) => element.style.setProperty("--chat-surface", "rgb(26 26 26 / 36%)"));
+      await page.locator('[aria-label="Чат с ИИ-ассистентом"]').evaluate((element) => element.style.setProperty("--chat-surface", "rgb(26 26 26 / 36%)"));
       await page.waitForTimeout(100);
       await page.screenshot({ path: "preview-checks/ai-chat-surface-36.png" });
-      await page.locator('[aria-label="Чат с AI-ассистентом"]').evaluate((element) => element.style.removeProperty("--chat-surface"));
+      await page.locator('[aria-label="Чат с ИИ-ассистентом"]').evaluate((element) => element.style.removeProperty("--chat-surface"));
       await page.waitForTimeout(100);
       await page.screenshot({ path: "preview-checks/ai-chat-surface-48.png" });
       await page.evaluate(() => window.scrollTo(0, 0));
@@ -59,19 +59,19 @@ try {
     await page.screenshot({ path: `preview-checks/ai-chat-${height}.png` });
     const launcherTop = await page.getByRole("button", { name: "Закрыть чат" }).last().evaluate((element) => element.getBoundingClientRect().top);
     await page.evaluate(() => window.scrollTo(0, 1200));
-    const scrolledTop = await page.locator('[aria-label="Чат с AI-ассистентом"]').evaluate((element) => element.getBoundingClientRect().top);
+    const scrolledTop = await page.locator('[aria-label="Чат с ИИ-ассистентом"]').evaluate((element) => element.getBoundingClientRect().top);
     const scrolledLauncherTop = await page.getByRole("button", { name: "Закрыть чат" }).last().evaluate((element) => element.getBoundingClientRect().top);
     if (scrolledTop !== geometry.top || scrolledLauncherTop !== launcherTop) throw new Error(`Chat moved during page scroll: panel ${geometry.top} -> ${scrolledTop}, launcher ${launcherTop} -> ${scrolledLauncherTop}`);
     await page.getByRole("button", { name: "Данные для геоаналитики" }).click();
     await page.getByText("Ассистент думает...").waitFor();
     await page.locator('[data-state="loading"]').waitFor();
-    if (height === 900) await page.locator('[aria-label="Чат с AI-ассистентом"]').screenshot({ path: "preview-checks/ai-chat-input-loading.png" });
+    if (height === 900) await page.locator('[aria-label="Чат с ИИ-ассистентом"]').screenshot({ path: "preview-checks/ai-chat-input-loading.png" });
     const userColor = await page.getByText("Данные для геоаналитики", { exact: true }).evaluate((element) => getComputedStyle(element.closest('[class*="message"]')).backgroundColor);
     if (userColor !== "rgb(18, 149, 26)") throw new Error(`Wrong user bubble: ${userColor}`);
     await page.getByText("Могу помочь с выбором продукта.", { exact: false }).waitFor();
     const assistantColor = await page.getByText("Могу помочь с выбором продукта.", { exact: false }).evaluate((element) => getComputedStyle(element.closest('[class*="message"]')).backgroundColor);
     if (assistantColor !== "rgba(255, 255, 255, 0.12)") throw new Error(`Wrong assistant bubble: ${assistantColor}`);
-    const dialogueGutters = await page.locator('[aria-label="Чат с AI-ассистентом"]').evaluate((panel) => {
+    const dialogueGutters = await page.locator('[aria-label="Чат с ИИ-ассистентом"]').evaluate((panel) => {
       const conversation = panel.querySelector('[class*="conversation"]');
       const contentLeft = conversation.getBoundingClientRect().left + parseFloat(getComputedStyle(conversation).paddingLeft);
       const contentRight = conversation.getBoundingClientRect().right - parseFloat(getComputedStyle(conversation).paddingRight);
@@ -81,21 +81,21 @@ try {
     });
     if (dialogueGutters.userLeft !== 32 || dialogueGutters.userRight !== 0 || dialogueGutters.assistantLeft !== 0 || dialogueGutters.assistantRight !== 32 || dialogueGutters.userWidth !== dialogueGutters.assistantWidth) throw new Error(`Wrong dialogue gutters: ${JSON.stringify(dialogueGutters)}`);
     if (height === 900) await page.screenshot({ path: "preview-checks/ai-chat-answer.png" });
-    const edge = await page.locator('[aria-label="Чат с AI-ассистентом"]').evaluate((panel) => {
+    const edge = await page.locator('[aria-label="Чат с ИИ-ассистентом"]').evaluate((panel) => {
       const conversation = panel.querySelector('[class*="conversation"]');
       const bar = panel.querySelector('[class*="inputBar"]');
       conversation.scrollTop = Math.max(0, conversation.scrollHeight - conversation.clientHeight - 40);
       return { mask: getComputedStyle(conversation).maskImage, blur: getComputedStyle(bar).backdropFilter, radius: getComputedStyle(bar).borderRadius };
     });
     if (!edge.mask.includes("linear-gradient") || edge.blur !== "blur(200px)" || edge.radius !== "20px") throw new Error(`Wrong input edge treatment: ${JSON.stringify(edge)}`);
-    if (height === 900) await page.locator('[aria-label="Чат с AI-ассистентом"]').screenshot({ path: "preview-checks/ai-chat-input-edge.png" });
+    if (height === 900) await page.locator('[aria-label="Чат с ИИ-ассистентом"]').screenshot({ path: "preview-checks/ai-chat-input-edge.png" });
     await page.getByRole("button", { name: "Закрыть чат" }).first().click();
-    await page.getByRole("button", { name: "Открыть чат с AI-ассистентом" }).click();
+    await page.getByRole("button", { name: "Открыть чат с ИИ-ассистентом" }).click();
     await page.getByRole("textbox", { name: "Задать вопрос" }).focus();
     await page.locator('[data-state="focused"]').waitFor();
     const focusOutline = await page.locator('[data-state="focused"]').evaluate((element) => getComputedStyle(element).boxShadow);
     if (!focusOutline.includes("rgba(255, 255, 255, 0.24)") || !focusOutline.includes("inset")) throw new Error(`Wrong focused outline: ${focusOutline}`);
-    if (height === 900) await page.locator('[aria-label="Чат с AI-ассистентом"]').screenshot({ path: "preview-checks/ai-chat-input-focused.png" });
+    if (height === 900) await page.locator('[aria-label="Чат с ИИ-ассистентом"]').screenshot({ path: "preview-checks/ai-chat-input-focused.png" });
     await page.getByRole("textbox", { name: "Задать вопрос" }).fill("Как подключить карту?");
     await page.locator('[data-state="entered"]').waitFor();
     const entered = await page.locator('[data-state="entered"]').evaluate((element) => ({ outline: getComputedStyle(element).boxShadow, icon: element.querySelector("button img")?.getAttribute("src"), iconLoaded: element.querySelector("button img")?.naturalWidth > 0 }));
@@ -106,7 +106,7 @@ try {
       return { top: field.top - bar.top, bottom: bar.bottom - field.bottom };
     });
     if (Math.abs(singleLinePadding.top - singleLinePadding.bottom) > 1) throw new Error(`Unequal single-line padding: ${JSON.stringify(singleLinePadding)}`);
-    if (height === 900) await page.locator('[aria-label="Чат с AI-ассистентом"]').screenshot({ path: "preview-checks/ai-chat-input-entered.png" });
+    if (height === 900) await page.locator('[aria-label="Чат с ИИ-ассистентом"]').screenshot({ path: "preview-checks/ai-chat-input-entered.png" });
     const question = "Расскажите, какие возможности кастомизации карт доступны для геоаналитики и как подключить поиск объектов в нашем продукте?";
     await page.getByRole("textbox", { name: "Задать вопрос" }).fill(question);
     const multiline = await page.locator('[data-state="entered"]').evaluate((element) => {
@@ -119,7 +119,7 @@ try {
     if (multiline.barHeight <= 64 || multiline.fieldHeight <= 24 || Math.abs(multiline.barBottom - multiline.buttonBottom - 8) > 1) throw new Error(`Multiline input geometry: ${JSON.stringify(multiline)}`);
     if (Math.abs(multiline.fieldTop - multiline.barTop - (multiline.barBottom - multiline.fieldBottom)) > 1 || Math.abs(multiline.fieldTop - multiline.barTop - singleLinePadding.top) > 1) throw new Error(`Unequal multiline padding: ${JSON.stringify({ singleLinePadding, multiline })}`);
     if (multiline.blur !== "blur(200px)" || multiline.radius !== "20px" || multiline.overflow !== "hidden" || multiline.barTop - multiline.lastMessageBottom < 19) throw new Error(`Input background or message gap: ${JSON.stringify(multiline)}`);
-    if (height === 900) await page.locator('[aria-label="Чат с AI-ассистентом"]').screenshot({ path: "preview-checks/ai-chat-input-multiline.png" });
+    if (height === 900) await page.locator('[aria-label="Чат с ИИ-ассистентом"]').screenshot({ path: "preview-checks/ai-chat-input-multiline.png" });
     await page.getByRole("textbox", { name: "Задать вопрос" }).fill(question.repeat(8));
     const capped = await page.getByRole("textbox", { name: "Задать вопрос" }).evaluate((field) => ({ height: field.getBoundingClientRect().height, scrollHeight: field.scrollHeight }));
     if (capped.height !== 120 || capped.scrollHeight <= capped.height) throw new Error(`Long input did not scroll internally: ${JSON.stringify(capped)}`);
