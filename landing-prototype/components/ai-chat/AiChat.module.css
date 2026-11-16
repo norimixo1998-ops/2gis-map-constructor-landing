@@ -21,7 +21,7 @@
 .suggestionLabel { margin: 0 0 16px; color: rgb(255 255 255 / 64%); font-size: 16px; line-height: 24px; letter-spacing: -.16px; }
 .suggestions { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
 .suggestion { padding: 8px 12px; border: 0; border-radius: 12px; background: rgb(255 255 255 / 12%); color: #fff; font: 500 16px/24px var(--font-suisse), Arial, sans-serif; cursor: pointer; }
-.suggestion:hover { background: rgb(255 255 255 / 24%); color: #fff; }
+.suggestion:hover { background: var(--button-secondary-hover); color: #fff; }
 .messages { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
 .message { padding: 12px; border-radius: 12px; background: rgb(255 255 255 / 12%); font-size: 14px; line-height: 20px; overflow-wrap: anywhere; }
 .message p { margin: 0; }
@@ -42,8 +42,8 @@
 .send { display: grid; width: 48px; height: 48px; flex: none; place-items: center; padding: 12px; border: 0; border-radius: 12px; background: rgb(255 255 255 / 12%); cursor: pointer; }
 .send:disabled { cursor: default; }
 .inputBar[data-state="entered"] .send { background: #12951a; }
-.send:not(:disabled):hover { background: rgb(255 255 255 / 24%); }
-.inputBar[data-state="entered"] .send:hover { background: #00830c; }
+.send:not(:disabled):hover { background: var(--button-secondary-hover); }
+.inputBar[data-state="entered"] .send:hover { background: var(--button-primary-hover); }
 .send img { display: block; width: 24px; height: 24px; }
 .spinner { width: 24px; height: 24px; border: 3px solid #fff; border-right-color: transparent; border-radius: 50%; animation: spin .8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }

@@ -26,7 +26,7 @@
 .primary { background: #fff; color: #1a1a1a; }
 .secondary { background: rgb(255 255 255 / 16%); color: #fff; }
 .primary:hover { background: #e9f7e9; }
-.secondary:hover { background: rgb(255 255 255 / 24%); }
+.secondary:hover { background: var(--button-secondary-hover); color: #fff; }
 .action:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
 .mobileLabel { display: none; }
 

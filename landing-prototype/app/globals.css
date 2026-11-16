@@ -1,5 +1,5 @@
 * { box-sizing: border-box; }
-:root { --content-width: 1168px; --grid-column-width: 68px; --grid-gutter: 32px; }
+:root { --content-width: 1168px; --grid-column-width: 68px; --grid-gutter: 32px; --button-primary-hover: #00830c; --button-secondary-hover: rgb(255 255 255 / 24%); }
 html, body { margin: 0; min-height: 100%; }
 body { background: #192025; }
 .headerPreview { width: min(calc(100% - 32px), var(--content-width)); margin: 0 auto; padding-bottom: 100px; color: #fff; font: 16px/24px var(--font-suisse), Arial, sans-serif; }

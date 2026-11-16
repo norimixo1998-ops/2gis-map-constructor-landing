@@ -20,7 +20,7 @@
 .language img { width: 24px; height: 24px; }
 .language img:last-child { margin-left: 4px; }
 .cabinet, .consultation { justify-content: center; font-size: 16px; font-weight: 500; line-height: 24px; }
-.cabinet { padding-inline: 28px; background: rgb(255 255 255 / 12%); }
+.cabinet { padding-inline: 16px; background: rgb(255 255 255 / 12%); }
 .consultation { padding-inline: 16px; background: #12951a; }
 .navRow {
   display: flex;
@@ -38,9 +38,9 @@
 }
 .navRow > span { display: inline-flex; align-items: center; gap: 8px; }
 .navRow .navPrimary { color: #fff; }
-.navRow > span:hover, .search:hover, .language:hover { color: #22aa27; }
-.cabinet:hover { background: rgb(255 255 255 / 24%); color: #fff; }
-.consultation:hover { background: #00830c; }
+.navRow > span:hover, .language:hover { color: #fff; }
+.search:hover, .cabinet:hover { background: var(--button-secondary-hover); color: #fff; }
+.consultation:hover { background: var(--button-primary-hover); color: #fff; }
 .navRow img { width: 24px; height: 24px; }
 .mobileControls { display: none; }
 .returning { position: fixed; }
