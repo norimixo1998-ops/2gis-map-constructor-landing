@@ -3,7 +3,7 @@
 .heading h2 { width: min(100%, 850px); margin: 0; font-size: 44px; font-weight: 500; line-height: 52px; letter-spacing: -.01em; }
 .controls { display: flex; gap: 12px; }
 .controls button { display: grid; width: 48px; height: 48px; place-items: center; border: 0; border-radius: 50%; background: #12951a; color: #fff; font: 24px/1 var(--font-suisse), Arial, sans-serif; cursor: pointer; }
-.controls button:hover { background: #17ad20; }
+.controls button:hover { background: #00830c; }
 .controls button:disabled { opacity: .55; cursor: default; }
 .controls button:focus-visible, .list:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
 .list { gap: 32px; margin: 0; padding: 0; list-style: none; }
