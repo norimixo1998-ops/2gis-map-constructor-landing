@@ -13,8 +13,8 @@
 .conversation::-webkit-scrollbar { display: none; }
 .panelHeader { position: absolute; z-index: 2; inset: 0 0 auto; display: flex; height: 73px; align-items: flex-start; justify-content: space-between; padding: 20px; border-bottom: 1px solid rgb(255 255 255 / 15%); isolation: isolate; }
 .panelHeader::before { content: ""; position: absolute; z-index: -1; inset: 0; background: var(--chat-surface); -webkit-backdrop-filter: blur(200px); backdrop-filter: blur(200px); pointer-events: none; }
-.headerTitle { display: flex; align-items: flex-start; gap: 10px; font-size: 18px; font-weight: 500; line-height: 28px; letter-spacing: -.18px; white-space: nowrap; }
-.headerIcon { display: block; flex: none; }
+.headerTitle { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 500; line-height: 28px; letter-spacing: -.18px; white-space: nowrap; }
+.headerIcon { display: block; width: 32px; height: 32px; flex: none; }
 .close { display: block; width: 32px; height: 32px; padding: 0; border: 0; background: none; cursor: pointer; }
 .close img { display: block; width: 32px; height: 32px; }
 .greeting { margin: 0 0 16px; font-size: 18px; font-weight: 500; line-height: 28px; letter-spacing: -.18px; }
