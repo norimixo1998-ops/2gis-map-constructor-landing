@@ -23,7 +23,7 @@
 .suggestion { padding: 8px 12px; border: 0; border-radius: 12px; background: rgb(255 255 255 / 12%); color: #fff; font: 400 14px/20px var(--font-suisse), Arial, sans-serif; cursor: pointer; }
 .suggestion:hover { background: var(--button-secondary-hover); color: #fff; }
 .messages { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
-.message { padding: 12px; border-radius: 12px; background: rgb(255 255 255 / 12%); font-size: 14px; line-height: 20px; overflow-wrap: anywhere; }
+.message { padding: 12px; border-radius: 12px; background: rgb(255 255 255 / 12%); font-size: 14px; font-weight: 400; line-height: 20px; overflow-wrap: anywhere; }
 .message p { margin: 0; }
 .user { align-self: stretch; margin-left: 32px; background: #12951a; }
 .assistant { align-self: stretch; margin-right: 32px; }
