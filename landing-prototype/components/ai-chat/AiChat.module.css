@@ -1,4 +1,5 @@
 .dock { position: fixed; z-index: 110; right: 40px; bottom: 40px; display: flex; flex-direction: column; align-items: flex-end; gap: 16px; font-family: var(--font-suisse), Arial, sans-serif; color: #fff; }
+.backdrop { display: none; }
 .launcher { display: block; width: 56px; height: 56px; padding: 0; border: 0; border-radius: 16px; background: transparent; cursor: pointer; }
 .launcherArtwork { display: block; overflow: visible; }
 .launcher:hover { filter: brightness(1.12); }
@@ -48,5 +49,18 @@
 .spinner { width: 24px; height: 24px; border: 3px solid #fff; border-right-color: transparent; border-radius: 50%; animation: spin .8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .disclaimer { margin: 12px 0 0; color: rgb(255 255 255 / 36%); font-size: 12px; line-height: 14px; text-align: center; }
-@media (max-width: 767px) { .dock { right: 16px; bottom: 16px; } .panel { width: min(350px, calc(100vw - 32px)); height: min(503px, calc(100dvh - 206px)); } }
-@media (prefers-reduced-motion: reduce) { .conversation { scroll-behavior: auto; } .launcher:hover .launcherSmallStar, .launcher:focus-visible .launcherSmallStar, .launcher:hover .launcherLargeStar, .launcher:focus-visible .launcherLargeStar { animation: none; } }
+@media (max-width: 767px) {
+  .dock { right: 16px; bottom: 16px; }
+  .dockOpen { inset: 0; display: block; }
+  .dockOpen .backdrop { position: absolute; inset: 0; display: block; width: 100%; height: 100%; padding: 0; border: 0; background: rgb(0 0 0 / 64%); cursor: default; animation: mobileBackdropIn 280ms ease-out both; }
+  .dockOpen .panel { position: absolute; right: 0; bottom: 0; left: 0; width: 100%; height: min(618px, calc(100dvh - 24px)); min-height: 0; border-bottom: 0; border-radius: 24px 24px 0 0; background: var(--chat-surface); -webkit-backdrop-filter: blur(200px); backdrop-filter: blur(200px); animation: mobileSheetIn 380ms cubic-bezier(.22, 1, .36, 1) both; }
+  .dockOpen .panel::before { display: none; }
+  .dockClosing .backdrop { pointer-events: none; animation: mobileBackdropOut 240ms ease-in both; }
+  .dockClosing .panel { pointer-events: none; animation: mobileSheetOut 240ms ease-in both; }
+  .dockOpen .launcher { display: none; }
+}
+@keyframes mobileBackdropIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes mobileBackdropOut { from { opacity: 1; } to { opacity: 0; } }
+@keyframes mobileSheetIn { from { transform: translateY(72px); opacity: .9; } to { transform: translateY(0); opacity: 1; } }
+@keyframes mobileSheetOut { from { transform: translateY(0); opacity: 1; } to { transform: translateY(48px); opacity: .9; } }
+@media (prefers-reduced-motion: reduce) { .conversation { scroll-behavior: auto; } .launcher:hover .launcherSmallStar, .launcher:focus-visible .launcherSmallStar, .launcher:hover .launcherLargeStar, .launcher:focus-visible .launcherLargeStar, .dockOpen .backdrop, .dockOpen .panel { animation: none; } }

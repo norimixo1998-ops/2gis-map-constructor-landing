@@ -15,9 +15,11 @@ const suggestions = [
 
 const reply =
   "Могу помочь с выбором продукта. Для задач геоаналитики начните с раздела о данных и отраслевых решениях. Если опишете сценарий и регион, подскажу, что изучить дальше.";
+const mobileSheetExitMs = 240;
 
 export function AiChat() {
   const [open, setOpen] = useState(false);
+  const [closing, setClosing] = useState(false);
   const [draft, setDraft] = useState("");
   const [inputFocused, setInputFocused] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -25,6 +27,7 @@ export function AiChat() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const responseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const nextId = useRef(1);
 
   useEffect(() => {
@@ -41,14 +44,47 @@ export function AiChat() {
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape" && open) closeChat();
     }
     window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [open]);
+
+  useEffect(() => {
     return () => {
-      window.removeEventListener("keydown", onKeyDown);
       if (responseTimer.current) clearTimeout(responseTimer.current);
+      if (closeTimer.current) clearTimeout(closeTimer.current);
     };
   }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const mobileViewport = window.matchMedia("(max-width: 767px)");
+    const previousOverflow = document.body.style.overflow;
+    const syncScrollLock = () => {
+      document.body.style.overflow = mobileViewport.matches ? "hidden" : previousOverflow;
+    };
+    syncScrollLock();
+    mobileViewport.addEventListener("change", syncScrollLock);
+    return () => {
+      mobileViewport.removeEventListener("change", syncScrollLock);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [open]);
+
+  function closeChat() {
+    if (closeTimer.current) return;
+    if (window.matchMedia("(max-width: 767px)").matches && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setClosing(true);
+      closeTimer.current = setTimeout(() => {
+        setOpen(false);
+        setClosing(false);
+        closeTimer.current = null;
+      }, mobileSheetExitMs);
+    } else {
+      setOpen(false);
+    }
+  }
 
   function send(text: string) {
     const question = text.trim();
@@ -64,8 +100,10 @@ export function AiChat() {
   }
 
   return (
-    <div className={styles.dock}>
+    <div className={`${styles.dock} ${open ? styles.dockOpen : ""} ${closing ? styles.dockClosing : ""}`}>
       {open && (
+        <>
+        <button className={styles.backdrop} type="button" tabIndex={-1} aria-label="Закрыть чат" onClick={closeChat} />
         <section className={styles.panel} aria-label="Чат с ИИ-ассистентом">
           <div className={styles.conversation} ref={scrollRef} aria-live="polite">
             {messages.length === 0 ? (
@@ -103,7 +141,7 @@ export function AiChat() {
               <img className={styles.headerIcon} src={publicAsset("/icons/ai-chat/logo-assistent_icon.svg")} alt="" aria-hidden="true" />
               <span>ИИ-ассистент</span>
             </div>
-            <button className={styles.close} type="button" aria-label="Закрыть чат" onClick={() => setOpen(false)}>
+            <button className={styles.close} type="button" aria-label="Закрыть чат" onClick={closeChat}>
               <img src={publicAsset("/icons/ai-chat/close.svg")} alt="" />
             </button>
           </div>
@@ -134,8 +172,9 @@ export function AiChat() {
             <p className={styles.disclaimer}>ИИ-ассистент может ошибаться. Проверяйте важную информацию.</p>
           </form>
         </section>
+        </>
       )}
-      <button className={styles.launcher} type="button" aria-label={open ? "Закрыть чат" : "Открыть чат с ИИ-ассистентом"} aria-expanded={open} onClick={() => setOpen((current) => !current)}>
+      <button className={styles.launcher} type="button" aria-label={open ? "Закрыть чат" : "Открыть чат с ИИ-ассистентом"} aria-expanded={open} onClick={() => open ? closeChat() : setOpen(true)}>
         <ChatLauncherIcon />
       </button>
     </div>
