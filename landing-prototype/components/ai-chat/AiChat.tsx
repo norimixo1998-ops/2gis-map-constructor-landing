@@ -24,6 +24,7 @@ export function AiChat() {
   const [inputFocused, setInputFocused] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [thinking, setThinking] = useState(false);
+  const dockRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const responseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -72,6 +73,28 @@ export function AiChat() {
     };
   }, [open]);
 
+  useEffect(() => {
+    if (!open) return;
+    const dock = dockRef.current;
+    const visualViewport = window.visualViewport;
+    if (!dock) return;
+    const syncVisibleViewport = () => {
+      dock.style.setProperty("--chat-visual-top", `${visualViewport?.offsetTop ?? 0}px`);
+      dock.style.setProperty("--chat-visual-height", `${visualViewport?.height ?? window.innerHeight}px`);
+    };
+    syncVisibleViewport();
+    visualViewport?.addEventListener("resize", syncVisibleViewport);
+    visualViewport?.addEventListener("scroll", syncVisibleViewport);
+    window.addEventListener("resize", syncVisibleViewport);
+    return () => {
+      visualViewport?.removeEventListener("resize", syncVisibleViewport);
+      visualViewport?.removeEventListener("scroll", syncVisibleViewport);
+      window.removeEventListener("resize", syncVisibleViewport);
+      dock.style.removeProperty("--chat-visual-top");
+      dock.style.removeProperty("--chat-visual-height");
+    };
+  }, [open]);
+
   function closeChat() {
     if (closeTimer.current) return;
     if (window.matchMedia("(max-width: 767px)").matches && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -100,7 +123,7 @@ export function AiChat() {
   }
 
   return (
-    <div className={`${styles.dock} ${open ? styles.dockOpen : ""} ${closing ? styles.dockClosing : ""}`}>
+    <div ref={dockRef} className={`${styles.dock} ${open ? styles.dockOpen : ""} ${closing ? styles.dockClosing : ""}`}>
       {open && (
         <>
         <button className={styles.backdrop} type="button" tabIndex={-1} aria-label="Закрыть чат" onClick={closeChat} />

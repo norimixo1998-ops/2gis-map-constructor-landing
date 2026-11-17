@@ -10,10 +10,9 @@
 @keyframes launcherLargeTwinkle { 0%, 100% { transform: scale(1); opacity: 1; } 32% { transform: scale(1.11); opacity: 1; } 65% { transform: scale(.9); opacity: .72; } }
 .panel { --chat-surface: rgb(26 26 26 / 48%); position: relative; display: flex; flex-direction: column; width: 350px; height: min(503px, calc(100dvh - 324px)); min-height: 220px; overflow: hidden; border: 1px solid rgb(255 255 255 / 12%); border-radius: 24px; background: transparent; box-shadow: 0 12px 30px rgb(15 22 27 / 32%); }
 .panel::before { content: ""; position: absolute; z-index: 0; inset: 0; background: var(--chat-surface); -webkit-backdrop-filter: blur(200px); backdrop-filter: blur(200px); pointer-events: none; }
-.conversation { position: relative; z-index: 1; flex: 1; min-height: 0; overflow-y: auto; padding: 97px 20px 20px; -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 24px), transparent 100%); mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 24px), transparent 100%); scrollbar-width: none; }
+.conversation { position: relative; z-index: 1; flex: 1; min-height: 0; margin-top: 73px; overflow-y: auto; padding: 24px 20px 20px; -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%); mask-image: linear-gradient(to bottom, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%); scrollbar-width: none; }
 .conversation::-webkit-scrollbar { display: none; }
-.panelHeader { position: absolute; z-index: 2; inset: 0 0 auto; display: flex; height: 73px; align-items: flex-start; justify-content: space-between; padding: 20px; border-bottom: 1px solid rgb(255 255 255 / 15%); isolation: isolate; }
-.panelHeader::before { content: ""; position: absolute; z-index: -1; inset: 0; background: var(--chat-surface); -webkit-backdrop-filter: blur(200px); backdrop-filter: blur(200px); pointer-events: none; }
+.panelHeader { position: absolute; z-index: 2; inset: 0 0 auto; display: flex; height: 73px; align-items: flex-start; justify-content: space-between; padding: 20px; border-bottom: 1px solid rgb(255 255 255 / 15%); background: var(--chat-surface); -webkit-backdrop-filter: blur(200px); backdrop-filter: blur(200px); }
 .headerTitle { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 500; line-height: 28px; letter-spacing: -.18px; white-space: nowrap; }
 .headerIcon { display: block; width: 32px; height: 32px; flex: none; }
 .close { display: block; width: 32px; height: 32px; padding: 0; border: 0; background: none; cursor: pointer; }
@@ -51,9 +50,9 @@
 .disclaimer { margin: 12px 0 0; color: rgb(255 255 255 / 36%); font-size: 12px; line-height: 14px; text-align: center; }
 @media (max-width: 767px) {
   .dock { right: 16px; bottom: 16px; }
-  .dockOpen { inset: 0; display: block; }
+  .dockOpen { inset: var(--chat-visual-top, 0px) 0 auto; display: block; height: var(--chat-visual-height, 100dvh); }
   .dockOpen .backdrop { position: absolute; inset: 0; display: block; width: 100%; height: 100%; padding: 0; border: 0; background: rgb(0 0 0 / 64%); cursor: default; animation: mobileBackdropIn 280ms ease-out both; }
-  .dockOpen .panel { position: absolute; right: 0; bottom: 0; left: 0; width: 100%; height: min(618px, calc(100dvh - 24px)); min-height: 0; border-bottom: 0; border-radius: 24px 24px 0 0; background: var(--chat-surface); -webkit-backdrop-filter: blur(200px); backdrop-filter: blur(200px); animation: mobileSheetIn 380ms cubic-bezier(.22, 1, .36, 1) both; }
+  .dockOpen .panel { position: absolute; right: 0; bottom: 0; left: 0; width: 100%; height: min(618px, calc(var(--chat-visual-height, 100dvh) - 24px)); min-height: 0; border-bottom: 0; border-radius: 24px 24px 0 0; background: var(--chat-surface); -webkit-backdrop-filter: blur(200px); backdrop-filter: blur(200px); animation: mobileSheetIn 380ms cubic-bezier(.22, 1, .36, 1) both; }
   .dockOpen .panel::before { display: none; }
   .dockClosing .backdrop { pointer-events: none; animation: mobileBackdropOut 240ms ease-in both; }
   .dockClosing .panel { pointer-events: none; animation: mobileSheetOut 240ms ease-in both; }
