@@ -57,7 +57,9 @@
   .dockOpen .panel::before { display: none; }
   .panelHeader { height: 65px; padding: 16px; }
   .conversationFrame { margin-top: 65px; }
+  .conversationFrame::after { content: ""; position: absolute; z-index: 1; right: 0; bottom: 0; left: 0; height: 40px; background: linear-gradient(to top, #1a1a1a, transparent); pointer-events: none; }
   .conversation { padding: 20px 16px; }
+  .inputArea { padding-right: 16px; padding-left: 16px; }
   .inputBar { min-height: 48px; border-radius: 12px; }
   .inputBar textarea { margin: 4px 0; }
   .send { width: 32px; height: 32px; padding: 8px; border-radius: 8px; }
