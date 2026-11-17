@@ -10,7 +10,11 @@
 @keyframes launcherLargeTwinkle { 0%, 100% { transform: scale(1); opacity: 1; } 32% { transform: scale(1.11); opacity: 1; } 65% { transform: scale(.9); opacity: .72; } }
 .panel { --chat-surface: rgb(26 26 26 / 48%); position: relative; display: flex; flex-direction: column; width: 350px; height: min(503px, calc(100dvh - 324px)); min-height: 220px; overflow: hidden; border: 1px solid rgb(255 255 255 / 12%); border-radius: 24px; background: transparent; box-shadow: 0 12px 30px rgb(15 22 27 / 32%); }
 .panel::before { content: ""; position: absolute; z-index: 0; inset: 0; background: var(--chat-surface); -webkit-backdrop-filter: blur(200px); backdrop-filter: blur(200px); pointer-events: none; }
-.conversation { position: relative; z-index: 1; flex: 1; min-height: 0; margin-top: 73px; overflow-y: auto; padding: 24px 20px 20px; -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%); mask-image: linear-gradient(to bottom, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%); scrollbar-width: none; }
+.conversationFrame { position: relative; z-index: 1; flex: 1; min-height: 0; margin-top: 73px; }
+.conversationFrame::before, .conversationFrame::after { content: ""; position: absolute; z-index: 1; right: 0; left: 0; height: 24px; pointer-events: none; }
+.conversationFrame::before { top: 0; background: linear-gradient(to bottom, #1a1a1a, transparent); }
+.conversationFrame::after { bottom: 0; background: linear-gradient(to top, #1a1a1a, transparent); }
+.conversation { height: 100%; min-height: 0; overflow-y: auto; padding: 24px 20px 20px; scrollbar-width: none; }
 .conversation::-webkit-scrollbar { display: none; }
 .panelHeader { position: absolute; z-index: 2; inset: 0 0 auto; display: flex; height: 73px; align-items: flex-start; justify-content: space-between; padding: 20px; border-bottom: 1px solid rgb(255 255 255 / 15%); background: var(--chat-surface); -webkit-backdrop-filter: blur(200px); backdrop-filter: blur(200px); }
 .headerTitle { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 500; line-height: 28px; letter-spacing: -.18px; white-space: nowrap; }

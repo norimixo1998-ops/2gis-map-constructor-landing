@@ -128,6 +128,7 @@ export function AiChat() {
         <>
         <button className={styles.backdrop} type="button" tabIndex={-1} aria-label="Закрыть чат" onClick={closeChat} />
         <section className={styles.panel} aria-label="Чат с ИИ-ассистентом">
+          <div className={styles.conversationFrame}>
           <div className={styles.conversation} ref={scrollRef} aria-live="polite">
             {messages.length === 0 ? (
               <div className={styles.intro}>
@@ -157,6 +158,7 @@ export function AiChat() {
                 {thinking && <p className={styles.thinking} role="status">Ассистент думает...</p>}
               </div>
             )}
+          </div>
           </div>
 
           <div className={styles.panelHeader}>
