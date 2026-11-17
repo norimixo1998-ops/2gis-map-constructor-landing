@@ -24,14 +24,11 @@ export function AiChat() {
   const [inputFocused, setInputFocused] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [thinking, setThinking] = useState(false);
-  const [showBottomFade, setShowBottomFade] = useState(false);
   const dockRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const responseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const bottomFadeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const lastScrollTop = useRef(0);
   const nextId = useRef(1);
 
   useEffect(() => {
@@ -58,7 +55,6 @@ export function AiChat() {
     return () => {
       if (responseTimer.current) clearTimeout(responseTimer.current);
       if (closeTimer.current) clearTimeout(closeTimer.current);
-      if (bottomFadeTimer.current) clearTimeout(bottomFadeTimer.current);
     };
   }, []);
 
@@ -101,7 +97,6 @@ export function AiChat() {
 
   function closeChat() {
     if (closeTimer.current) return;
-    setShowBottomFade(false);
     if (window.matchMedia("(max-width: 767px)").matches && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setClosing(true);
       closeTimer.current = setTimeout(() => {
@@ -127,24 +122,14 @@ export function AiChat() {
     }, 900);
   }
 
-  function handleConversationScroll(event: React.UIEvent<HTMLDivElement>) {
-    const scrollTop = event.currentTarget.scrollTop;
-    const distance = scrollTop - lastScrollTop.current;
-    if (Math.abs(distance) < 0.5) return;
-    lastScrollTop.current = scrollTop;
-    setShowBottomFade(distance > 0);
-    if (bottomFadeTimer.current) clearTimeout(bottomFadeTimer.current);
-    bottomFadeTimer.current = setTimeout(() => setShowBottomFade(false), 350);
-  }
-
   return (
     <div ref={dockRef} className={`${styles.dock} ${open ? styles.dockOpen : ""} ${closing ? styles.dockClosing : ""}`}>
       {open && (
         <>
         <button className={styles.backdrop} type="button" tabIndex={-1} aria-label="Закрыть чат" onClick={closeChat} />
         <section className={styles.panel} aria-label="Чат с ИИ-ассистентом">
-          <div className={styles.conversationFrame} data-bottom-fade={showBottomFade}>
-          <div className={styles.conversation} ref={scrollRef} onScroll={handleConversationScroll} aria-live="polite">
+          <div className={styles.conversationFrame}>
+          <div className={styles.conversation} ref={scrollRef} aria-live="polite">
             {messages.length === 0 ? (
               <div className={styles.intro}>
                 <p className={styles.greeting}>Расскажите о задаче и я подскажу нужный продукт, дам ссылки</p>
