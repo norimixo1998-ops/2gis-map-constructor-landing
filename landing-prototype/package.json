@@ -9,7 +9,8 @@
   "dependencies": {
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "typograf": "7.9.1"
   },
   "devDependencies": {
     "@types/node": "latest",

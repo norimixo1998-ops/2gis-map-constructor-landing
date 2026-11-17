@@ -10,20 +10,33 @@ import { TechnicalDemonstration } from "../components/technical-demonstration/Te
 import { AiChat } from "../components/ai-chat/AiChat";
 import { faq, heroVariant2, intermediateCta, leadForm, mainValues, solvedTasks, startWork, technicalDemonstration } from "../content/map-constructor";
 import { reasons } from "../content/geoflow-logistics-preview";
+import { typographContent } from "../lib/typography";
+
+const copy = typographContent({
+  heroVariant2,
+  mainValues,
+  solvedTasks,
+  intermediateCta,
+  technicalDemonstration,
+  startWork,
+  reasons,
+  faq,
+  leadForm,
+});
 
 export default function Page() {
   return (
     <>
       <main>
-        <HeroVariant2 {...heroVariant2} />
-        <MainValues {...mainValues} />
-        <SolvedTasks {...solvedTasks} />
-        <IntermediateCta {...intermediateCta} />
-        <TechnicalDemonstration {...technicalDemonstration} />
-        <StartWork {...startWork} />
-        <Reasons {...reasons} />
-        <Faq {...faq} />
-        <LeadForm {...leadForm} />
+        <HeroVariant2 {...copy.heroVariant2} />
+        <MainValues {...copy.mainValues} />
+        <SolvedTasks {...copy.solvedTasks} />
+        <IntermediateCta {...copy.intermediateCta} />
+        <TechnicalDemonstration {...copy.technicalDemonstration} />
+        <StartWork {...copy.startWork} />
+        <Reasons {...copy.reasons} />
+        <Faq {...copy.faq} />
+        <LeadForm {...copy.leadForm} />
       </main>
       <AiChat />
     </>

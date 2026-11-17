@@ -1,5 +1,5 @@
 .section { width: min(calc(100% - 32px), var(--content-width)); margin: 120px auto; color: #fff; font-family: var(--font-suisse), Arial, sans-serif; }
-.heading { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 32px; }
+.heading { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 48px; }
 .heading h2 { width: min(100%, 850px); margin: 0; font-size: 44px; font-weight: 500; line-height: 52px; letter-spacing: -.01em; }
 .controls { display: flex; gap: 12px; }
 .controls button { display: grid; width: 48px; height: 48px; place-items: center; border: 0; border-radius: 50%; background: #12951a; color: #fff; font: 24px/1 var(--font-suisse), Arial, sans-serif; cursor: pointer; }
@@ -35,4 +35,5 @@
 }
 @media (min-width: 768px) and (max-width: 899px) {
   .section { margin-block: 120px; }
+  .heading { margin-bottom: 48px; }
 }
