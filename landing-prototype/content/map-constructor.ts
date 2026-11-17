@@ -86,12 +86,12 @@ export const technicalDemonstration: TechnicalDemonstrationProps = {
 export const startWork: StartWorkProps = {
   title: "От идеи до карты за несколько минут",
   items: [
-    { heading: "Регистрация", text: "Создайте аккаунт в Менеджере Платформы 2ГИС для сохранения и управления картами" },
     { heading: "Найдите место", text: "Откройте Конструктор карт и выберите нужный адрес или объект" },
     { heading: "Нанесите объекты", text: "Добавьте метки, линии и области. Настройте подписи, описания и оформление." },
+    { heading: "Регистрация", text: "Создайте аккаунт в Менеджере Платформы 2ГИС для сохранения и управления картами" },
     { heading: "Вставьте карту", text: "Задайте размер, получите код и добавьте его в HTML страницы" },
   ],
-  action: { label: "Открыть конструктор", href: constructorUrl },
+  action: { label: "Открыть конструктор", href: "https://platform.2gis.ru/ru/my-maps" },
 };
 
 export const faq: FaqProps = {
