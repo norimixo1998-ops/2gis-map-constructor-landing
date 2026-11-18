@@ -8,7 +8,7 @@
 .launcher:hover .launcherLargeStar, .launcher:focus-visible .launcherLargeStar { animation: launcherLargeTwinkle 700ms ease-in-out both; }
 @keyframes launcherSmallTwinkle { 0%, 100% { transform: scale(1); opacity: .8; } 35% { transform: scale(.82); opacity: .55; } 70% { transform: scale(1.12); opacity: 1; } }
 @keyframes launcherLargeTwinkle { 0%, 100% { transform: scale(1); opacity: 1; } 32% { transform: scale(1.11); opacity: 1; } 65% { transform: scale(.9); opacity: .72; } }
-.panel { --chat-surface: rgb(26 26 26 / 48%); position: relative; display: flex; flex-direction: column; width: 350px; height: min(503px, calc(100dvh - 324px)); min-height: 220px; overflow: hidden; border: 1px solid rgb(255 255 255 / 12%); border-radius: 24px; background: transparent; box-shadow: 0 12px 30px rgb(15 22 27 / 32%); }
+.panel { --chat-surface: rgb(26 26 26 / 48%); position: relative; display: flex; flex-direction: column; width: 350px; height: min(516px, calc(100dvh - 324px)); min-height: 220px; overflow: hidden; border: 1px solid rgb(255 255 255 / 12%); border-radius: 24px; background: transparent; box-shadow: 0 12px 30px rgb(15 22 27 / 32%); }
 .panel::before { content: ""; position: absolute; z-index: 0; inset: 0; background: var(--chat-surface); -webkit-backdrop-filter: blur(200px); backdrop-filter: blur(200px); pointer-events: none; }
 .conversationFrame { position: relative; z-index: 1; flex: 1; min-height: 0; margin-top: 73px; }
 .conversation { display: flex; flex-direction: column; height: 100%; min-height: 0; overflow-y: auto; padding: 24px 20px 36px; scrollbar-width: none; }
@@ -53,7 +53,7 @@
   .dock { right: 16px; bottom: 16px; }
   .dockOpen { inset: var(--chat-visual-top, 0px) 0 auto; display: block; height: var(--chat-visual-height, 100dvh); }
   .dockOpen .backdrop { position: absolute; inset: 0; display: block; width: 100%; height: 100%; padding: 0; border: 0; background: rgb(0 0 0 / 64%); cursor: default; animation: mobileBackdropIn 280ms ease-out both; }
-  .dockOpen .panel { position: absolute; right: 0; bottom: 0; left: 0; width: 100%; height: min(618px, calc(var(--chat-visual-height, 100dvh) - 24px)); min-height: 0; border-bottom: 0; border-radius: 24px 24px 0 0; background: var(--chat-surface); -webkit-backdrop-filter: blur(200px); backdrop-filter: blur(200px); animation: mobileSheetIn 380ms cubic-bezier(.22, 1, .36, 1) both; }
+  .dockOpen .panel { position: absolute; right: 0; bottom: 0; left: 0; width: 100%; height: min(619px, calc(var(--chat-visual-height, 100dvh) - 24px)); min-height: 0; border-bottom: 0; border-radius: 24px 24px 0 0; background: var(--chat-surface); -webkit-backdrop-filter: blur(200px); backdrop-filter: blur(200px); animation: mobileSheetIn 380ms cubic-bezier(.22, 1, .36, 1) both; }
   .dockOpen .panel::before { display: none; }
   .panelHeader { height: 65px; padding: 16px; }
   .conversationFrame { margin-top: 65px; overflow: hidden; }
