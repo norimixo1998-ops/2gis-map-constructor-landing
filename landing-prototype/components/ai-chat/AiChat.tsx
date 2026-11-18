@@ -83,18 +83,39 @@ export function AiChat() {
     const dock = dockRef.current;
     const visualViewport = window.visualViewport;
     if (!dock) return;
+    let animationFrame = 0;
+    let watchUntil = 0;
     const syncVisibleViewport = () => {
       dock.style.setProperty("--chat-visual-top", `${visualViewport?.offsetTop ?? 0}px`);
       dock.style.setProperty("--chat-visual-height", `${visualViewport?.height ?? window.innerHeight}px`);
+    };
+    const watchViewport = () => {
+      syncVisibleViewport();
+      if (performance.now() < watchUntil) {
+        animationFrame = requestAnimationFrame(watchViewport);
+      } else {
+        animationFrame = 0;
+      }
+    };
+    const watchKeyboardTransition = () => {
+      watchUntil = performance.now() + 1200;
+      if (!animationFrame) animationFrame = requestAnimationFrame(watchViewport);
     };
     syncVisibleViewport();
     visualViewport?.addEventListener("resize", syncVisibleViewport);
     visualViewport?.addEventListener("scroll", syncVisibleViewport);
     window.addEventListener("resize", syncVisibleViewport);
+    window.addEventListener("scroll", syncVisibleViewport);
+    dock.addEventListener("focusin", watchKeyboardTransition);
+    dock.addEventListener("focusout", watchKeyboardTransition);
     return () => {
+      cancelAnimationFrame(animationFrame);
       visualViewport?.removeEventListener("resize", syncVisibleViewport);
       visualViewport?.removeEventListener("scroll", syncVisibleViewport);
       window.removeEventListener("resize", syncVisibleViewport);
+      window.removeEventListener("scroll", syncVisibleViewport);
+      dock.removeEventListener("focusin", watchKeyboardTransition);
+      dock.removeEventListener("focusout", watchKeyboardTransition);
       dock.style.removeProperty("--chat-visual-top");
       dock.style.removeProperty("--chat-visual-height");
     };
