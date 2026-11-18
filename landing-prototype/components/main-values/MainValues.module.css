@@ -37,3 +37,6 @@
   .section { margin-block: 120px; }
   .heading { margin-bottom: 48px; }
 }
+@media (min-width: 699px) and (max-width: 767.98px) {
+  .heading h2 { font-size: 32px; line-height: 40px; }
+}

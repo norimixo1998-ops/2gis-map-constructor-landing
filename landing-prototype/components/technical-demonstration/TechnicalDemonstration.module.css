@@ -87,7 +87,7 @@
   line-height: 24px;
 }
 
-@media (max-width: 699px) {
+@media (max-width: 699.98px) {
   .section { margin-block: 64px; }
   .card { padding: 20px 20px 0; border-radius: 20px; }
   .copy { max-width: 303px; }
@@ -113,4 +113,8 @@
 }
 @media (min-width: 768px) and (max-width: 1079px) {
   .copy h2 { font-size: clamp(32px, calc(3.846vw + 2.46px), 44px); line-height: clamp(40px, calc(3.846vw + 10.46px), 52px); }
+}
+@media (min-width: 699px) and (max-width: 767.98px) {
+  .section { margin-block: 64px; }
+  .copy h2 { font-size: 32px; line-height: 40px; }
 }

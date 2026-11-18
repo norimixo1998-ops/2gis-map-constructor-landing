@@ -51,7 +51,7 @@
   .contacts { grid-template-columns: minmax(0, 1fr); gap: 24px; min-height: 0; margin-top: 32px; padding: 0; border-radius: 0; background: transparent; }
   .contactItem { gap: 6px; }
 }
-@media (max-width: 767px) {
+@media (max-width: 767.98px) {
   .card { min-height: 0; padding: 28px 20px 32px; border-radius: 24px; }
   .card h2 { margin-bottom: 24px; }
   .form { width: 100%; }
@@ -67,4 +67,7 @@
 @media (min-width: 768px) and (max-width: 899px) {
   .section { margin-bottom: 120px; }
   .card { min-height: 0; }
+}
+@media (min-width: 699px) and (max-width: 767.98px) {
+  .card h2 { margin-bottom: 36px; font-size: 32px; line-height: 40px; }
 }

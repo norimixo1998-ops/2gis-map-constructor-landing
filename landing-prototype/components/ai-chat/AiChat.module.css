@@ -49,7 +49,7 @@
 .spinner { width: 24px; height: 24px; border: 3px solid #fff; border-right-color: transparent; border-radius: 50%; animation: spin .8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .disclaimer { margin: 12px 0 0; color: rgb(255 255 255 / 36%); font-size: 12px; line-height: 14px; text-align: center; }
-@media (max-width: 767px) {
+@media (max-width: 767.98px) {
   .dock { right: 16px; bottom: 16px; }
   .dockOpen { inset: var(--chat-visual-top, 0px) 0 auto; display: block; height: var(--chat-visual-height, 100dvh); }
   .dockOpen .backdrop { position: absolute; inset: 0; display: block; width: 100%; height: 100%; padding: 0; border: 0; background: rgb(0 0 0 / 64%); cursor: default; animation: mobileBackdropIn 280ms ease-out both; }
