@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type MouseEvent } from "react";
 import { publicAsset } from "../../lib/public-asset";
 import { ChatLauncherIcon } from "./ChatLauncherIcon";
 import styles from "./AiChat.module.css";
@@ -26,6 +26,7 @@ export function AiChat() {
   const [thinking, setThinking] = useState(false);
   const dockRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const savedScrollTop = useRef(0);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const responseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -34,6 +35,10 @@ export function AiChat() {
   useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [messages, thinking]);
+
+  useLayoutEffect(() => {
+    if (open && scrollRef.current) scrollRef.current.scrollTop = savedScrollTop.current;
+  }, [open]);
 
   useEffect(() => {
     const textarea = textareaRef.current;
@@ -95,18 +100,36 @@ export function AiChat() {
     };
   }, [open]);
 
-  function closeChat() {
+  function closeChat(onClosed?: () => void) {
     if (closeTimer.current) return;
+    savedScrollTop.current = scrollRef.current?.scrollTop ?? 0;
+    const finishClosing = () => {
+      setOpen(false);
+      if (onClosed) requestAnimationFrame(onClosed);
+    };
     if (window.matchMedia("(max-width: 767px)").matches && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setClosing(true);
       closeTimer.current = setTimeout(() => {
-        setOpen(false);
+        finishClosing();
         setClosing(false);
         closeTimer.current = null;
       }, mobileSheetExitMs);
     } else {
-      setOpen(false);
+      finishClosing();
     }
+  }
+
+  function followSectionLink(event: MouseEvent<HTMLAnchorElement>) {
+    event.preventDefault();
+    const hash = event.currentTarget.hash;
+    const target = document.getElementById(decodeURIComponent(hash.slice(1)));
+    if (!target) return;
+    closeChat(() => {
+      if (window.location.hash !== hash) window.history.pushState(null, "", hash);
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      target.setAttribute("tabindex", "-1");
+      target.focus({ preventScroll: true });
+    });
   }
 
   function send(text: string) {
@@ -126,7 +149,7 @@ export function AiChat() {
     <div ref={dockRef} className={`${styles.dock} ${open ? styles.dockOpen : ""} ${closing ? styles.dockClosing : ""}`}>
       {open && (
         <>
-        <button className={styles.backdrop} type="button" tabIndex={-1} aria-label="Закрыть чат" onClick={closeChat} />
+        <button className={styles.backdrop} type="button" tabIndex={-1} aria-label="Закрыть чат" onClick={() => closeChat()} />
         <section className={styles.panel} aria-label="Чат с ИИ-ассистентом">
           <div className={styles.conversationFrame}>
           <div className={styles.conversation} ref={scrollRef} aria-live="polite">
@@ -149,8 +172,8 @@ export function AiChat() {
                     <p>{message.text}</p>
                     {message.role === "assistant" && (
                       <div className={styles.answerLinks}>
-                        <a href="#main-values">Данные и решения ↗</a>
-                        <a href="#lead-form">Получить консультацию ↗</a>
+                        <a href="#main-values" onClick={followSectionLink}>Данные и решения ↗</a>
+                        <a href="#lead-form" onClick={followSectionLink}>Получить консультацию ↗</a>
                       </div>
                     )}
                   </div>
@@ -166,7 +189,7 @@ export function AiChat() {
               <img className={styles.headerIcon} src={publicAsset("/icons/ai-chat/logo-assistent_icon.svg")} alt="" aria-hidden="true" />
               <span>ИИ-ассистент</span>
             </div>
-            <button className={styles.close} type="button" aria-label="Закрыть чат" onClick={closeChat}>
+            <button className={styles.close} type="button" aria-label="Закрыть чат" onClick={() => closeChat()}>
               <img src={publicAsset("/icons/ai-chat/close.svg")} alt="" />
             </button>
           </div>
