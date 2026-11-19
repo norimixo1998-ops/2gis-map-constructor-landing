@@ -43,6 +43,8 @@
   margin-top: 36px;
 }
 
+.emptyMedia { min-height: 400px; border-radius: 16px 16px 0 0; background: #344047; }
+
 .media picture {
   display: block;
   width: 100%;
@@ -80,7 +82,7 @@
 
 .placeholder {
   display: grid;
-  height: 100%;
+  min-height: 400px;
   place-items: center;
   color: rgb(255 255 255 / 36%);
   font-size: 16px;
@@ -94,6 +96,8 @@
   .copy h2 { font-size: 30px; line-height: 38px; }
   .copy p { margin-top: 20px; }
   .media img { max-height: min(320px, 85vw); }
+  .emptyMedia { min-height: 240px; }
+  .placeholder { min-height: 240px; }
   .showcase { aspect-ratio: 303 / 239; }
   .showcase.withGlow::before {
     content: "";

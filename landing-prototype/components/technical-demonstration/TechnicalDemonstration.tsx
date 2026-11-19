@@ -31,7 +31,7 @@ export function TechnicalDemonstration({
           {description && <p>{description}</p>}
         </div>
         <div
-          className={`${styles.media} ${isShowcase ? styles.showcase : ""} ${isShowcase && image?.ambientGlow ? styles.withGlow : ""}`}
+          className={`${styles.media} ${!image ? styles.emptyMedia : ""} ${isShowcase ? styles.showcase : ""} ${isShowcase && image?.ambientGlow ? styles.withGlow : ""}`}
           style={isShowcase && image?.ambientGlow ? ({ "--ambient-glow": image.ambientGlow } as CSSProperties) : undefined}
         >
           {image ? (

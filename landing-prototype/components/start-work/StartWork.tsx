@@ -20,16 +20,17 @@ export type StartWorkProps = {
   items: StartWorkItem[];
   id?: string;
   action?: { label: string; href: string; target?: "_blank" | "_self" };
+  cardTextStyle?: "regular18";
 };
 
-export function StartWork({ title, items, id = "start-work", action }: StartWorkProps) {
+export function StartWork({ title, items, id = "start-work", action, cardTextStyle }: StartWorkProps) {
   const carousel = useCardCarousel(styles.dragging);
   if (items.length === 0) return null;
 
   const columns = items.length <= 4 ? items.length : 3;
 
   return (
-    <section className={styles.section} id={id} aria-labelledby={`${id}-title`}>
+    <section className={`${styles.section} ${cardTextStyle === "regular18" ? styles.regular18 : ""}`} id={id} aria-labelledby={`${id}-title`}>
       <h2 id={`${id}-title`}>{title}</h2>
       <ul
         className={`${styles.list} ${carousel.isDragging ? styles.dragging : ""}`}

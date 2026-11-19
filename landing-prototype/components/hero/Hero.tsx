@@ -22,12 +22,13 @@ type HeroMediaBase = {
   animation?: "float";
 };
 
-export type HeroMedia = HeroMediaBase & (
+export type HeroMedia = { kind: "placeholder"; label: string } | HeroMediaBase & (
   | { kind: "decorative"; alt: "" }
   | { kind: "meaningful"; alt: string }
 );
 
 type HeroBase = {
+  eyebrow?: string;
   title: string;
   titleBreakAfter?: string; // optional soft wrap hint; does not force a line break
   description: string;
@@ -40,6 +41,9 @@ export type HeroProps = HeroBase;
 const breakpoint = 992;
 
 function HeroImage({ media }: { media: HeroMedia }) {
+  if (media.kind === "placeholder") {
+    return <div className={styles.imagePlaceholder} role="img" aria-label={media.label}>{media.label}</div>;
+  }
   if (media.kind === "meaningful" && !media.alt.trim()) {
     throw new Error("A meaningful Hero visual requires a non-empty alt description.");
   }
@@ -60,7 +64,7 @@ function HeroImage({ media }: { media: HeroMedia }) {
   );
 }
 
-export function Hero({ title, titleBreakAfter, description, actions, media }: HeroProps) {
+export function Hero({ eyebrow, title, titleBreakAfter, description, actions, media }: HeroProps) {
   const breakIndex = titleBreakAfter ? title.indexOf(titleBreakAfter) : -1;
   const titleContent = breakIndex >= 0 && titleBreakAfter ? (
     <>
@@ -75,6 +79,7 @@ export function Hero({ title, titleBreakAfter, description, actions, media }: He
       <div className={styles.layout}>
         <div className={styles.copy}>
           <div className={styles.text}>
+            {eyebrow ? <p className={styles.eyebrow}>{eyebrow}</p> : null}
             <h1>{titleContent}</h1>
             <p>{description}</p>
           </div>

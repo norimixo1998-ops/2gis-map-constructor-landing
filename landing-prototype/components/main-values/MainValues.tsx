@@ -7,7 +7,7 @@ import styles from "./MainValues.module.css";
 
 export type MainValueItem = {
   title: string;
-  description: string;
+  description?: string;
   iconSrc?: string;
 };
 
@@ -71,7 +71,7 @@ export function MainValues({ items, title, id = "main-values" }: MainValuesProps
               {item.iconSrc ? <img className={styles.icon} src={publicAsset(item.iconSrc)} width="96" height="96" alt="" /> : <span className={styles.iconPlaceholder} aria-hidden="true" />}
               <div className={styles.copy}>
                 <h3>{item.title}</h3>
-                <p>{item.description}</p>
+                {item.description ? <p>{item.description}</p> : null}
               </div>
             </div>
           </li>

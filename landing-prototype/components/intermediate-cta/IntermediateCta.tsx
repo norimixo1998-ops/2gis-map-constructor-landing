@@ -4,10 +4,9 @@ import { actionLinkProps } from "../../lib/action-link";
 
 export type IntermediateCtaAction = {
   label: string;
-  href: string;
   mobileLabel?: string;
   target?: "_self" | "_blank";
-};
+} & ({ href: string; disabled?: false } | { href?: never; disabled: true });
 
 export type IntermediateCtaProps = {
   id?: string;
@@ -15,7 +14,7 @@ export type IntermediateCtaProps = {
   description?: string;
   primaryAction: IntermediateCtaAction;
   secondaryAction?: IntermediateCtaAction;
-  image?: { desktop: string; mobile?: string; alt: string };
+  image?: { desktop: string; mobile?: string; alt: string; fit?: "cover" | "contain" };
 };
 
 export function IntermediateCta({
@@ -33,7 +32,7 @@ export function IntermediateCta({
           <h2 id={`${id}-title`}>{title}</h2>
           {description && <p>{description}</p>}
         </div>
-        <div className={styles.visual}>
+        <div className={`${styles.visual} ${image?.fit === "contain" ? styles.contain : ""}`}>
           {image ? (
             <picture>
               {image.mobile && <source media="(max-width: 899px)" srcSet={publicAsset(image.mobile)} />}
@@ -44,11 +43,18 @@ export function IntermediateCta({
           )}
         </div>
         <div className={styles.actions}>
-          <a className={`${styles.action} ${styles.primary}`} href={primaryAction.href} {...actionLinkProps(primaryAction.href, primaryAction.target)}>
-            <span className={styles.desktopLabel}>{primaryAction.label}</span>
-            <span className={styles.mobileLabel}>{primaryAction.mobileLabel ?? primaryAction.label}</span>
-          </a>
-          {secondaryAction && <a className={`${styles.action} ${styles.secondary}`} href={secondaryAction.href} {...actionLinkProps(secondaryAction.href, secondaryAction.target)}>
+          {primaryAction.disabled ? (
+            <button className={`${styles.action} ${styles.primary}`} type="button" disabled>
+              <span className={styles.desktopLabel}>{primaryAction.label}</span>
+              <span className={styles.mobileLabel}>{primaryAction.mobileLabel ?? primaryAction.label}</span>
+            </button>
+          ) : (
+            <a className={`${styles.action} ${styles.primary}`} href={primaryAction.href} {...actionLinkProps(primaryAction.href, primaryAction.target)}>
+              <span className={styles.desktopLabel}>{primaryAction.label}</span>
+              <span className={styles.mobileLabel}>{primaryAction.mobileLabel ?? primaryAction.label}</span>
+            </a>
+          )}
+          {secondaryAction && !secondaryAction.disabled && <a className={`${styles.action} ${styles.secondary}`} href={secondaryAction.href} {...actionLinkProps(secondaryAction.href, secondaryAction.target)}>
             {secondaryAction.label}
           </a>}
         </div>
