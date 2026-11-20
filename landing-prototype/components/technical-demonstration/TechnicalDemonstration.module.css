@@ -6,10 +6,22 @@
 }
 
 .card {
+  position: relative;
   overflow: hidden;
   padding: 48px 48px 0;
   border-radius: 20px;
   background: #20282c;
+}
+
+.glowingCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--technical-glow) center 42% / 115% auto no-repeat,
+    var(--technical-glow) center 42% / 115% auto no-repeat;
+  filter: blur(40px);
+  opacity: .85;
+  pointer-events: none;
 }
 
 .copy {
@@ -17,6 +29,9 @@
   z-index: 1;
   max-width: 970px;
 }
+
+.framedCopy { max-width: none; }
+.headingWrap { padding-right: 160px; }
 
 .copy h2 {
   margin: 0;
@@ -27,16 +42,40 @@
   overflow-wrap: anywhere;
 }
 
+.summaryRow { margin-top: 20px; }
+
 .copy p {
-  margin: 16px 0 0;
+  margin: 0;
   font-size: 16px;
   line-height: 24px;
   letter-spacing: -0.01em;
   overflow-wrap: anywhere;
 }
 
+.framedCopy .summaryRow { display: flex; align-items: flex-start; gap: 64px; }
+.framedCopy .summaryRow p { flex: 1; min-width: 0; }
+.action {
+  display: inline-flex;
+  flex: none;
+  min-height: 56px;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 26px;
+  border-radius: 12px;
+  background: rgb(255 255 255 / 12%);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: center;
+  text-decoration: none;
+}
+.action:hover { background: var(--button-secondary-hover); color: #fff; }
+.action:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
 .media {
   position: relative;
+  z-index: 1;
   display: block;
   width: 100%;
   overflow: visible;
@@ -58,6 +97,43 @@
   object-fit: contain;
   object-position: left top;
 }
+
+.framed {
+  aspect-ratio: 1072 / 661;
+  margin-top: 48px;
+}
+
+.frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 12px 12px 0;
+  border-radius: 32px 32px 0 0;
+}
+
+.frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgb(255 255 255 / 12%);
+  -webkit-backdrop-filter: blur(40px);
+  backdrop-filter: blur(40px);
+}
+
+.imageSlot {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 20px 20px 0 0;
+  background: #323b40;
+}
+
+.imageSlot picture { height: 100%; }
+.imageSlot img { height: 100%; max-height: none; object-fit: cover; object-position: center; }
+.imageSlot .placeholder { height: 100%; min-height: 0; }
+.mobilePlaceholder { display: none; }
 
 .showcase {
   aspect-ratio: 1072 / 497;
@@ -93,12 +169,35 @@
   .section { margin-block: 64px; }
   .card { padding: 20px 20px 0; border-radius: 20px; }
   .copy { max-width: 303px; }
+  .framedCopy { max-width: none; }
+  .headingWrap { padding-right: 0; }
   .copy h2 { font-size: 30px; line-height: 38px; }
-  .copy p { margin-top: 20px; }
+  .summaryRow { margin-top: 12px; }
+  .framedCopy .summaryRow { align-items: stretch; }
+  .framedCopy .action { width: 100%; }
   .media img { max-height: min(320px, 85vw); }
   .emptyMedia { min-height: 240px; }
   .placeholder { min-height: 240px; }
   .showcase { aspect-ratio: 303 / 239; }
+  .framed { aspect-ratio: 343 / 325; }
+  .glowingCard::before {
+    background-size: 190% auto;
+    background-position: center 68%;
+    filter: blur(28px);
+    opacity: .6;
+  }
+  .framed .frame { padding: 5px 5px 0; border-radius: 9px 9px 0 0; }
+  .framed .imageSlot { border-radius: 6px 6px 0 0; }
+  .awaitingMobile .imageSlot picture { display: none; }
+  .awaitingMobile .mobilePlaceholder {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    place-items: center;
+    color: rgb(255 255 255 / 56%);
+    font-size: 14px;
+    text-align: center;
+  }
   .showcase.withGlow::before {
     content: "";
     position: absolute;
@@ -114,6 +213,12 @@
   }
   .showcase.withGlow img { mask-image: linear-gradient(to right, #000 0 93%, transparent 100%); }
   .placeholder { font-size: 14px; }
+}
+@media (min-width: 700px) and (max-width: 899.98px) {
+  .headingWrap { padding-right: 0; }
+}
+@media (max-width: 899.98px) {
+  .framedCopy .summaryRow { flex-direction: column; align-items: flex-start; gap: 24px; }
 }
 @media (min-width: 768px) and (max-width: 1079px) {
   .copy h2 { font-size: clamp(32px, calc(3.846vw + 2.46px), 44px); line-height: clamp(40px, calc(3.846vw + 10.46px), 52px); }

@@ -74,12 +74,12 @@ export const intermediateCta: IntermediateCtaProps = {
 export const technicalDemonstration: TechnicalDemonstrationProps = {
   title: "Управляйте стилями карт и ключами в одном сервисе",
   description: "Редактор стилей и управление API-ключами доступны в Менеджере Платформы 2ГИС. Встроенная карта автоматически адаптируется под любой экран: десктоп, планшет или смартфон.",
+  action: { label: "Получить демо-ключ", href: "https://platform.2gis.ru/" },
+  variant: "framed",
+  glowSrc: "/images/technical-demonstration/Glow (2).png",
   image: {
-    desktop: "/images/technical-demonstration/demonstration block_desktop.png",
-    mobile: "/images/technical-demonstration/image_mobile.png",
-    alt: "Пример оформления карты на компьютере и смартфоне",
-    layout: "showcase",
-    ambientGlow: "rgb(31 120 46 / 22%)",
+    desktop: "/images/technical-demonstration/API key_desktop.png",
+    alt: "Менеджер Платформы с настройками ключей API, редактором стилей и картой",
   },
 };
 

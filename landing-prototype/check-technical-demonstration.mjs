@@ -19,75 +19,62 @@ try {
       const copy = card.firstElementChild;
       const heading = copy.querySelector("h2");
       const description = copy.querySelector("p");
+      const action = copy.querySelector("a");
+      const headingWrap = heading.parentElement;
       const media = card.lastElementChild;
-      const picture = media.querySelector("picture");
-      const img = media.querySelector("img");
-      const sections = [...document.querySelectorAll("main > section")];
+      const frame = media.firstElementChild;
+      const slot = frame.firstElementChild;
+      const picture = slot.querySelector("picture");
+      const image = picture?.querySelector("img");
+      const mobilePlaceholder = slot.querySelector("span");
+      const bounds = node => node.getBoundingClientRect();
+      const frameStyle = getComputedStyle(frame);
       return {
-        sections: sections.map(node => node.id || "hero"),
-        title: element.querySelector("h2")?.textContent,
-        copyX: copy.getBoundingClientRect().x,
-        copyTop: copy.getBoundingClientRect().top,
-        headingBottom: heading.getBoundingClientRect().bottom,
-        descriptionTop: description?.getBoundingClientRect().top,
-        mediaX: media.getBoundingClientRect().x,
-        copyBottom: copy.getBoundingClientRect().bottom,
-        mediaTop: media.getBoundingClientRect().top,
-        mediaBottom: media.getBoundingClientRect().bottom,
-        cardBottom: card.getBoundingClientRect().bottom,
-        pictureX: picture?.getBoundingClientRect().x,
-        cardX: card.getBoundingClientRect().x,
-        cardTop: card.getBoundingClientRect().top,
-        mediaOverflow: getComputedStyle(media).overflow,
-        cardWidth: card.getBoundingClientRect().width,
-        mediaWidth: media.getBoundingClientRect().width,
-        mediaHeight: media.getBoundingClientRect().height,
-        image: img && {
-          src: new URL(img.currentSrc).pathname,
-          width: img.naturalWidth,
-          height: img.naturalHeight,
-          fit: getComputedStyle(img).objectFit,
-        },
+        title: heading.textContent,
+        card: { x: bounds(card).x, y: bounds(card).y, width: bounds(card).width, height: bounds(card).height, bottom: bounds(card).bottom, glow: getComputedStyle(card, "::before").backgroundImage, glowOpacity: getComputedStyle(card, "::before").opacity },
+        copy: { x: bounds(copy).x, y: bounds(copy).y, bottom: bounds(copy).bottom },
+        headingBottom: bounds(heading).bottom,
+        headingRightInset: parseFloat(getComputedStyle(headingWrap).paddingRight),
+        descriptionTop: bounds(description).top,
+        descriptionFontSize: getComputedStyle(description).fontSize,
+        descriptionLineHeight: getComputedStyle(description).lineHeight,
+        descriptionRight: bounds(description).right,
+        descriptionBottom: bounds(description).bottom,
+        action: action && { text: action.textContent, href: action.href, x: bounds(action).x, y: bounds(action).y, width: bounds(action).width, height: bounds(action).height, radius: getComputedStyle(action).borderRadius, fontSize: getComputedStyle(action).fontSize, lineHeight: getComputedStyle(action).lineHeight, weight: getComputedStyle(action).fontWeight },
+        media: { x: bounds(media).x, y: bounds(media).y, width: bounds(media).width, height: bounds(media).height, bottom: bounds(media).bottom },
+        frame: { x: bounds(frame).x, y: bounds(frame).y, width: bounds(frame).width, height: bounds(frame).height, paddingTop: frameStyle.paddingTop, paddingRight: frameStyle.paddingRight, paddingBottom: frameStyle.paddingBottom, paddingLeft: frameStyle.paddingLeft, radius: frameStyle.borderTopLeftRadius, shadow: frameStyle.boxShadow, background: getComputedStyle(frame, "::before").backgroundColor },
+        slot: { x: bounds(slot).x, y: bounds(slot).y, width: bounds(slot).width, height: bounds(slot).height, radius: getComputedStyle(slot).borderTopLeftRadius },
+        image: image && { src: new URL(image.currentSrc || image.src).pathname, width: image.naturalWidth, height: image.naturalHeight, display: getComputedStyle(picture).display },
+        placeholder: mobilePlaceholder && { text: mobilePlaceholder.textContent, display: getComputedStyle(mobilePlaceholder).display },
         scrollWidth: document.documentElement.scrollWidth,
       };
     });
     const output = join("preview-checks", `technical-demonstration-landing-${width}.png`);
     await section.screenshot({ path: output });
     console.log(JSON.stringify({ width, status: response.status(), output, ...result, errors }));
-    const expected = width < 700 ? "image_mobile.png" : "demonstration%20block_desktop.png";
+
     const inset = width < 700 ? 20 : 48;
-    if (response.status() !== 200 || errors.length || result.scrollWidth > width || !result.title || result.sections.indexOf("technical-demonstration") < 0 || !result.image?.src.endsWith(expected) || !result.image.width || result.image.fit !== "cover" || result.mediaX !== result.copyX || result.mediaOverflow !== "visible" || Math.abs(result.mediaTop - result.copyBottom - 36) > 1 || Math.abs(result.cardBottom - result.mediaBottom) > 1 || result.copyX - result.cardX !== inset || result.copyTop - result.cardTop !== inset || (width < 700 && (result.pictureX !== result.cardX || Math.abs(result.descriptionTop - result.headingBottom - 20) > 1)) || (width >= 700 && Math.abs(result.descriptionTop - result.headingBottom - 16) > 1)) process.exitCode = 1;
-    if (width === 390 || width === 1440) {
-      const generic = await page.evaluate(async () => {
-        const section = document.querySelector("#technical-demonstration");
-        const media = section.firstElementChild.lastElementChild;
-        const copy = section.firstElementChild.firstElementChild;
-        const picture = media.querySelector("picture");
-        const img = picture.querySelector("img");
-        picture.querySelector("source")?.remove();
-        media.className = media.className.split(" ")[0];
-        media.removeAttribute("style");
-        img.src = "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="600" height="1200"><rect width="600" height="1200" fill="#759b82"/></svg>');
-        await img.decode();
-        const imageStyle = getComputedStyle(img);
-        return {
-          fit: imageStyle.objectFit,
-          position: imageStyle.objectPosition,
-          naturalWidth: img.naturalWidth,
-          naturalHeight: img.naturalHeight,
-          pictureX: picture.getBoundingClientRect().x,
-          copyX: copy.getBoundingClientRect().x,
-          imageHeight: img.getBoundingClientRect().height,
-          mediaHeight: media.getBoundingClientRect().height,
-          textGap: media.getBoundingClientRect().top - copy.getBoundingClientRect().bottom,
-          scrollWidth: document.documentElement.scrollWidth,
-        };
-      });
-      const genericOutput = join("preview-checks", `technical-demonstration-generic-${width}.png`);
-      await section.screenshot({ path: genericOutput });
-      console.log(JSON.stringify({ width, variant: "generic", output: genericOutput, ...generic }));
-      if (generic.fit !== "contain" || generic.position !== "0% 0%" || generic.naturalWidth !== 600 || generic.naturalHeight !== 1200 || generic.pictureX !== generic.copyX || Math.abs(generic.mediaHeight - generic.imageHeight) > 1 || Math.abs(generic.textGap - 36) > 1 || generic.scrollWidth > width || generic.imageHeight > (width < 700 ? 320 : 497)) process.exitCode = 1;
-    }
+    const frameInset = width < 700 ? 5 : 12;
+    const descriptionGap = width < 700 ? 12 : 20;
+    const close = (a, b) => Math.abs(a - b) < 1;
+    if (
+      response.status() !== 200 || errors.length || !result.title || result.scrollWidth > width ||
+      !close(result.copy.x - result.card.x, inset) || !close(result.copy.y - result.card.y, inset) ||
+      !close(result.media.x, result.copy.x) || !close(result.media.y - result.copy.bottom, 48) ||
+      !close(result.descriptionTop - result.headingBottom, descriptionGap) || result.descriptionFontSize !== "16px" || result.descriptionLineHeight !== "24px" ||
+      result.action?.text !== "Получить демо-ключ" || !result.action.href.startsWith("https://platform.2gis.ru/") || result.action.height !== 56 || result.action.radius !== "12px" || result.action.fontSize !== "16px" || result.action.lineHeight !== "24px" || result.action.weight !== "500" ||
+      (width >= 900 ? !close(result.action.x - result.descriptionRight, 64) || !close(result.headingRightInset, 160) : !close(result.action.y - result.descriptionBottom, 24) || !close(result.headingRightInset, 0)) ||
+      !close(result.media.bottom, result.card.bottom) ||
+      !close(result.frame.width, result.media.width) || !close(result.frame.height, result.media.height) ||
+      !close(result.slot.x - result.frame.x, frameInset) || !close(result.slot.y - result.frame.y, frameInset) ||
+      !close(result.slot.width, result.frame.width - frameInset * 2) || !close(result.slot.height, result.frame.height - frameInset) ||
+      result.frame.paddingTop !== `${frameInset}px` || result.frame.paddingBottom !== "0px" ||
+      result.frame.radius !== (width < 700 ? "9px" : "32px") || result.slot.radius !== (width < 700 ? "6px" : "20px") ||
+      result.frame.background !== "rgba(255, 255, 255, 0.12)" || result.frame.shadow !== "none" || !result.card.glow.includes("Glow%20(2).png") || result.card.glowOpacity !== (width < 700 ? "0.6" : "0.85") ||
+      !result.image?.src.endsWith("API%20key_desktop.png") || result.image.width !== 4192 || result.image.height !== 2596 ||
+      (width < 700 ? result.image.display !== "none" || result.placeholder?.display !== "grid" || result.placeholder.text !== "Изображение для мобильной версии" : result.image.display !== "block" || result.placeholder?.display !== "none") ||
+      (width === 1440 && (!close(result.card.width, 1168) || !close(result.media.width, 1072) || !close(result.media.height, 661) || !close(result.slot.width, 1048) || !close(result.slot.height, 649)))
+    ) process.exitCode = 1;
     await page.close();
   }
 } finally {
