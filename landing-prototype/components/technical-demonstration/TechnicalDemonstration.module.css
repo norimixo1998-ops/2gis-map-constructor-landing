@@ -175,7 +175,7 @@
   .summaryRow { margin-top: 12px; }
   .framedCopy .summaryRow { align-items: stretch; }
   .framedCopy .action { width: 100%; }
-  .media img { max-height: min(320px, 85vw); }
+  .media:not(.framed) img { max-height: min(320px, 85vw); }
   .emptyMedia { min-height: 240px; }
   .placeholder { min-height: 240px; }
   .showcase { aspect-ratio: 303 / 239; }

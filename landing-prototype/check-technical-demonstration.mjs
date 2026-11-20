@@ -44,7 +44,7 @@ try {
         media: { x: bounds(media).x, y: bounds(media).y, width: bounds(media).width, height: bounds(media).height, bottom: bounds(media).bottom },
         frame: { x: bounds(frame).x, y: bounds(frame).y, width: bounds(frame).width, height: bounds(frame).height, paddingTop: frameStyle.paddingTop, paddingRight: frameStyle.paddingRight, paddingBottom: frameStyle.paddingBottom, paddingLeft: frameStyle.paddingLeft, radius: frameStyle.borderTopLeftRadius, shadow: frameStyle.boxShadow, background: getComputedStyle(frame, "::before").backgroundColor },
         slot: { x: bounds(slot).x, y: bounds(slot).y, width: bounds(slot).width, height: bounds(slot).height, radius: getComputedStyle(slot).borderTopLeftRadius },
-        image: image && { src: new URL(image.currentSrc || image.src).pathname, width: image.naturalWidth, height: image.naturalHeight, display: getComputedStyle(picture).display },
+        image: image && { src: new URL(image.currentSrc || image.src).pathname, width: image.naturalWidth, height: image.naturalHeight, renderedWidth: bounds(image).width, renderedHeight: bounds(image).height, fit: getComputedStyle(image).objectFit, display: getComputedStyle(picture).display },
         placeholder: mobilePlaceholder && { text: mobilePlaceholder.textContent, display: getComputedStyle(mobilePlaceholder).display },
         scrollWidth: document.documentElement.scrollWidth,
       };
@@ -71,8 +71,8 @@ try {
       result.frame.paddingTop !== `${frameInset}px` || result.frame.paddingBottom !== "0px" ||
       result.frame.radius !== (width < 700 ? "9px" : "32px") || result.slot.radius !== (width < 700 ? "6px" : "20px") ||
       result.frame.background !== "rgba(255, 255, 255, 0.12)" || result.frame.shadow !== "none" || !result.card.glow.includes("Glow%20(2).png") || result.card.glowOpacity !== (width < 700 ? "0.6" : "0.85") ||
-      (width < 700 ? !result.image?.src.endsWith("API%20key_mobile.png") || result.image.width !== 1212 || result.image.height !== 1280 : !result.image?.src.endsWith("API%20key_desktop.png") || result.image.width !== 3012 || result.image.height !== 1868) ||
-      result.image.display !== "block" || result.placeholder !== null ||
+      (width < 700 ? !result.image?.src.endsWith("API%20key_mobile.png") || result.image.width !== 1172 || result.image.height !== 1260 : !result.image?.src.endsWith("API%20key_desktop.png") || result.image.width !== 3012 || result.image.height !== 1868) ||
+      result.image.display !== "block" || result.image.fit !== "cover" || !close(result.image.renderedWidth, result.slot.width) || !close(result.image.renderedHeight, result.slot.height) || result.placeholder !== null ||
       (width === 1440 && (!close(result.card.width, 1168) || !close(result.media.width, 1072) || !close(result.media.height, 661) || !close(result.slot.width, 1048) || !close(result.slot.height, 649))) ||
       (width === 375 && (!close(result.card.width, 343) || !close(result.media.width, 303) || !close(result.media.height, 320)))
     ) process.exitCode = 1;
