@@ -33,7 +33,7 @@ export function TechnicalDemonstration({
   const awaitingMobile = isFramed && Boolean(image) && !image?.mobile;
   const visual = image ? (
     <picture>
-      {image.mobile && <source media="(max-width: 699px)" srcSet={publicAsset(image.mobile)} />}
+      {image.mobile && <source media="(max-width: 699px)" srcSet={encodeURI(publicAsset(image.mobile))} />}
       <img src={publicAsset(image.desktop)} alt={image.alt} />
     </picture>
   ) : (

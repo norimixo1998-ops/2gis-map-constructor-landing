@@ -72,13 +72,14 @@ export const intermediateCta: IntermediateCtaProps = {
 };
 
 export const technicalDemonstration: TechnicalDemonstrationProps = {
-  title: "Карты, ключи и стили в одном кабинете",
-  description: "В Менеджере Платформы 2ГИС собраны все инструменты: конструктор карт, редактор стилей, управление ключами и статистика.",
+  title: "Один кабинет для конструктора карт, стилей и API-ключей",
+  description: "В Менеджере Платформы 2ГИС собраны все инструменты: конструктор карт, редактор стилей, управление ключами и статистика",
   action: { label: "Получить демо-ключ", href: "https://platform.2gis.ru/" },
   variant: "framed",
   glowSrc: "/images/technical-demonstration/Glow (2).png",
   image: {
     desktop: "/images/technical-demonstration/API key_desktop.png",
+    mobile: "/images/technical-demonstration/API key_mobile.png",
     alt: "Менеджер Платформы с настройками ключей API, редактором стилей и картой",
   },
 };

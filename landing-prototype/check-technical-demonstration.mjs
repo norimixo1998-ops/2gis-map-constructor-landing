@@ -60,7 +60,7 @@ try {
     if (
       response.status() !== 200 || errors.length || !result.title || result.scrollWidth > width ||
       !close(result.copy.x - result.card.x, inset) || !close(result.copy.y - result.card.y, inset) ||
-      !close(result.media.x, result.copy.x) || !close(result.media.y - result.copy.bottom, 48) ||
+      !close(result.media.x, result.copy.x) || !close(result.media.y - result.copy.bottom, width < 700 ? 36 : 48) ||
       !close(result.descriptionTop - result.headingBottom, descriptionGap) || result.descriptionFontSize !== "16px" || result.descriptionLineHeight !== "24px" ||
       result.action?.text !== "Получить демо-ключ" || !result.action.href.startsWith("https://platform.2gis.ru/") || result.action.height !== 56 || result.action.radius !== "12px" || result.action.fontSize !== "16px" || result.action.lineHeight !== "24px" || result.action.weight !== "500" ||
       (width >= 900 ? !close(result.action.x - result.descriptionRight, 64) || !close(result.headingRightInset, 160) : !close(result.action.y - result.descriptionBottom, 24) || !close(result.headingRightInset, 0)) ||
@@ -71,9 +71,10 @@ try {
       result.frame.paddingTop !== `${frameInset}px` || result.frame.paddingBottom !== "0px" ||
       result.frame.radius !== (width < 700 ? "9px" : "32px") || result.slot.radius !== (width < 700 ? "6px" : "20px") ||
       result.frame.background !== "rgba(255, 255, 255, 0.12)" || result.frame.shadow !== "none" || !result.card.glow.includes("Glow%20(2).png") || result.card.glowOpacity !== (width < 700 ? "0.6" : "0.85") ||
-      !result.image?.src.endsWith("API%20key_desktop.png") || result.image.width !== 3012 || result.image.height !== 1868 ||
-      (width < 700 ? result.image.display !== "none" || result.placeholder?.display !== "grid" || result.placeholder.text !== "Изображение для мобильной версии" : result.image.display !== "block" || result.placeholder?.display !== "none") ||
-      (width === 1440 && (!close(result.card.width, 1168) || !close(result.media.width, 1072) || !close(result.media.height, 661) || !close(result.slot.width, 1048) || !close(result.slot.height, 649)))
+      (width < 700 ? !result.image?.src.endsWith("API%20key_mobile.png") || result.image.width !== 1212 || result.image.height !== 1280 : !result.image?.src.endsWith("API%20key_desktop.png") || result.image.width !== 3012 || result.image.height !== 1868) ||
+      result.image.display !== "block" || result.placeholder !== null ||
+      (width === 1440 && (!close(result.card.width, 1168) || !close(result.media.width, 1072) || !close(result.media.height, 661) || !close(result.slot.width, 1048) || !close(result.slot.height, 649))) ||
+      (width === 375 && (!close(result.card.width, 343) || !close(result.media.width, 303) || !close(result.media.height, 320)))
     ) process.exitCode = 1;
     await page.close();
   }

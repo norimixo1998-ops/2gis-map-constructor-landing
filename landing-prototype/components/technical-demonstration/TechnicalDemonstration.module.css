@@ -179,7 +179,7 @@
   .emptyMedia { min-height: 240px; }
   .placeholder { min-height: 240px; }
   .showcase { aspect-ratio: 303 / 239; }
-  .framed { aspect-ratio: 343 / 325; }
+  .framed { aspect-ratio: 303 / 320; margin-top: 36px; }
   .glowingCard::before {
     background-size: 190% auto;
     background-position: center 68%;
