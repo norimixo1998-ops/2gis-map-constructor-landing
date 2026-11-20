@@ -71,7 +71,7 @@ try {
       result.frame.paddingTop !== `${frameInset}px` || result.frame.paddingBottom !== "0px" ||
       result.frame.radius !== (width < 700 ? "9px" : "32px") || result.slot.radius !== (width < 700 ? "6px" : "20px") ||
       result.frame.background !== "rgba(255, 255, 255, 0.12)" || result.frame.shadow !== "none" || !result.card.glow.includes("Glow%20(2).png") || result.card.glowOpacity !== (width < 700 ? "0.6" : "0.85") ||
-      !result.image?.src.endsWith("API%20key_desktop.png") || result.image.width !== 4192 || result.image.height !== 2596 ||
+      !result.image?.src.endsWith("API%20key_desktop.png") || result.image.width !== 3012 || result.image.height !== 1868 ||
       (width < 700 ? result.image.display !== "none" || result.placeholder?.display !== "grid" || result.placeholder.text !== "Изображение для мобильной версии" : result.image.display !== "block" || result.placeholder?.display !== "none") ||
       (width === 1440 && (!close(result.card.width, 1168) || !close(result.media.width, 1072) || !close(result.media.height, 661) || !close(result.slot.width, 1048) || !close(result.slot.height, 649)))
     ) process.exitCode = 1;
