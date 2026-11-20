@@ -6,7 +6,7 @@ const { chromium } = require("C:/Users/Legion/.cache/codex-runtimes/codex-primar
 const browser = await chromium.launch({ headless: true, executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe" });
 
 try {
-  for (const width of [1440, 1024, 768, 390, 375]) {
+  for (const width of [1440, 1024, 768, 375, 390, 400, 412, 430, 450, 480]) {
     const page = await browser.newPage({ viewport: { width, height: 900 }, deviceScaleFactor: 1 });
     const errors = [];
     page.on("pageerror", error => errors.push(error.message));
