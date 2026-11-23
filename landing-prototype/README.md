@@ -6,7 +6,7 @@
 
 | Маршрут | Порядок секций из кода | Данные |
 | --- | --- | --- |
-| `/` — Конструктор карт | S01 (вариант 2) → S02 → S03 → S08 → S05 → S06 → S07 → S09 → S10 | [`content/map-constructor.ts`](content/map-constructor.ts); S07 пока использует данные из [`content/geoflow-logistics-preview.ts`](content/geoflow-logistics-preview.ts). |
+| `/` — Конструктор карт | S01 (вариант 2) → S02 → S03 → S08 → S05 → S06 → S07 → S09 → S10 | Данные содержательных секций, включая S07, находятся в [`content/map-constructor.ts`](content/map-constructor.ts). |
 | `/geoflow-holiday` — черновик акции | S01 (вариант 1) → S04 → S02 → S05 → S06 → S08 → S09 | [`content/geoflow-holiday.ts`](content/geoflow-holiday.ts); состав описан в [паспорте сборки](../specs/geoflow-holiday-blocks-spec.md). |
 
 Порядок задают соответственно [`app/page.tsx`](app/page.tsx) и [`app/geoflow-holiday/page.tsx`](app/geoflow-holiday/page.tsx). На акции CTA с саморегистрацией стоит **перед** FAQ, как предусмотрено её сценарием. Адрес саморегистрации не подтверждён, поэтому кнопка отключена.

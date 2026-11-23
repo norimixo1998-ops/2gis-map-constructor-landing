@@ -8,8 +8,7 @@ import { SolvedTasks } from "../components/solved-tasks/SolvedTasks";
 import { IntermediateCta } from "../components/intermediate-cta/IntermediateCta";
 import { TechnicalDemonstration } from "../components/technical-demonstration/TechnicalDemonstration";
 import { AiChat } from "../components/ai-chat/AiChat";
-import { faq, heroVariant2, intermediateCta, leadForm, mainValues, solvedTasks, startWork, technicalDemonstration } from "../content/map-constructor";
-import { reasons } from "../content/geoflow-logistics-preview";
+import { faq, heroVariant2, intermediateCta, leadForm, mainValues, reasons, solvedTasks, startWork, technicalDemonstration } from "../content/map-constructor";
 import { typographContent } from "../lib/typography";
 
 const copy = typographContent({

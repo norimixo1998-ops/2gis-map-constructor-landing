@@ -5,6 +5,7 @@ import type { SolvedTasksProps } from "../components/solved-tasks/SolvedTasks";
 import type { IntermediateCtaProps } from "../components/intermediate-cta/IntermediateCta";
 import type { TechnicalDemonstrationProps } from "../components/technical-demonstration/TechnicalDemonstration";
 import type { StartWorkProps } from "../components/start-work/StartWork";
+import type { ReasonsProps } from "../components/reasons/Reasons";
 import type { FaqProps } from "../components/faq/Faq";
 import type { LeadFormProps } from "../components/lead-form/LeadForm";
 
@@ -93,6 +94,16 @@ export const startWork: StartWorkProps = {
     { heading: "Вставьте карту", text: "Задайте размер, получите код и добавьте его в HTML страницы" },
   ],
   action: { label: "Открыть конструктор", href: "https://platform.2gis.ru/ru/my-maps" },
+};
+
+export const reasons: ReasonsProps = {
+  title: "Четыре причины выбрать 2ГИС",
+  items: [
+    { iconSrc: "/images/benefits/2gis/database.png", text: "В основе всех решений — данные, которые мы сами собираем и обновляем" },
+    { iconSrc: "/images/benefits/2gis/hand.png", text: "С 1999 года работаем с данными, которым можно верить" },
+    { iconSrc: "/images/benefits/2gis/target.png", text: "95% — точность данных 2ГИС. Объясняем, как мы этого добились", href: "https://dev.2gis.ru/company", target: "_blank" },
+    { iconSrc: "/images/benefits/2gis/handshake.png", text: "Нам доверяют тысячи клиентов в России и странах СНГ" },
+  ],
 };
 
 export const faq: FaqProps = {

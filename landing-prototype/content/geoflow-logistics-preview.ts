@@ -71,6 +71,7 @@ export const faq: FaqProps = {
   })),
 };
 
+// Макетные данные для /faq-preview; содержимое действующего лендинга хранится в его content-файле.
 export const reasons: ReasonsProps = {
   title: "Четыре причины выбрать 2ГИС",
   items: [
