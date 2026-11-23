@@ -1,7 +1,7 @@
 import type { HeroProps } from "../components/hero/Hero";
 import type { HeroVariant2Props } from "../components/hero/HeroVariant2";
 import type { MainValuesProps } from "../components/main-values/MainValues";
-import type { SolvedTasksProps } from "../components/solved-tasks/SolvedTasks";
+import type { ImageFeatureCardsProps } from "../components/image-feature-cards/ImageFeatureCards";
 import type { IntermediateCtaProps } from "../components/intermediate-cta/IntermediateCta";
 import type { TechnicalDemonstrationProps } from "../components/technical-demonstration/TechnicalDemonstration";
 import type { StartWorkProps } from "../components/start-work/StartWork";
@@ -51,14 +51,14 @@ export const mainValues: MainValuesProps = {
   ],
 };
 
-export const solvedTasks: SolvedTasksProps = {
-  id: "solved-tasks",
+export const imageFeatureCards: ImageFeatureCardsProps = {
+  id: "image-feature-cards",
   title: "Все инструменты для создания карты",
   items: [
-    { title: "Метки с информацией", description: "Добавьте отметки по адресу или на карте — с подписями и описаниями", imageSrc: "/images/solved-tasks/constructor-desktop-1.png", mobileImageSrc: "/images/solved-tasks/constructor-mobile-1.png", imageAlt: "Карта с метками и карточкой объекта" },
-    { title: "Линии и области", description: "Рисуйте линии, круги, прямоугольники и многоугольники. Настраивайте цвет и оформление фигур", imageSrc: "/images/solved-tasks/constructor-desktop-2.png", mobileImageSrc: "/images/solved-tasks/constructor-mobile-2.png", imageAlt: "Линии и области на карте" },
-    { title: "Объекты под контролем", description: "Выбирайте объекты в списке или на карте, меняйте настройки и порядок наложения", imageSrc: "/images/solved-tasks/constructor-desktop-3.png", mobileImageSrc: "/images/solved-tasks/constructor-mobile-3.png", imageAlt: "Редактирование объектов на карте" },
-    { title: "Размер карты для сайта", description: "Настройте ширину и высоту карты и получите готовый код для вставки", imageSrc: "/images/solved-tasks/constructor-desktop-4.png", mobileImageSrc: "/images/solved-tasks/constructor-mobile-4.png", imageAlt: "Настройка размеров карты и код для встраивания" },
+    { title: "Метки с информацией", description: "Добавьте отметки по адресу или на карте — с подписями и описаниями", imageSrc: "/images/image-feature-cards/constructor-desktop-1.png", mobileImageSrc: "/images/image-feature-cards/constructor-mobile-1.png", imageAlt: "Карта с метками и карточкой объекта" },
+    { title: "Линии и области", description: "Рисуйте линии, круги, прямоугольники и многоугольники. Настраивайте цвет и оформление фигур", imageSrc: "/images/image-feature-cards/constructor-desktop-2.png", mobileImageSrc: "/images/image-feature-cards/constructor-mobile-2.png", imageAlt: "Линии и области на карте" },
+    { title: "Объекты под контролем", description: "Выбирайте объекты в списке или на карте, меняйте настройки и порядок наложения", imageSrc: "/images/image-feature-cards/constructor-desktop-3.png", mobileImageSrc: "/images/image-feature-cards/constructor-mobile-3.png", imageAlt: "Редактирование объектов на карте" },
+    { title: "Размер карты для сайта", description: "Настройте ширину и высоту карты и получите готовый код для вставки", imageSrc: "/images/image-feature-cards/constructor-desktop-4.png", mobileImageSrc: "/images/image-feature-cards/constructor-mobile-4.png", imageAlt: "Настройка размеров карты и код для встраивания" },
   ],
 };
 

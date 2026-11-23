@@ -1,0 +1,122 @@
+.section {
+  width: min(calc(100% - 32px), var(--content-width));
+  margin: 80px auto 120px;
+  color: #fff;
+  font-family: var(--font-suisse), Arial, sans-serif;
+}
+
+.heading {
+  margin: 0 0 48px;
+  font-size: 44px;
+  font-weight: 500;
+  line-height: 52px;
+  letter-spacing: -0.01em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  display: flex;
+  min-width: 0;
+  min-height: 320px;
+  flex-direction: column;
+  padding: 24px;
+  border-radius: 20px;
+  background: #283136;
+}
+
+.copy h3 {
+  margin: 0 0 12px;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 32px;
+  letter-spacing: -0.005em;
+  overflow-wrap: break-word;
+}
+
+.copy p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  overflow-wrap: break-word;
+}
+
+.iconSlot {
+  display: flex;
+  flex: none;
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.iconSlot img { display: block; width: 48px; height: 48px; }
+
+.cta { background: #12951a; }
+.cta h3 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 38px;
+  letter-spacing: -0.015em;
+  overflow-wrap: break-word;
+}
+
+.actions {
+  display: flex;
+  width: min(100%, 240px);
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.actions a {
+  display: flex;
+  min-height: 56px;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 24px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: center;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.primaryAction { background: #fff; color: #1a1a1a; }
+.primaryAction:hover { background: #e9f5e9; }
+.secondaryAction { background: rgb(255 255 255 / 12%); color: #fff; }
+.secondaryAction:hover { background: rgb(255 255 255 / 24%); }
+.actions a:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+@media (max-width: 1079.98px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 699.98px) {
+  .section { margin-block: 64px; }
+  .heading { margin-bottom: 32px; font-size: 30px; line-height: 38px; }
+  .grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .card { min-height: 320px; }
+  .copy h3 { font-size: 20px; line-height: 24px; }
+  .actions { width: 100%; }
+}
+
+@media (min-width: 700px) and (max-width: 767.98px) {
+  .section { margin-block: 64px; }
+  .heading { margin-bottom: 36px; font-size: 32px; line-height: 40px; }
+}
+
+@media (min-width: 768px) and (max-width: 1079.98px) {
+  .heading { font-size: clamp(32px, calc(3.846vw + 2.46px), 44px); line-height: clamp(40px, calc(3.846vw + 10.46px), 52px); }
+}

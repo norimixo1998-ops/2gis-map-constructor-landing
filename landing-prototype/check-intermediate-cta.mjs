@@ -19,7 +19,7 @@ try {
       const card = block.querySelector('[class*="card"]');
       const visual = block.querySelector('[class*="visual"]');
       const actions = block.querySelector('[class*="actions"]');
-      const previous = document.querySelector("#solved-tasks");
+      const previous = document.querySelector("#image-feature-cards");
       const next = document.querySelector("#technical-demonstration");
       return {
         cardHeight: Math.round(card.getBoundingClientRect().height),

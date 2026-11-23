@@ -9,11 +9,11 @@ try {
     const page = await browser.newPage({ viewport: { width, height: 900 } });
     const errors = [];
     page.on("pageerror", (error) => errors.push(error.message));
-    const response = await page.goto("http://127.0.0.1:3000/solved-tasks-preview", { waitUntil: "networkidle" });
+    const response = await page.goto("http://127.0.0.1:3000/image-feature-cards-preview", { waitUntil: "networkidle" });
     await page.evaluate(() => document.fonts.ready);
     const result = await page.evaluate(() => {
-      const two = document.querySelector("#solved-tasks-two");
-      const four = document.querySelector("#solved-tasks-four");
+      const two = document.querySelector("#image-feature-cards-two");
+      const four = document.querySelector("#image-feature-cards-four");
       const card = two.querySelector("li");
       const title = card.querySelector("h3");
       const description = card.querySelector("p");
@@ -36,8 +36,8 @@ try {
     });
     if (width === 375 || width === 1440) {
       await page.addStyleTag({ content: "nextjs-portal { display: none !important; }" });
-      await page.locator("#solved-tasks-two").screenshot({ path: `preview-checks/solved-tasks-two-${width}.png` });
-      await page.locator("#solved-tasks-four").screenshot({ path: `preview-checks/solved-tasks-four-${width}.png` });
+      await page.locator("#image-feature-cards-two").screenshot({ path: `preview-checks/image-feature-cards-two-${width}.png` });
+      await page.locator("#image-feature-cards-four").screenshot({ path: `preview-checks/image-feature-cards-four-${width}.png` });
     }
     const passed = response.status() === 200 && !errors.length && !result.overflow && result.twoCount === 2 && result.fourCount === 4 && result.twoActions === 2 && result.fourActions === 0 && result.placeholders === 6 && result.columns === (width < 700 ? 1 : 2) && result.title.join() === (width < 700 ? "20px,500,24px" : "24px,500,32px") && result.description.join() === "16px,400,24px" && result.action.join() === "16px,500,24px,56";
     console.log(JSON.stringify({ width, passed, ...result, errors }));

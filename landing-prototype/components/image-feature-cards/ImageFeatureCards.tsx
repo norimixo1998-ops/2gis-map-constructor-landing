@@ -1,8 +1,8 @@
-import styles from "./SolvedTasks.module.css";
+import styles from "./ImageFeatureCards.module.css";
 import { publicAsset } from "../../lib/public-asset";
 import { actionLinkProps } from "../../lib/action-link";
 
-export type SolvedTaskItem = {
+export type ImageFeatureCardItem = {
   title: string;
   description: string;
   imageSrc?: string;
@@ -11,15 +11,15 @@ export type SolvedTaskItem = {
   action?: { label: string; href: string; target?: "_self" | "_blank" };
 };
 
-export type SolvedTasksProps = {
+export type ImageFeatureCardsProps = {
   id: string;
   title?: string;
-  items: readonly [SolvedTaskItem, SolvedTaskItem] | readonly [SolvedTaskItem, SolvedTaskItem, SolvedTaskItem, SolvedTaskItem];
+  items: readonly [ImageFeatureCardItem, ImageFeatureCardItem] | readonly [ImageFeatureCardItem, ImageFeatureCardItem, ImageFeatureCardItem, ImageFeatureCardItem];
 };
 
-export function SolvedTasks({ id, title, items }: SolvedTasksProps) {
+export function ImageFeatureCards({ id, title, items }: ImageFeatureCardsProps) {
   return (
-    <section className={styles.section} id={id} aria-labelledby={title ? `${id}-title` : undefined} aria-label={title ? undefined : "Решаемые задачи"}>
+    <section className={styles.section} id={id} aria-labelledby={title ? `${id}-title` : undefined} aria-label={title ? undefined : "Возможности продукта"}>
       {title ? <h2 className={styles.heading} id={`${id}-title`}>{title}</h2> : null}
       <ul className={styles.grid}>
         {items.map((item, index) => (

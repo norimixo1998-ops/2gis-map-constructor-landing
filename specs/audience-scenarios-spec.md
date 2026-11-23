@@ -1,4 +1,4 @@
-# S04 Сферы применения
+# S05 Сферы применения
 
 **Статус:** необязательный блок. Добавлять в лендинг только тогда, когда он явно указан в ТЗ. Источник композиции — [Figma, фрейм 253:13093](https://www.figma.com/design/2GackEUWd1sfbXBU0OUElS/Конструктор?node-id=253-13093); конкретная секция внутри фрейма — `253:13620`. Реализация: `landing-prototype/components/audience-scenarios/AudienceScenarios.tsx`. Содержание для акции находится в [данных маршрута](../landing-prototype/content/geoflow-holiday.ts).
 

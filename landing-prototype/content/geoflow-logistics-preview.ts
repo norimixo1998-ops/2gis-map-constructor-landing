@@ -4,7 +4,7 @@ import type { MainValuesProps } from "../components/main-values/MainValues";
 import type { FaqProps } from "../components/faq/Faq";
 import type { ReasonsProps } from "../components/reasons/Reasons";
 import type { StartWorkProps } from "../components/start-work/StartWork";
-import type { SolvedTasksProps } from "../components/solved-tasks/SolvedTasks";
+import type { ImageFeatureCardsProps } from "../components/image-feature-cards/ImageFeatureCards";
 import type { IntermediateCtaProps } from "../components/intermediate-cta/IntermediateCta";
 import type { TechnicalDemonstrationProps } from "../components/technical-demonstration/TechnicalDemonstration";
 
@@ -41,9 +41,9 @@ export const mainValues: MainValuesProps = {
 };
 
 // Макетные карточки без кнопок: тексты и коллажи добавляются по ТЗ нового лендинга.
-export const solvedTasks: SolvedTasksProps = {
-  id: "solved-tasks",
-  title: "Решаемые задачи",
+export const imageFeatureCards: ImageFeatureCardsProps = {
+  id: "image-feature-cards",
+  title: "Возможности продукта",
   items: [
     { title: "Текст блока", description: "Описание в две или три строки" },
     { title: "Текст блока", description: "Описание в две или три строки" },
