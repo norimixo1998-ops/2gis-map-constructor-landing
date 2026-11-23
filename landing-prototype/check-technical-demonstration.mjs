@@ -55,12 +55,12 @@ try {
 
     const inset = width < 700 ? 20 : 48;
     const frameInset = width < 700 ? 5 : 12;
-    const descriptionGap = width < 768 ? 36 : 48;
+    const descriptionGap = width <= 768 ? 36 : 48;
     const close = (a, b) => Math.abs(a - b) < 1;
     if (
       response.status() !== 200 || errors.length || !result.title || result.scrollWidth > width ||
       !close(result.copy.x - result.card.x, inset) || !close(result.copy.y - result.card.y, inset) ||
-      !close(result.media.x, result.copy.x) || !close(result.media.y - result.copy.bottom, width < 768 ? 36 : 48) ||
+      !close(result.media.x, result.copy.x) || !close(result.media.y - result.copy.bottom, width <= 768 ? 36 : 48) ||
       !close(result.descriptionTop - result.headingBottom, descriptionGap) || result.descriptionFontSize !== "16px" || result.descriptionLineHeight !== "24px" ||
       result.action?.text !== "Получить демо-ключ" || !result.action.href.startsWith("https://platform.2gis.ru/") || result.action.height !== 56 || result.action.radius !== "12px" || result.action.fontSize !== "16px" || result.action.lineHeight !== "24px" || result.action.weight !== "500" ||
       (width >= 900 ? !close(result.action.x - result.descriptionRight, 64) || !close(result.headingRightInset, 160) : !close(result.action.y - result.descriptionBottom, 24) || !close(result.headingRightInset, 0)) ||

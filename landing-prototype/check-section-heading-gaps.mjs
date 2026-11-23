@@ -6,7 +6,7 @@ const browser = await chromium.launch({ headless: true, executablePath: "C:/Prog
 
 try {
   for (const route of ["/", "/geoflow-holiday", "/image-feature-cards-preview", "/icon-feature-cards-preview"]) {
-    for (const width of [375, 767, 768, 1440]) {
+    for (const width of [375, 767, 768, 769, 1440]) {
       const page = await browser.newPage({ viewport: { width, height: 1000 } });
       const response = await page.goto(`http://127.0.0.1:3000${route}`, { waitUntil: "networkidle" });
       await page.evaluate(() => document.fonts.ready);
@@ -28,7 +28,7 @@ try {
         }
         return [{ section: section.id || heading.textContent, gap: null }];
       }));
-      const expected = width < 768 ? 36 : 48;
+      const expected = width <= 768 ? 36 : 48;
       const failures = gaps.filter(({ gap }) => gap !== expected);
       console.log(JSON.stringify({ route, width, expected, checked: gaps.length, failures }));
       if (response?.status() !== 200 || failures.length || !gaps.length) process.exitCode = 1;
