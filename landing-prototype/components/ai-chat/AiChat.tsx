@@ -207,7 +207,7 @@ export function AiChat() {
 
           <div className={styles.panelHeader}>
             <div className={styles.headerTitle}>
-              <img className={styles.headerIcon} src={publicAsset("/icons/ai-chat/logo-assistent_icon.svg")} alt="" aria-hidden="true" />
+              <img className={styles.headerIcon} src={publicAsset("/icons/ai-chat/assistant-logo-icon.svg")} alt="" aria-hidden="true" />
               <span>ИИ-ассистент</span>
             </div>
             <button className={styles.close} type="button" aria-label="Закрыть чат" onClick={() => closeChat()}>

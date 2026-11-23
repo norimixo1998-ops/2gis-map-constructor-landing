@@ -58,7 +58,7 @@ export function SiteHeader() {
       <header className={`${styles.header} ${styles[mode]}`} data-header-mode={mode}>
         <div className={styles.inner}>
           <div className={styles.topRow}>
-            <img className={styles.logo} src={publicAsset("/brand/logo-2GIS.svg")} alt="2ГИС" />
+            <img className={styles.logo} src={publicAsset("/brand/logo-2gis.svg")} alt="2ГИС" />
 
             <div className={styles.desktopControls}>
               <span className={styles.search}>

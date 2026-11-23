@@ -2,8 +2,8 @@ import { ProductDemonstration } from "../../components/product-demonstration/Pro
 import styles from "./page.module.css";
 
 const background = {
-  desktop: "/images/product-demonstration/light_desktop.png",
-  mobile: "/images/product-demonstration/Light_mobile.png",
+  desktop: "/images/product-demonstration/light-desktop.png",
+  mobile: "/images/product-demonstration/light-mobile.png",
 };
 
 export default function ProductDemonstrationPreview() {

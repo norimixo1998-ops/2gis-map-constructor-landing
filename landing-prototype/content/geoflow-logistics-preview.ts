@@ -54,8 +54,8 @@ export const solvedTasks: SolvedTasksProps = {
 export const productDemonstration: ProductDemonstrationProps = {
   title: "Заголовок",
   background: {
-    desktop: "/images/product-demonstration/light_desktop.png",
-    mobile: "/images/product-demonstration/Light_mobile.png",
+    desktop: "/images/product-demonstration/light-desktop.png",
+    mobile: "/images/product-demonstration/light-mobile.png",
   },
 };
 
@@ -65,8 +65,8 @@ export const intermediateCta: IntermediateCtaProps = {
   primaryAction: { label: "Текст кнопки", mobileLabel: "Получить доступ", href: "#lead-form" },
   secondaryAction: { label: "Текст кнопки", href: "#lead-form" },
   image: {
-    desktop: "/images/intermediate-cta/desktop_image.png",
-    mobile: "/images/intermediate-cta/mobile_image.png",
+    desktop: "/images/intermediate-cta/illustration-desktop.png",
+    mobile: "/images/intermediate-cta/illustration-mobile.png",
     alt: "",
   },
 };
@@ -105,8 +105,8 @@ export const technicalDemonstration: TechnicalDemonstrationProps = {
   title: "Заголовок в одну или две строки при необходимости",
   description: "Описание",
   image: {
-    desktop: "/images/technical-demonstration/demonstration block_desktop.png",
-    mobile: "/images/technical-demonstration/image_mobile.png",
+    desktop: "/images/technical-demonstration/showcase-desktop.png",
+    mobile: "/images/technical-demonstration/showcase-mobile.png",
     alt: "Схема переноса оформления карты с экрана компьютера на смартфон",
     layout: "showcase",
     ambientGlow: "rgb(31 120 46 / 22%)",

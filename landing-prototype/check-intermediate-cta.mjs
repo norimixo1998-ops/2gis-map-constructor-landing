@@ -47,7 +47,7 @@ try {
     if (width !== 768) await section.screenshot({ path: `preview-checks/intermediate-cta-long-${width}.png` });
     const mobile = width <= 899;
     const spacing = width <= 699 ? 64 : 120;
-    const passed = response.status() === 200 && !errors.length && before.imageLoaded && before.imageSource.endsWith(mobile ? "mobile_image.png" : "desktop_image.png") && before.scrollWidth <= width && after.scrollWidth <= width && before.gapBefore === spacing && before.gapAfter === spacing && before.buttonCount === (mobile ? 1 : 2) && (mobile ? before.visualBeforeAction : !before.visualBeforeAction) && after.cardHeight > before.cardHeight && (mobile || after.visualHeight > before.visualHeight);
+    const passed = response.status() === 200 && !errors.length && before.imageLoaded && before.imageSource.endsWith(mobile ? "illustration-mobile.png" : "illustration-desktop.png") && before.scrollWidth <= width && after.scrollWidth <= width && before.gapBefore === spacing && before.gapAfter === spacing && before.buttonCount === (mobile ? 1 : 2) && (mobile ? before.visualBeforeAction : !before.visualBeforeAction) && after.cardHeight > before.cardHeight && (mobile || after.visualHeight > before.visualHeight);
     console.log(`${width}px ${passed ? "PASS" : "FAIL"} ${JSON.stringify({ before, after, errors })}`);
     if (!passed) process.exitCode = 1;
     await page.close();

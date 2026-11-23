@@ -32,7 +32,7 @@ try {
     await inputBar.hover();
     const hoverColor = await inputBar.evaluate((element) => getComputedStyle(element).backgroundColor);
     if (hoverColor !== "rgba(255, 255, 255, 0.24)") throw new Error(`Wrong input hover: ${hoverColor}`);
-    for (const asset of ["logo-assistent_icon.svg"]) {
+    for (const asset of ["assistant-logo-icon.svg"]) {
       const loaded = await page.locator(`img[src$="${asset}"]`).evaluate((img) => img.complete && img.naturalWidth > 0);
       if (!loaded) throw new Error(`Chat asset did not load: ${asset}`);
     }

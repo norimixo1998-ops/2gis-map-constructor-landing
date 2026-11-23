@@ -32,8 +32,8 @@ export const heroVariant2: HeroVariant2Props = {
   description: heroDescription,
   actions: [documentationAction, createMapAction],
   image: {
-    src: "/images/hero/variant-2/desktop.png",
-    mobileSrc: "/images/hero/variant-2/mobile/mobile.png",
+    src: "/images/hero/variant-2/map-desktop.png",
+    mobileSrc: "/images/hero/variant-2/mobile/map-mobile.png",
     alt: "Карта с отмеченными областями и инструментами Конструктора карт",
   },
   gridSrc: "/images/hero/variant-2/grid.png",
@@ -44,9 +44,9 @@ export const heroVariant2: HeroVariant2Props = {
 export const mainValues: MainValuesProps = {
   title: "Покажите на карте всё, что нужно вашим клиентам и посетителям",
   items: [
-    { title: "Адреса и филиалы", description: "Отметьте офисы, магазины и пункты выдачи с названиями и пояснениями к каждой точке", iconSrc: "/images/benefits/main-values/constructor_2.png" },
-    { title: "Как пройти или проехать", description: "Нарисуйте маршрут от остановки, обозначьте вход, парковку или место встречи на карте", iconSrc: "/images/benefits/main-values/constructor_3.png" },
-    { title: "Территории и зоны", description: "Выделите зону обслуживания, территорию мероприятия или нужный участок с помощью фигур", iconSrc: "/images/benefits/main-values/constructor_1.png" },
+    { title: "Адреса и филиалы", description: "Отметьте офисы, магазины и пункты выдачи с названиями и пояснениями к каждой точке", iconSrc: "/images/benefits/main-values/constructor-2.png" },
+    { title: "Как пройти или проехать", description: "Нарисуйте маршрут от остановки, обозначьте вход, парковку или место встречи на карте", iconSrc: "/images/benefits/main-values/constructor-3.png" },
+    { title: "Территории и зоны", description: "Выделите зону обслуживания, территорию мероприятия или нужный участок с помощью фигур", iconSrc: "/images/benefits/main-values/constructor-1.png" },
   ],
 };
 
@@ -54,10 +54,10 @@ export const solvedTasks: SolvedTasksProps = {
   id: "solved-tasks",
   title: "Все инструменты для создания карты",
   items: [
-    { title: "Метки с информацией", description: "Добавьте отметки по адресу или на карте — с подписями и описаниями", imageSrc: "/images/solved-tasks/Constructor_desktop 1.png", mobileImageSrc: "/images/solved-tasks/Constructor_mobile%201.png", imageAlt: "Карта с метками и карточкой объекта" },
-    { title: "Линии и области", description: "Рисуйте линии, круги, прямоугольники и многоугольники. Настраивайте цвет и оформление фигур", imageSrc: "/images/solved-tasks/Constructor_desktop 2.png", mobileImageSrc: "/images/solved-tasks/Constructor_mobile%202.png", imageAlt: "Линии и области на карте" },
-    { title: "Объекты под контролем", description: "Выбирайте объекты в списке или на карте, меняйте настройки и порядок наложения", imageSrc: "/images/solved-tasks/Constructor_desktop 3.png", mobileImageSrc: "/images/solved-tasks/Constructor_mobile%203.png", imageAlt: "Редактирование объектов на карте" },
-    { title: "Размер карты для сайта", description: "Настройте ширину и высоту карты и получите готовый код для вставки", imageSrc: "/images/solved-tasks/Изображение 4.png", mobileImageSrc: "/images/solved-tasks/Constructor_mobile%204.png", imageAlt: "Настройка размеров карты и код для встраивания" },
+    { title: "Метки с информацией", description: "Добавьте отметки по адресу или на карте — с подписями и описаниями", imageSrc: "/images/solved-tasks/constructor-desktop-1.png", mobileImageSrc: "/images/solved-tasks/constructor-mobile-1.png", imageAlt: "Карта с метками и карточкой объекта" },
+    { title: "Линии и области", description: "Рисуйте линии, круги, прямоугольники и многоугольники. Настраивайте цвет и оформление фигур", imageSrc: "/images/solved-tasks/constructor-desktop-2.png", mobileImageSrc: "/images/solved-tasks/constructor-mobile-2.png", imageAlt: "Линии и области на карте" },
+    { title: "Объекты под контролем", description: "Выбирайте объекты в списке или на карте, меняйте настройки и порядок наложения", imageSrc: "/images/solved-tasks/constructor-desktop-3.png", mobileImageSrc: "/images/solved-tasks/constructor-mobile-3.png", imageAlt: "Редактирование объектов на карте" },
+    { title: "Размер карты для сайта", description: "Настройте ширину и высоту карты и получите готовый код для вставки", imageSrc: "/images/solved-tasks/constructor-desktop-4.png", mobileImageSrc: "/images/solved-tasks/constructor-mobile-4.png", imageAlt: "Настройка размеров карты и код для встраивания" },
   ],
 };
 
@@ -65,8 +65,8 @@ export const intermediateCta: IntermediateCtaProps = {
   title: "Карта 2ГИС на вашем сайте за несколько минут",
   primaryAction: { label: "Создать карту", href: constructorUrl },
   image: {
-    desktop: "/images/intermediate-cta/desktop_image.png",
-    mobile: "/images/intermediate-cta/mobile_image.png",
+    desktop: "/images/intermediate-cta/illustration-desktop.png",
+    mobile: "/images/intermediate-cta/illustration-mobile.png",
     alt: "",
   },
 };
@@ -76,10 +76,10 @@ export const technicalDemonstration: TechnicalDemonstrationProps = {
   description: "В Менеджере Платформы 2ГИС собраны все инструменты: конструктор карт, редактор стилей, управление ключами и статистика",
   action: { label: "Получить демо-ключ", href: "https://platform.2gis.ru/" },
   variant: "framed",
-  glowSrc: "/images/technical-demonstration/Glow (2).png",
+  glowSrc: "/images/technical-demonstration/glow.png",
   image: {
-    desktop: "/images/technical-demonstration/API key_desktop.png",
-    mobile: "/images/technical-demonstration/API key_mobile.png",
+    desktop: "/images/technical-demonstration/api-key-desktop.png",
+    mobile: "/images/technical-demonstration/api-key-mobile.png",
     alt: "Менеджер Платформы с настройками ключей API, редактором стилей и картой",
   },
 };

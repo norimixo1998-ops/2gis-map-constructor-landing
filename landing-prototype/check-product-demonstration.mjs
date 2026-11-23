@@ -54,7 +54,7 @@ try {
       heading.textContent = original;
       return { short, medium, long };
     }) : null;
-    const expectedBackground = width <= 699 ? "/images/product-demonstration/Light_mobile.png" : "/images/product-demonstration/light_desktop.png";
+    const expectedBackground = width <= 699 ? "/images/product-demonstration/light-mobile.png" : "/images/product-demonstration/light-desktop.png";
     const headingPass = !headingFlow || (Math.abs(headingFlow.medium.top - headingFlow.short.top) < 1 && headingFlow.medium.screenTop > headingFlow.short.screenTop && headingFlow.long.screenTop > headingFlow.medium.screenTop);
     const mobileFramePass = width > 699 || (result.screenShadow === "none" && result.innerHighlight === "none");
     const spacing = width <= 699 ? 64 : 120;

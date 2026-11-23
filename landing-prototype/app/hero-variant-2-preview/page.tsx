@@ -11,8 +11,8 @@ export default function HeroVariant2Preview() {
           { kind: "primary", label: "Кнопка", href: "#primary" },
         ]}
         image={{
-          src: "/images/hero/variant-2/desktop.png",
-          mobileSrc: "/images/hero/variant-2/mobile/mobile.png",
+          src: "/images/hero/variant-2/map-desktop.png",
+          mobileSrc: "/images/hero/variant-2/mobile/map-mobile.png",
           alt: "Карта с отмеченными областями и инструментами Конструктора карт",
         }}
         gridSrc="/images/hero/variant-2/grid.png"

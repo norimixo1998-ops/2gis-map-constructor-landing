@@ -90,7 +90,7 @@ const legalGroups: FooterGroup[] = [
 ];
 
 function Link({ item, className }: { item: FooterLink; className?: string }) {
-  const content = <>{item.label}{item.external && <img src={publicAsset("/icons/footer/Arrow-right-corner.svg")} alt="" aria-hidden="true" />}</>;
+  const content = <>{item.label}{item.external && <img src={publicAsset("/icons/footer/arrow-right-corner.svg")} alt="" aria-hidden="true" />}</>;
   return item.href ? (
     <a className={className} href={item.href}>{content}</a>
   ) : (
@@ -148,7 +148,7 @@ export function SiteFooter() {
   return <footer className={styles.footer} aria-label="Подвал сайта">
     <div className={styles.main}>
       <div className={styles.desktopContent}>
-        <div className={styles.desktopBrand}><img src={publicAsset("/brand/logo-2GIS.svg")} alt="2ГИС" /></div>
+        <div className={styles.desktopBrand}><img src={publicAsset("/brand/logo-2gis.svg")} alt="2ГИС" /></div>
         <div className={styles.desktopColumn}>
           <h2>Данные и технологии 2ГИС</h2>
           <div className={styles.productColumns}>
@@ -161,7 +161,7 @@ export function SiteFooter() {
         <div className={styles.desktopColumn}><h2>Условия использования</h2><Links links={legalGroups[0].links} /><Subscribe /></div>
       </div>
       <div className={styles.mobileContent}>
-        <img className={styles.mobileLogo} src={publicAsset("/brand/logo-2GIS.svg")} alt="2ГИС" />
+        <img className={styles.mobileLogo} src={publicAsset("/brand/logo-2gis.svg")} alt="2ГИС" />
         <Accordion title="Данные и технологии 2ГИС" open>{dataGroups.map((group) => <Group group={group} key={group.title} />)}<DirectLinks links={[...developerLinks, casesLink]} /></Accordion>
         <Accordion title="Другие продукты">{otherGroups.map((group) => <Group group={group} key={group.title} />)}</Accordion>
         <Accordion title="Компания" compact><Links links={companyGroups[0].links} /><Group group={companyGroups[1]} /></Accordion>

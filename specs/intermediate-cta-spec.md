@@ -49,7 +49,7 @@
 
 ## Ассеты
 
-Папка для файлов: `landing-prototype/public/images/intermediate-cta/`. Текущие имена: `desktop_image.png`, `mobile_image.png`; пути в данных: `/images/intermediate-cta/desktop_image.png` и `/images/intermediate-cta/mobile_image.png`. В PNG только иллюстрация с прозрачностью, без зелёной карточки, текста и кнопок. При замене файлов сохранить имена или обновить объект `image` в данных страницы.
+Папка для файлов: `landing-prototype/public/images/intermediate-cta/`. Текущие имена: `illustration-desktop.png`, `illustration-mobile.png`; пути в данных: `/images/intermediate-cta/illustration-desktop.png` и `/images/intermediate-cta/illustration-mobile.png`. В PNG только иллюстрация с прозрачностью, без зелёной карточки, текста и кнопок. При замене файлов сохранить имена или обновить объект `image` в данных страницы.
 
 ## Проверка
 

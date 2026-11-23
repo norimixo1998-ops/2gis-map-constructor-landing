@@ -43,7 +43,7 @@ export function Reasons({ title, items, id = "reasons" }: ReasonsProps) {
                 <img className={styles.icon} src={publicAsset(item.iconSrc)} width="96" height="96" alt="" />
                 {item.href ? (
                   <span className={styles.arrow} aria-hidden="true">
-                    <img src={publicAsset("/icons/footer/Arrow-right-corner.svg")} width="20" height="20" alt="" />
+                    <img src={publicAsset("/icons/footer/arrow-right-corner.svg")} width="20" height="20" alt="" />
                   </span>
                 ) : null}
               </span>

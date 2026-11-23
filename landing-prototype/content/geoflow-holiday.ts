@@ -26,8 +26,8 @@ export const offer: MainValuesProps = {
   id: "offer",
   title: "Условия акции",
   items: [
-    { title: "Для новых клиентов", description: "Одна компания может участвовать один раз.", iconSrc: "/images/benefits/main-values/hand_marker.png" },
-    { title: "Три месяца доступа", description: "Срок начинается с момента регистрации по акции.", iconSrc: "/images/benefits/main-values/clock%20blue.png" },
+    { title: "Для новых клиентов", description: "Одна компания может участвовать один раз.", iconSrc: "/images/benefits/main-values/hand-marker.png" },
+    { title: "Три месяца доступа", description: "Срок начинается с момента регистрации по акции.", iconSrc: "/images/benefits/main-values/clock-blue.png" },
     { title: "До пяти курьеров", description: "Лимит действует для одной компании.", iconSrc: "/images/benefits/main-values/courier.png" },
   ],
 };
@@ -79,8 +79,8 @@ export const finalCta: IntermediateCtaProps = {
   title: "Подключите своих курьеров и планируйте на своих заказах",
   primaryAction: { label: "Подключить своих курьеров", disabled: true },
   image: {
-    desktop: "/images/intermediate-cta/desktop_image.png",
-    mobile: "/images/intermediate-cta/mobile_image.png",
+    desktop: "/images/intermediate-cta/illustration-desktop.png",
+    mobile: "/images/intermediate-cta/illustration-mobile.png",
     alt: "",
     fit: "contain",
   },
