@@ -22,13 +22,13 @@ try {
     const snapshot = async (names) => form.evaluate((element, fieldNames) => Object.fromEntries(fieldNames.map((name) => {
       const control = element.querySelector(`[name="${name}"]`);
       const label = control.closest("label");
-      const field = label.className.includes("control") ? label.parentElement : label;
+      const field = control.closest('[class*="productField"]') ?? (label.className.includes("control") ? label.parentElement : label);
       const caption = field.querySelector('span[class*="floatLabel"]');
       const wrap = field.parentElement;
       return [name, {
         value: control.value,
         valid: control.checkValidity(),
-        ariaInvalid: control.getAttribute("aria-invalid"),
+        ariaInvalid: name === "productId" ? field.querySelector('[role="combobox"]').getAttribute("aria-invalid") : control.getAttribute("aria-invalid"),
         error: wrap.querySelector('[role="alert"]')?.textContent ?? null,
         background: getComputedStyle(field).backgroundColor,
         captionSize: getComputedStyle(caption).fontSize,
@@ -45,8 +45,15 @@ try {
     };
     await form.screenshot({ path: join(output, `lead-form-empty-submit-${width}.png`) });
 
-    await field("fullName").fill("   ");
+    await field("fullName").fill("Анна Иванова");
     await field("email").fill("person@example.com");
+    await form.locator('button[type="submit"]').click();
+    result.missingProduct = {
+      focused: await page.evaluate(() => document.activeElement?.getAttribute("role")),
+      error: await form.getByRole("alert").allTextContents(),
+    };
+
+    await field("fullName").fill("   ");
     await field("productId").selectOption(await field("productId").locator('option:not([value=""])').first().getAttribute("value"));
     await form.locator('button[type="submit"]').click();
     result.whitespaceName = {
@@ -78,6 +85,34 @@ try {
     await field("task").fill("Подключить карту к сайту и показать филиалы. ".repeat(7));
     await field("company").focus();
     result.entered = await snapshot(["fullName", "phone", "email", "productId", "task"]);
+    result.productOptions = await field("productId").locator("option").allTextContents();
+    const productButton = form.getByRole("combobox", { name: "Выберите продукт" });
+    await productButton.click();
+    result.productDropdown = {
+      options: await form.getByRole("listbox", { name: "Продукты" }).getByRole("option").count(),
+      expanded: await productButton.getAttribute("aria-expanded"),
+    };
+    await form.screenshot({ path: join(output, `lead-form-products-${width}.png`) });
+    await form.getByRole("listbox", { name: "Продукты" }).getByRole("option", { name: "2ГИС Про" }).click();
+    result.clickedProduct = await field("productId").inputValue();
+    await productButton.press("ArrowDown");
+    await form.getByRole("option", { name: "2ГИС Про" }).press("Escape");
+    result.productEscapeClosesList = await form.getByRole("listbox", { name: "Продукты" }).count() === 0;
+    await field("productId").selectOption("geoflow-logistics");
+    await field("company").focus();
+    result.selectedProduct = await field("productId").evaluate((control) => {
+      const field = control.closest('[class*="productField"]');
+      const button = field.querySelector('[role="combobox"]');
+      const caption = field.querySelector('span[class*="floatLabel"]');
+      return {
+        value: control.value,
+        disabled: control.disabled,
+        color: getComputedStyle(button).color,
+        textFill: getComputedStyle(button).webkitTextFillColor,
+        captionColor: getComputedStyle(caption).color,
+        background: getComputedStyle(field).backgroundColor,
+      };
+    });
     await form.locator('button[type="submit"]').click();
     result.validSubmit = await form.getByRole("status").count() === 1;
     result.taskGeometry = await field("task").evaluate((control) => ({
@@ -122,7 +157,9 @@ try {
     await page.getByRole("option", { name: /Грузия/ }).press("Escape");
     result.escapeClosesList = await page.getByRole("listbox").count() === 0;
     result.runtimeErrors = runtimeErrors;
-    result.passed = result.whitespaceName.field.ariaInvalid === "true"
+    result.passed = result.missingProduct.focused === "combobox"
+      && result.missingProduct.error.includes("Выберите продукт")
+      && result.whitespaceName.field.ariaInvalid === "true"
       && result.whitespaceName.previewCount === 0
       && result.invalidPhone.field.ariaInvalid === "true"
       && result.invalidPhone.previewCount === 0
@@ -131,6 +168,18 @@ try {
       && result.phoneCases.empty === "false"
       && result.phoneCases.formatted === "false"
       && result.correctedEmail.ariaInvalid === "false"
+      && result.productOptions.length === 13
+      && result.productOptions.includes("2ГИС ГеоПоток: Логистика")
+      && result.productOptions.includes("Другое")
+      && result.productDropdown.options === 12
+      && result.productDropdown.expanded === "true"
+      && result.clickedProduct === "2gis-pro"
+      && result.productEscapeClosesList
+      && result.selectedProduct.value === "geoflow-logistics"
+      && !result.selectedProduct.disabled
+      && result.selectedProduct.color === "rgb(255, 255, 255)"
+      && result.selectedProduct.textFill === "rgb(255, 255, 255)"
+      && result.selectedProduct.background === "rgba(255, 255, 255, 0.12)"
       && result.validSubmit
       && result.phoneArrow.options === 237
       && result.selectedCountry.iso === "AM"

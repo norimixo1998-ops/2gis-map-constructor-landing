@@ -34,6 +34,20 @@ type TextFieldProps = {
 
 const assetPath = publicAsset("/images/lead-form/");
 
+const productOptions = [
+  { id: "2gis-pro", label: "2ГИС Про" },
+  { id: "database", label: "Базы данных" },
+  { id: "api-sdk", label: "API и SDK" },
+  { id: "vector-maps", label: "Векторные карты" },
+  { id: "onpremise", label: "On-Premise" },
+  { id: "cityscan", label: "2ГИС Ситискан" },
+  { id: "geoflow-monitoring", label: "2ГИС ГеоПоток: Мониторинг" },
+  { id: "geoflow-logistics", label: "2ГИС ГеоПоток: Логистика" },
+  { id: "mcp-server", label: "2ГИС MCP-сервер" },
+  { id: "custom-solutions", label: "Индивидуальные решения" },
+  { id: "other", label: "Другое" },
+];
+
 function CountryFlag({ country }: { country: Country }) {
   const FlagIcon = FlagIcons[country.iso as keyof typeof FlagIcons];
   return (
@@ -212,6 +226,25 @@ export function LeadForm({
   const [previewMessage, setPreviewMessage] = useState("");
   const [touched, setTouched] = useState<FieldName[]>([]);
   const [invalidFields, setInvalidFields] = useState<FieldName[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState("");
+  const [productOpen, setProductOpen] = useState(false);
+  const [activeProductIndex, setActiveProductIndex] = useState(0);
+  const productRef = useRef<HTMLDivElement>(null);
+  const productButtonRef = useRef<HTMLButtonElement>(null);
+  const productOptionRefs = useRef<(HTMLLIElement | null)[]>([]);
+
+  useEffect(() => {
+    if (productOpen) productOptionRefs.current[activeProductIndex]?.focus();
+  }, [productOpen, activeProductIndex]);
+
+  useEffect(() => {
+    if (!productOpen) return;
+    const closeOnOutsideClick = (event: PointerEvent) => {
+      if (!productRef.current?.contains(event.target as Node)) setProductOpen(false);
+    };
+    document.addEventListener("pointerdown", closeOnOutsideClick);
+    return () => document.removeEventListener("pointerdown", closeOnOutsideClick);
+  }, [productOpen]);
 
   function isField(target: EventTarget): target is HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement {
     return target instanceof HTMLInputElement || target instanceof HTMLSelectElement || target instanceof HTMLTextAreaElement;
@@ -236,7 +269,8 @@ export function LeadForm({
       event.preventDefault();
       setPreviewMessage("");
       setInvalidFields(invalid.map((field) => field.name as FieldName));
-      invalid[0].focus();
+      if (invalid[0].name === "productId") productButtonRef.current?.focus();
+      else invalid[0].focus();
       return;
     }
     if (!action) {
@@ -247,6 +281,37 @@ export function LeadForm({
 
   const isInvalid = (name: FieldName) => invalidFields.includes(name);
   const isDisabled = (name: FieldName) => disabledFields.includes(name);
+  const availableProducts = productOptions.some((option) => option.id === productId)
+    ? productOptions
+    : [{ id: productId, label: productLabel }, ...productOptions];
+
+  function chooseProduct(value: string) {
+    setSelectedProduct(value);
+    setProductOpen(false);
+    setTouched((current) => current.includes("productId") ? current : [...current, "productId"]);
+    setInvalidFields((current) => current.filter((field) => field !== "productId"));
+    setPreviewMessage("");
+    productButtonRef.current?.focus();
+  }
+
+  function handleProductKeyDown(event: KeyboardEvent<HTMLUListElement>) {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      setProductOpen(false);
+      productButtonRef.current?.focus();
+    } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault();
+      setActiveProductIndex((index) => Math.max(0, Math.min(availableProducts.length - 1, index + (event.key === "ArrowDown" ? 1 : -1))));
+    } else if (event.key === "Home" || event.key === "End") {
+      event.preventDefault();
+      setActiveProductIndex(event.key === "Home" ? 0 : availableProducts.length - 1);
+    } else if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      chooseProduct(availableProducts[activeProductIndex].id);
+    } else if (event.key === "Tab") {
+      setProductOpen(false);
+    }
+  }
 
   return (
     <section className={styles.section} id="lead-form" aria-labelledby="lead-form-title">
@@ -279,17 +344,38 @@ export function LeadForm({
               <TextField name="phone" label="Телефон" error="Проверьте телефон" invalid={isInvalid("phone")} disabled={isDisabled("phone")} type="tel" autoComplete="tel" inputMode="tel" phonePrefix onCountryChange={() => setPreviewMessage("")} />
               <TextField name="email" label="Эл. почта" error="Укажите корректную эл. почту" invalid={isInvalid("email")} disabled={isDisabled("email")} type="email" autoComplete="email" required />
               <TextField name="company" label="Компания" error="Проверьте компанию" invalid={isInvalid("company")} disabled={isDisabled("company")} autoComplete="organization" />
-              <div className={styles.fieldWrap} data-invalid={isInvalid("productId")}>
-                <label className={`${styles.field} ${styles.productField}`}>
-                  <span className={styles.control}>
-                    <select name="productId" defaultValue="" required disabled={isDisabled("productId")} aria-invalid={isInvalid("productId")} aria-describedby={isInvalid("productId") ? "lead-productId-error" : undefined}>
-                      <option value="" disabled>Выберите продукт</option>
-                      <option value={productId}>{productLabel}</option>
-                    </select>
-                    <span className={styles.floatLabel}>Выберите продукт</span>
-                  </span>
-                  <img src={`${assetPath}clear.svg`} alt="" aria-hidden="true" />
-                </label>
+              <div className={styles.fieldWrap} data-invalid={isInvalid("productId")} ref={productRef} onBlurCapture={(event) => {
+                if (!event.currentTarget.contains(event.relatedTarget as Node)) {
+                  setProductOpen(false);
+                  if (!selectedProduct && !isDisabled("productId")) {
+                    setInvalidFields((current) => current.includes("productId") ? current : [...current, "productId"]);
+                  }
+                }
+              }}>
+                <div className={`${styles.field} ${styles.productField}`}>
+                  <select className={styles.productNativeSelect} name="productId" value={selectedProduct} required disabled={isDisabled("productId")} aria-hidden="true" tabIndex={-1} onChange={(event) => chooseProduct(event.target.value)}>
+                    <option value="" disabled>Выберите продукт</option>
+                    {availableProducts.map((option) => <option key={option.id} value={option.id}>{option.label}</option>)}
+                  </select>
+                  <button ref={productButtonRef} className={styles.productTrigger} type="button" role="combobox" aria-label="Выберите продукт" aria-haspopup="listbox" aria-expanded={productOpen} aria-controls="lead-product-options" aria-required="true" aria-invalid={isInvalid("productId")} aria-describedby={isInvalid("productId") ? "lead-productId-error" : undefined} disabled={isDisabled("productId")} onClick={() => {
+                    setTouched((current) => current.includes("productId") ? current : [...current, "productId"]);
+                    setActiveProductIndex(Math.max(0, availableProducts.findIndex((option) => option.id === selectedProduct)));
+                    setProductOpen((current) => !current);
+                  }} onKeyDown={(event) => {
+                    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+                      event.preventDefault();
+                      setActiveProductIndex(Math.max(0, availableProducts.findIndex((option) => option.id === selectedProduct)));
+                      setProductOpen(true);
+                    }
+                  }}>
+                    <span className={`${styles.floatLabel} ${selectedProduct || productOpen ? styles.productFloatLabel : ""}`}>Выберите продукт</span>
+                    {selectedProduct && <span className={styles.productValue}>{availableProducts.find((option) => option.id === selectedProduct)?.label}</span>}
+                    <img src={`${assetPath}clear.svg`} alt="" aria-hidden="true" />
+                  </button>
+                </div>
+                {productOpen && <ul className={styles.productList} id="lead-product-options" role="listbox" aria-label="Продукты" onKeyDown={handleProductKeyDown}>
+                  {availableProducts.map((option, index) => <li key={option.id} ref={(node) => { productOptionRefs.current[index] = node; }} role="option" aria-selected={selectedProduct === option.id} tabIndex={index === activeProductIndex ? 0 : -1} className={styles.productOption} onClick={() => chooseProduct(option.id)}>{option.label}</li>)}
+                </ul>}
                 {isInvalid("productId") && <span className={styles.errorText} id="lead-productId-error" role="alert">Выберите продукт</span>}
               </div>
               <TextField name="task" label="Опишите задачу" error="Проверьте описание задачи" invalid={isInvalid("task")} disabled={isDisabled("task")} multiline />

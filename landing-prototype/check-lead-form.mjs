@@ -29,8 +29,9 @@ try {
     check("page", response?.status() === 200 && errors.length === 0);
     check("no horizontal overflow", await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     check("product starts empty", await product.inputValue() === "");
-    check("country picker only in phone field", await form.locator('button[aria-haspopup="listbox"]').count() === 1
-      && await nameField.locator('button[aria-haspopup="listbox"]').count() === 0);
+    check("country picker only in phone field", await form.locator('button[aria-label^="Выбрать код страны"]').count() === 1
+      && await nameField.locator('button[aria-haspopup="listbox"]').count() === 0
+      && await form.locator('[class*="productField"] [class*="countryFlag"]').count() === 0);
     const gap = await form.locator('[name="phone"]').evaluate((input) => {
       const field = input.closest("label").parentElement;
       const arrow = field.querySelector('img[src$="flag-chevron.svg"]');
