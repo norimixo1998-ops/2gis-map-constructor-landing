@@ -2,8 +2,8 @@ import { IconFeatureCards, type IconFeatureCardItem } from "../../components/ico
 
 const icons = ["route-mini-map", "map-pins", "clock", "tuning-right", "layers"] as const;
 
-const items: IconFeatureCardItem[] = icons.map((icon, index) => ({
-  title: index === 2 ? "Описание" : "Заголовок",
+const items: IconFeatureCardItem[] = icons.map((icon) => ({
+  title: "Заголовок",
   description: "Описание",
   iconSrc: `/images/icon-feature-cards/${icon}.svg`,
 }));
