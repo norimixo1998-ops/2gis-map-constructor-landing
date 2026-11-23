@@ -5,7 +5,6 @@
   font-family: var(--font-suisse), Arial, sans-serif;
 }
 
-:global(#product-demonstration) + .section { margin-top: 120px; }
 :global(#main-values) + .section { margin-top: 120px; }
 
 .heading {
@@ -81,7 +80,6 @@
 
 @media (max-width: 699.98px) {
   .section { margin-block: 64px; }
-  :global(#product-demonstration) + .section { margin-top: 64px; }
   :global(#main-values) + .section { margin-top: 64px; }
   .heading { margin-bottom: 32px; font-size: 30px; line-height: 38px; }
   .grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
@@ -95,6 +93,6 @@
   .heading { font-size: clamp(32px, calc(3.846vw + 2.46px), 44px); line-height: clamp(40px, calc(3.846vw + 10.46px), 52px); }
 }
 @media (min-width: 699px) and (max-width: 767.98px) {
-  .section, :global(#product-demonstration) + .section, :global(#main-values) + .section { margin-block: 64px; }
+  .section, :global(#main-values) + .section { margin-block: 64px; }
   .heading { margin-bottom: 36px; font-size: 32px; line-height: 40px; }
 }

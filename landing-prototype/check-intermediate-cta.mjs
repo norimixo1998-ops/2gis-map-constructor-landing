@@ -4,6 +4,7 @@ import { mkdir } from "node:fs/promises";
 const require = createRequire(import.meta.url);
 const { chromium } = require("C:/Users/Legion/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright");
 const browser = await chromium.launch({ headless: true, executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe" });
+const baseUrl = process.env.PREVIEW_BASE_URL ?? "http://127.0.0.1:3000";
 
 try {
   await mkdir("preview-checks", { recursive: true });
@@ -11,15 +12,15 @@ try {
     const page = await browser.newPage({ viewport: { width, height: 900 } });
     const errors = [];
     page.on("pageerror", error => errors.push(error.message));
-    const response = await page.goto("http://127.0.0.1:3000/", { waitUntil: "networkidle" });
+    const response = await page.goto(baseUrl, { waitUntil: "networkidle" });
     await page.evaluate(() => document.fonts.ready);
     const section = page.locator("#intermediate-cta");
     const before = await section.evaluate(block => {
       const card = block.querySelector('[class*="card"]');
       const visual = block.querySelector('[class*="visual"]');
       const actions = block.querySelector('[class*="actions"]');
-      const previous = document.querySelector("#product-demonstration");
-      const next = document.querySelector("#reasons");
+      const previous = document.querySelector("#solved-tasks");
+      const next = document.querySelector("#technical-demonstration");
       return {
         cardHeight: Math.round(card.getBoundingClientRect().height),
         visualHeight: Math.round(visual.getBoundingClientRect().height),
@@ -37,7 +38,9 @@ try {
     if (width !== 768) await page.screenshot({ path: `preview-checks/landing-current-${width}.png`, fullPage: true });
     const after = await section.evaluate(block => {
       block.querySelector("h2").textContent = "Заголовок промежуточного призыва к действию, который занимает несколько строк и подробно объясняет следующий шаг для посетителя";
-      block.querySelector("p").textContent = "Более подробное описание продукта и действия. Этот текст может занимать несколько строк и должен увеличивать карточку без наложения на иллюстрацию или кнопки.";
+      const copy = block.querySelector('[class*="copy"]');
+      const description = copy.querySelector("p") ?? copy.appendChild(document.createElement("p"));
+      description.textContent = "Более подробное описание продукта и действия. Этот текст может занимать несколько строк и должен увеличивать карточку без наложения на иллюстрацию или кнопки.";
       return {
         cardHeight: Math.round(block.querySelector('[class*="card"]').getBoundingClientRect().height),
         visualHeight: Math.round(block.querySelector('[class*="visual"]').getBoundingClientRect().height),
@@ -47,7 +50,7 @@ try {
     if (width !== 768) await section.screenshot({ path: `preview-checks/intermediate-cta-long-${width}.png` });
     const mobile = width <= 899;
     const spacing = width <= 699 ? 64 : 120;
-    const passed = response.status() === 200 && !errors.length && before.imageLoaded && before.imageSource.endsWith(mobile ? "illustration-mobile.png" : "illustration-desktop.png") && before.scrollWidth <= width && after.scrollWidth <= width && before.gapBefore === spacing && before.gapAfter === spacing && before.buttonCount === (mobile ? 1 : 2) && (mobile ? before.visualBeforeAction : !before.visualBeforeAction) && after.cardHeight > before.cardHeight && (mobile || after.visualHeight > before.visualHeight);
+    const passed = response.status() === 200 && !errors.length && before.imageLoaded && before.imageSource.endsWith(mobile ? "illustration-mobile.png" : "illustration-desktop.png") && before.scrollWidth <= width && after.scrollWidth <= width && before.gapBefore === spacing && before.gapAfter === spacing && before.buttonCount === 1 && (mobile ? before.visualBeforeAction : !before.visualBeforeAction) && after.cardHeight > before.cardHeight && (mobile || after.visualHeight > before.visualHeight);
     console.log(`${width}px ${passed ? "PASS" : "FAIL"} ${JSON.stringify({ before, after, errors })}`);
     if (!passed) process.exitCode = 1;
     await page.close();

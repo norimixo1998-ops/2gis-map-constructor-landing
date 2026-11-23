@@ -5,7 +5,6 @@ import type { FaqProps } from "../components/faq/Faq";
 import type { ReasonsProps } from "../components/reasons/Reasons";
 import type { StartWorkProps } from "../components/start-work/StartWork";
 import type { SolvedTasksProps } from "../components/solved-tasks/SolvedTasks";
-import type { ProductDemonstrationProps } from "../components/product-demonstration/ProductDemonstration";
 import type { IntermediateCtaProps } from "../components/intermediate-cta/IntermediateCta";
 import type { TechnicalDemonstrationProps } from "../components/technical-demonstration/TechnicalDemonstration";
 
@@ -49,14 +48,6 @@ export const solvedTasks: SolvedTasksProps = {
     { title: "Текст блока", description: "Описание в две или три строки" },
     { title: "Текст блока", description: "Описание в две или три строки" },
   ],
-};
-
-export const productDemonstration: ProductDemonstrationProps = {
-  title: "Заголовок",
-  background: {
-    desktop: "/images/product-demonstration/light-desktop.png",
-    mobile: "/images/product-demonstration/light-mobile.png",
-  },
 };
 
 export const intermediateCta: IntermediateCtaProps = {
