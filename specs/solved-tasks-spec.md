@@ -1,4 +1,4 @@
-# Блок «Решаемые задачи»
+# S03 Возможности в карточках
 
 Основа: [фреймы `solves problems_desktop` и `solves problems_mobile` в Figma](https://www.figma.com/design/2GackEUWd1sfbXBU0OUElS/Конструктор?node-id=0-1). В макете показаны две карточки; реализация также поддерживает четыре карточки во второй строке той же сетки.
 
