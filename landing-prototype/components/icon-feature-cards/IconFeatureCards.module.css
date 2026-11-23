@@ -24,6 +24,8 @@
 
 .gridWithoutCta > .card:last-child:nth-child(3n + 1) { grid-column: span 3; }
 .gridWithoutCta > .card:last-child:nth-child(3n + 2) { grid-column: span 2; }
+.grid:focus-visible { outline: 2px solid #fff; outline-offset: 4px; border-radius: 20px; }
+.dragging { scroll-snap-type: none !important; cursor: grabbing !important; user-select: none; }
 
 .card {
   display: flex;
@@ -110,7 +112,7 @@
 
 @media (max-width: 699.98px) {
   .section { margin-block: 64px; }
-  .heading { margin-bottom: 32px; font-size: 30px; line-height: 38px; }
+  .heading { margin-bottom: 48px; font-size: 30px; line-height: 38px; }
   .grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
   .gridWithoutCta > .card:last-child:nth-child(n) { grid-column: auto; }
   .card { min-height: 320px; }
@@ -118,9 +120,30 @@
   .actions { width: 100%; }
 }
 
+@media (max-width: 899.98px) {
+  .mobileCarousel {
+    display: flex;
+    width: calc(100% + 16px);
+    align-items: stretch;
+    gap: 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+    cursor: grab;
+  }
+  .mobileCarousel::-webkit-scrollbar { display: none; }
+  .mobileCarousel::after { content: ""; flex: 0 0 max(19px, calc(100% - 340px)); }
+  .mobileCarousel > .card { flex: 0 0 min(328px, calc(100% - 31px)); scroll-snap-align: start; }
+  .mobileCarousel .copy h3 { font-size: 20px; line-height: 24px; }
+  .mobileCarousel.gridWithoutCta > .card:last-child:nth-child(n) { grid-column: auto; }
+}
+
 @media (min-width: 700px) and (max-width: 767.98px) {
   .section { margin-block: 64px; }
-  .heading { margin-bottom: 36px; font-size: 32px; line-height: 40px; }
+  .heading { margin-bottom: 48px; font-size: 32px; line-height: 40px; }
 }
 
 @media (min-width: 768px) and (max-width: 1079.98px) {

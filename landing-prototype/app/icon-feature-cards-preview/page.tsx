@@ -24,10 +24,13 @@ const cta = {
 export default function IconFeatureCardsPreview() {
   return (
     <main>
-      <IconFeatureCards id="icon-feature-cards" items={items} cta={cta} />
+      <IconFeatureCards id="icon-feature-cards" title="Возможности продукта" items={items} cta={cta} />
       <IconFeatureCards id="long-copy" title="Проверка длинного текста" items={longItems} cta={cta} />
       <IconFeatureCards id="single-action" title="CTA с одной кнопкой" items={items} cta={{ title: "Текст", primaryAction: { label: "Кнопка", href: "#without-cta" } }} />
       <IconFeatureCards id="without-cta" title="Без CTA" items={items} />
+      <IconFeatureCards id="three-cards" title="Три карточки" items={items.slice(0, 3)} />
+      <IconFeatureCards id="two-with-cta" title="Две карточки и CTA" items={items.slice(0, 2)} cta={{ title: "Текст", primaryAction: { label: "Кнопка", href: "#two-cards" } }} />
+      <IconFeatureCards id="two-cards" title="Две карточки" items={items.slice(0, 2)} />
     </main>
   );
 }

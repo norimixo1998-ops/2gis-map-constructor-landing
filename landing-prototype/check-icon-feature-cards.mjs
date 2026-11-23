@@ -16,9 +16,16 @@ try {
       const longSection = document.querySelector("#long-copy");
       const singleActionSection = document.querySelector("#single-action");
       const withoutCtaSection = document.querySelector("#without-cta");
+      const threeCardSection = document.querySelector("#three-cards");
+      const twoWithCtaSection = document.querySelector("#two-with-cta");
+      const twoCardSection = document.querySelector("#two-cards");
       const cards = [...section.querySelectorAll("li")];
       const longCards = [...longSection.querySelectorAll("li")];
       const withoutCtaCards = [...withoutCtaSection.querySelectorAll("li")];
+      const mainList = section.querySelector("ul");
+      const threeList = threeCardSection.querySelector("ul");
+      const twoWithCtaList = twoWithCtaSection.querySelector("ul");
+      const twoList = twoCardSection.querySelector("ul");
       const icons = [...document.querySelectorAll("#icon-feature-cards li img")];
       const longHeights = longCards.map((card) => Math.round(card.getBoundingClientRect().height));
       const firstRowEqual = longHeights.slice(0, innerWidth >= 1080 ? 3 : innerWidth >= 700 ? 2 : 1).every((height) => height === longHeights[0]);
@@ -26,6 +33,14 @@ try {
         const description = icon.closest("li").querySelector("p");
         return Math.round(icon.getBoundingClientRect().top - description.getBoundingClientRect().bottom);
       });
+      function reachesLastCard(list) {
+        list.scrollLeft = list.scrollWidth;
+        const listRect = list.getBoundingClientRect();
+        const lastRect = list.querySelector("li:last-child").getBoundingClientRect();
+        const reached = list.scrollLeft > 0 && lastRect.left >= listRect.left - 1 && lastRect.right <= listRect.right + 1;
+        list.scrollLeft = 0;
+        return reached;
+      }
       return {
         cardCount: cards.length,
         iconCount: icons.length,
@@ -38,7 +53,18 @@ try {
         withoutCtaGridWidth: Math.round(withoutCtaSection.querySelector("ul").getBoundingClientRect().width),
         withoutCtaLastRight: Math.round(withoutCtaCards.at(-1).getBoundingClientRect().right),
         withoutCtaGridRight: Math.round(withoutCtaSection.querySelector("ul").getBoundingClientRect().right),
-        columns: getComputedStyle(section.querySelector("ul")).gridTemplateColumns.split(" ").length,
+        columns: getComputedStyle(mainList).gridTemplateColumns.split(" ").length,
+        display: getComputedStyle(mainList).display,
+        mainScrolls: mainList.scrollWidth > mainList.clientWidth,
+        threeScrolls: threeList.scrollWidth > threeList.clientWidth,
+        twoWithCtaScrolls: twoWithCtaList.scrollWidth > twoWithCtaList.clientWidth,
+        twoScrolls: twoList.scrollWidth > twoList.clientWidth,
+        mainReachesLast: innerWidth <= 899 ? reachesLastCard(mainList) : null,
+        threeReachesLast: innerWidth <= 899 ? reachesLastCard(threeList) : null,
+        twoWithCtaReachesLast: innerWidth <= 899 ? reachesLastCard(twoWithCtaList) : null,
+        headingGap: Math.round(mainList.getBoundingClientRect().top - section.querySelector("h2").getBoundingClientRect().bottom),
+        cardTitle: [getComputedStyle(cards[0].querySelector("h3")).fontSize, getComputedStyle(cards[0].querySelector("h3")).lineHeight],
+        cardDescription: [getComputedStyle(cards[0].querySelector("p")).fontSize, getComputedStyle(cards[0].querySelector("p")).lineHeight],
         cardWidth: Math.round(cards[0].getBoundingClientRect().width),
         cardHeight: Math.round(cards[0].getBoundingClientRect().height),
         longHeights,
@@ -53,10 +79,14 @@ try {
       await page.locator("#long-copy").screenshot({ path: `preview-checks/icon-feature-cards-long-${width}.png` });
       await page.locator("#single-action").screenshot({ path: `preview-checks/icon-feature-cards-single-action-${width}.png` });
       await page.locator("#without-cta").screenshot({ path: `preview-checks/icon-feature-cards-without-cta-${width}.png` });
+      await page.locator("#three-cards").screenshot({ path: `preview-checks/icon-feature-cards-three-${width}.png` });
     }
-    const expectedColumns = width >= 1080 ? 3 : width >= 700 ? 2 : 1;
-    const expectedLastWidth = width >= 1080 ? result.cardWidth * 2 + 32 : width >= 700 ? result.withoutCtaGridWidth : result.cardWidth;
-    const passed = response.status() === 200 && errors.length === 0 && !result.overflow && result.cardCount === 6 && result.iconCount === 5 && result.iconsLoaded && result.ctaLinks === 2 && result.singleActionLinks === 1 && result.withoutCtaCount === 5 && result.withoutCtaLinks === 0 && result.withoutCtaLastWidth === expectedLastWidth && result.withoutCtaLastRight === result.withoutCtaGridRight && result.columns === expectedColumns && result.cardHeight >= 320 && result.firstRowEqual && result.minIconGap >= 24;
+    const mobile = width <= 899;
+    const expectedColumns = width >= 1080 ? 3 : 2;
+    const expectedLastWidth = mobile ? result.cardWidth : width >= 1080 ? result.cardWidth * 2 + 32 : result.withoutCtaGridWidth;
+    const correctScroll = mobile ? result.mainScrolls && result.threeScrolls && result.twoWithCtaScrolls && !result.twoScrolls && result.mainReachesLast && result.threeReachesLast && result.twoWithCtaReachesLast : !result.mainScrolls && !result.threeScrolls && !result.twoWithCtaScrolls && !result.twoScrolls;
+    const correctType = result.cardTitle.join() === (mobile ? "20px,24px" : "24px,32px") && result.cardDescription.join() === "16px,24px";
+    const passed = response.status() === 200 && errors.length === 0 && !result.overflow && result.cardCount === 6 && result.iconCount === 5 && result.iconsLoaded && result.ctaLinks === 2 && result.singleActionLinks === 1 && result.withoutCtaCount === 5 && result.withoutCtaLinks === 0 && result.withoutCtaLastWidth === expectedLastWidth && (mobile || result.withoutCtaLastRight === result.withoutCtaGridRight) && (mobile ? result.display === "flex" : result.display === "grid" && result.columns === expectedColumns) && result.cardHeight >= 320 && result.firstRowEqual && result.minIconGap >= 24 && correctScroll && correctType && result.headingGap === 48;
     console.log(JSON.stringify({ width, passed, ...result, errors }));
     if (!passed) process.exitCode = 1;
     await page.close();
