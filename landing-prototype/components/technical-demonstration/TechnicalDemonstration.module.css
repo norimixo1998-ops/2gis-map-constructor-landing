@@ -42,7 +42,7 @@
   overflow-wrap: anywhere;
 }
 
-.summaryRow { margin-top: 20px; }
+.summaryRow { margin-top: var(--section-heading-content-gap); }
 
 .copy p {
   margin: 0;
@@ -79,7 +79,7 @@
   display: block;
   width: 100%;
   overflow: visible;
-  margin-top: 36px;
+  margin-top: var(--section-heading-content-gap);
 }
 
 .emptyMedia { min-height: 400px; border-radius: 16px 16px 0 0; background: #344047; }
@@ -100,7 +100,7 @@
 
 .framed {
   aspect-ratio: 1072 / 661;
-  margin-top: 48px;
+  margin-top: var(--section-heading-content-gap);
 }
 
 .frame {
@@ -172,14 +172,14 @@
   .framedCopy { max-width: none; }
   .headingWrap { padding-right: 0; }
   .copy h2 { font-size: 30px; line-height: 38px; }
-  .summaryRow { margin-top: 12px; }
+  .summaryRow { margin-top: var(--section-heading-content-gap); }
   .framedCopy .summaryRow { align-items: stretch; }
   .framedCopy .action { width: 100%; }
   .media:not(.framed) img { max-height: min(320px, 85vw); }
   .emptyMedia { min-height: 240px; }
   .placeholder { min-height: 240px; }
   .showcase { aspect-ratio: 303 / 239; }
-  .framed { aspect-ratio: 303 / 320; margin-top: 36px; }
+  .framed { aspect-ratio: 303 / 320; margin-top: var(--section-heading-content-gap); }
   .glowingCard::before {
     background-size: 190% auto;
     background-position: center 68%;

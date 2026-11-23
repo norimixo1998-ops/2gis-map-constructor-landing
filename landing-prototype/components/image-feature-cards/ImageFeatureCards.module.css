@@ -8,7 +8,7 @@
 :global(#main-values) + .section { margin-top: 120px; }
 
 .heading {
-  margin: 0 0 48px;
+  margin: 0 0 var(--section-heading-content-gap);
   font-size: 44px;
   font-weight: 500;
   line-height: 52px;
@@ -81,7 +81,7 @@
 @media (max-width: 699.98px) {
   .section { margin-block: 64px; }
   :global(#main-values) + .section { margin-top: 64px; }
-  .heading { margin-bottom: 32px; font-size: 30px; line-height: 38px; }
+  .heading { margin-bottom: var(--section-heading-content-gap); font-size: 30px; line-height: 38px; }
   .grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
   .media { aspect-ratio: 328 / 220; }
   .media img { object-fit: cover; }
@@ -94,5 +94,5 @@
 }
 @media (min-width: 699px) and (max-width: 767.98px) {
   .section, :global(#main-values) + .section { margin-block: 64px; }
-  .heading { margin-bottom: 36px; font-size: 32px; line-height: 40px; }
+  .heading { margin-bottom: var(--section-heading-content-gap); font-size: 32px; line-height: 40px; }
 }
