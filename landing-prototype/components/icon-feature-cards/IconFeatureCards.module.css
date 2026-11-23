@@ -22,6 +22,9 @@
   list-style: none;
 }
 
+.gridWithoutCta > .card:last-child:nth-child(3n + 1) { grid-column: span 3; }
+.gridWithoutCta > .card:last-child:nth-child(3n + 2) { grid-column: span 2; }
+
 .card {
   display: flex;
   min-width: 0;
@@ -101,12 +104,15 @@
 
 @media (max-width: 1079.98px) {
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gridWithoutCta > .card:last-child:nth-child(n) { grid-column: auto; }
+  .gridWithoutCta > .card:last-child:nth-child(2n + 1) { grid-column: span 2; }
 }
 
 @media (max-width: 699.98px) {
   .section { margin-block: 64px; }
   .heading { margin-bottom: 32px; font-size: 30px; line-height: 38px; }
   .grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .gridWithoutCta > .card:last-child:nth-child(n) { grid-column: auto; }
   .card { min-height: 320px; }
   .copy h3 { font-size: 20px; line-height: 24px; }
   .actions { width: 100%; }

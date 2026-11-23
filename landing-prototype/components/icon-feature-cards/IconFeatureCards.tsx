@@ -31,7 +31,7 @@ export function IconFeatureCards({ id, title, items, cta }: IconFeatureCardsProp
   return (
     <section className={styles.section} id={id} aria-labelledby={title ? `${id}-title` : undefined} aria-label={title ? undefined : "Возможности продукта"}>
       {title ? <h2 className={styles.heading} id={`${id}-title`}>{title}</h2> : null}
-      <ul className={styles.grid}>
+      <ul className={`${styles.grid} ${cta ? "" : styles.gridWithoutCta}`}>
         {items.map((item, index) => (
           <li className={styles.card} key={`${item.title}-${index}`}>
             <div className={styles.copy}>

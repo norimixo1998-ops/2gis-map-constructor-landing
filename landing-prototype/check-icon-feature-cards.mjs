@@ -14,8 +14,11 @@ try {
     const result = await page.evaluate(() => {
       const section = document.querySelector("#icon-feature-cards");
       const longSection = document.querySelector("#long-copy");
+      const singleActionSection = document.querySelector("#single-action");
+      const withoutCtaSection = document.querySelector("#without-cta");
       const cards = [...section.querySelectorAll("li")];
       const longCards = [...longSection.querySelectorAll("li")];
+      const withoutCtaCards = [...withoutCtaSection.querySelectorAll("li")];
       const icons = [...document.querySelectorAll("#icon-feature-cards li img")];
       const longHeights = longCards.map((card) => Math.round(card.getBoundingClientRect().height));
       const firstRowEqual = longHeights.slice(0, innerWidth >= 1080 ? 3 : innerWidth >= 700 ? 2 : 1).every((height) => height === longHeights[0]);
@@ -28,6 +31,13 @@ try {
         iconCount: icons.length,
         iconsLoaded: icons.every((icon) => icon.complete && icon.naturalWidth > 0),
         ctaLinks: cards.at(-1).querySelectorAll("a").length,
+        singleActionLinks: singleActionSection.querySelectorAll("li:last-child a").length,
+        withoutCtaCount: withoutCtaCards.length,
+        withoutCtaLinks: withoutCtaSection.querySelectorAll("a").length,
+        withoutCtaLastWidth: Math.round(withoutCtaCards.at(-1).getBoundingClientRect().width),
+        withoutCtaGridWidth: Math.round(withoutCtaSection.querySelector("ul").getBoundingClientRect().width),
+        withoutCtaLastRight: Math.round(withoutCtaCards.at(-1).getBoundingClientRect().right),
+        withoutCtaGridRight: Math.round(withoutCtaSection.querySelector("ul").getBoundingClientRect().right),
         columns: getComputedStyle(section.querySelector("ul")).gridTemplateColumns.split(" ").length,
         cardWidth: Math.round(cards[0].getBoundingClientRect().width),
         cardHeight: Math.round(cards[0].getBoundingClientRect().height),
@@ -41,9 +51,12 @@ try {
       await page.addStyleTag({ content: "nextjs-portal { display: none !important; }" });
       await page.locator("#icon-feature-cards").screenshot({ path: `preview-checks/icon-feature-cards-${width}.png` });
       await page.locator("#long-copy").screenshot({ path: `preview-checks/icon-feature-cards-long-${width}.png` });
+      await page.locator("#single-action").screenshot({ path: `preview-checks/icon-feature-cards-single-action-${width}.png` });
+      await page.locator("#without-cta").screenshot({ path: `preview-checks/icon-feature-cards-without-cta-${width}.png` });
     }
     const expectedColumns = width >= 1080 ? 3 : width >= 700 ? 2 : 1;
-    const passed = response.status() === 200 && errors.length === 0 && !result.overflow && result.cardCount === 6 && result.iconCount === 5 && result.iconsLoaded && result.ctaLinks === 2 && result.columns === expectedColumns && result.cardHeight >= 320 && result.firstRowEqual && result.minIconGap >= 24;
+    const expectedLastWidth = width >= 1080 ? result.cardWidth * 2 + 32 : width >= 700 ? result.withoutCtaGridWidth : result.cardWidth;
+    const passed = response.status() === 200 && errors.length === 0 && !result.overflow && result.cardCount === 6 && result.iconCount === 5 && result.iconsLoaded && result.ctaLinks === 2 && result.singleActionLinks === 1 && result.withoutCtaCount === 5 && result.withoutCtaLinks === 0 && result.withoutCtaLastWidth === expectedLastWidth && result.withoutCtaLastRight === result.withoutCtaGridRight && result.columns === expectedColumns && result.cardHeight >= 320 && result.firstRowEqual && result.minIconGap >= 24;
     console.log(JSON.stringify({ width, passed, ...result, errors }));
     if (!passed) process.exitCode = 1;
     await page.close();

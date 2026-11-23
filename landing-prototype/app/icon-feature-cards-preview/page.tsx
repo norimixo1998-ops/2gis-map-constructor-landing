@@ -17,8 +17,8 @@ const longItems: IconFeatureCardItem[] = items.map((item, index) => ({
 
 const cta = {
   title: "Текст",
-  primaryAction: { label: "Кнопка", href: "#long-copy" },
-  secondaryAction: { label: "Кнопка", href: "#icon-feature-cards" },
+  primaryAction: { label: "Кнопка", href: "#single-action" },
+  secondaryAction: { label: "Кнопка", href: "#without-cta" },
 };
 
 export default function IconFeatureCardsPreview() {
@@ -26,6 +26,8 @@ export default function IconFeatureCardsPreview() {
     <main>
       <IconFeatureCards id="icon-feature-cards" items={items} cta={cta} />
       <IconFeatureCards id="long-copy" title="Проверка длинного текста" items={longItems} cta={cta} />
+      <IconFeatureCards id="single-action" title="CTA с одной кнопкой" items={items} cta={{ title: "Текст", primaryAction: { label: "Кнопка", href: "#without-cta" } }} />
+      <IconFeatureCards id="without-cta" title="Без CTA" items={items} />
     </main>
   );
 }
