@@ -37,7 +37,7 @@
   .trigger, .active .trigger { position: relative; visibility: visible; display: flex; min-height: 72px; flex-direction: row; align-items: flex-start; justify-content: flex-start; padding: 16px 20px; pointer-events: auto; }
   .verticalTitle { display: none; }
   .horizontalTitle { display: block; flex: 1; font-size: 20px; font-weight: 500; line-height: 24px; }
-  .chevron { display: grid; width: 24px; height: 24px; flex: none; place-items: center; align-self: center; transition: transform .2s; }
+  .chevron { display: grid; width: 24px; height: 24px; flex: none; place-items: center; align-self: flex-start; transition: transform .2s; }
   .chevron img { display: block; width: 24px; height: 24px; }
   .active .chevron { transform: rotate(180deg); }
   .body, .active .body { position: relative; display: grid; grid-template-rows: 0fr; overflow: hidden; visibility: visible; opacity: 1; transition: grid-template-rows .3s ease; }
