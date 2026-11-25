@@ -18,6 +18,14 @@
 .iconPlaceholder { border-radius: 18px; background: linear-gradient(135deg, #0869e6, #008bfc 60%, #04ac80); }
 .copy h3 { margin: 0 0 8px; font-size: 24px; font-weight: 500; line-height: 32px; }
 .copy p { margin: 0; font-size: 16px; line-height: 24px; overflow-wrap: break-word; }
+.horizontal .card { min-height: 136px; flex-direction: row; align-items: center; justify-content: flex-start; gap: 8px; padding: 20px; }
+.horizontal .copy { min-width: 0; }
+.horizontal .copy h3 { font-size: 24px; line-height: 28px; }
+.horizontal .copy h3, .horizontal .copy p { overflow-wrap: anywhere; }
+@media (min-width: 900px) and (max-width: 1199px) {
+  .horizontal .icon, .horizontal .iconPlaceholder { width: 80px; height: 80px; }
+  .horizontal .copy h3 { font-size: 20px; line-height: 24px; }
+}
 @media (max-width: 899px) {
   .section { margin-block: 64px; }
   .heading { margin-bottom: var(--section-heading-content-gap); }
@@ -29,6 +37,9 @@
   .card { min-height: 236px; gap: 16px; padding: 24px 20px; }
   .copy { margin-top: auto; }
   .copy h3 { font-size: 20px; line-height: 24px; }
+  .horizontal .card { min-height: 136px; padding: 20px; }
+  .horizontal .copy { margin-top: 0; }
+  .horizontal .copy h3 { font-size: 20px; line-height: 24px; }
 }
 @media (min-width: 768px) and (max-width: 1079px) {
   .heading h2 { font-size: clamp(32px, calc(3.846vw + 2.46px), 44px); line-height: clamp(40px, calc(3.846vw + 10.46px), 52px); }

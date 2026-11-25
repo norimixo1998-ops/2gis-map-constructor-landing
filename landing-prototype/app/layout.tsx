@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import localFont from "next/font/local";
-import { SiteHeader } from "../components/site-header/SiteHeader";
-import { SiteFooter } from "../components/site-footer/SiteFooter";
+import { SiteChrome } from "../components/site-chrome/SiteChrome";
 import "./globals.css";
 
 const suisse = localFont({
@@ -22,9 +21,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ru" className={suisse.variable}>
       <body>
-        <SiteHeader />
+        <SiteChrome position="header" />
         {children}
-        <SiteFooter />
+        <SiteChrome position="footer" />
       </body>
     </html>
   );

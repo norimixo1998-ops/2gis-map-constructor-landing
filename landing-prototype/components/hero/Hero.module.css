@@ -10,7 +10,8 @@
 .layout { position: relative; z-index: 1; margin-inline: auto; width: min(calc(100% - 32px), var(--content-width)); }
 .copy, .text, .actions { min-width: 0; }
 .text h1, .text p { margin: 0; overflow-wrap: break-word; }
-.text .eyebrow { color: rgb(255 255 255 / 64%); font-size: 16px; line-height: 24px; }
+.text .eyebrow { display: inline-flex; width: fit-content; max-width: 100%; min-height: 40px; align-items: center; gap: 4px; margin-bottom: 20px; padding: 8px 12px; border-radius: 12px; background: rgb(25 170 30 / 12%); backdrop-filter: blur(40px); color: #3bb643; font-size: 14px; line-height: 20px; }
+.eyebrow img { flex: none; }
 .text h1 { font-size: 56px; font-weight: 500; line-height: 68px; letter-spacing: -0.01em; }
 .text p { font-size: 16px; font-weight: 400; line-height: 24px; letter-spacing: -0.01em; }
 .actions { display: flex; flex-wrap: wrap; gap: 16px; }
@@ -76,6 +77,7 @@
   .visual { order: 0; width: 100%; max-width: 600px; margin-inline: auto; aspect-ratio: 342 / 230; }
   .copy { order: 1; }
   .text { gap: 16px; }
+  .text .eyebrow { margin-bottom: 4px; }
   .actions { margin-top: 32px; }
 }
 

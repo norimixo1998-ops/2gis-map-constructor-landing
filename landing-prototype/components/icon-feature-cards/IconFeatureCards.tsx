@@ -34,10 +34,8 @@ export function IconFeatureCards({ id, title, items, cta }: IconFeatureCardsProp
 
   if (items.length === 0) return null;
 
-  return (
-    <section className={styles.section} id={id} aria-labelledby={title ? `${id}-title` : undefined} aria-label={title ? undefined : "Возможности продукта"}>
-      {title ? <h2 className={styles.heading} id={`${id}-title`}>{title}</h2> : null}
-      <ul
+  const grid = (
+    <ul
         className={`${styles.grid} ${cta ? "" : styles.gridWithoutCta} ${sliding ? styles.mobileCarousel : ""} ${carousel.isDragging ? styles.dragging : ""}`}
         tabIndex={sliding ? 0 : undefined}
         aria-label={sliding ? `${title ?? "Возможности продукта"}: горизонтальная прокрутка карточек на узком экране` : undefined}
@@ -68,7 +66,13 @@ export function IconFeatureCards({ id, title, items, cta }: IconFeatureCardsProp
             </div>
           </li>
         ) : null}
-      </ul>
+    </ul>
+  );
+
+  return (
+    <section className={styles.section} id={id} aria-labelledby={title ? `${id}-title` : undefined} aria-label={title ? undefined : "Возможности продукта"}>
+      {title ? <h2 className={styles.heading} id={`${id}-title`}>{title}</h2> : null}
+      {grid}
     </section>
   );
 }

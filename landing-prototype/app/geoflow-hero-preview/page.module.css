@@ -1,0 +1,10 @@
+.heroStage {
+  width: 100%;
+}
+
+.heroStage > section { width: 100%; }
+.page > section:first-of-type { margin-top: 80px; }
+
+@media (max-width: 991px) {
+  .page > section:first-of-type { margin-top: 64px; }
+}

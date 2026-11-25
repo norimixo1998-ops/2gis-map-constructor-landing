@@ -13,14 +13,20 @@ export type ImageFeatureCardItem = {
 
 export type ImageFeatureCardsProps = {
   id: string;
+  eyebrow?: string;
   title?: string;
+  titleBreakBefore?: string;
+  description?: string;
   items: readonly [ImageFeatureCardItem, ImageFeatureCardItem] | readonly [ImageFeatureCardItem, ImageFeatureCardItem, ImageFeatureCardItem, ImageFeatureCardItem];
 };
 
-export function ImageFeatureCards({ id, title, items }: ImageFeatureCardsProps) {
+export function ImageFeatureCards({ id, eyebrow, title, titleBreakBefore, description, items }: ImageFeatureCardsProps) {
+  const breakAt = title && titleBreakBefore ? title.indexOf(titleBreakBefore) : -1;
   return (
     <section className={styles.section} id={id} aria-labelledby={title ? `${id}-title` : undefined} aria-label={title ? undefined : "Возможности продукта"}>
-      {title ? <h2 className={styles.heading} id={`${id}-title`}>{title}</h2> : null}
+      {eyebrow ? <p className={styles.eyebrow}>{eyebrow}</p> : null}
+      {title ? <h2 className={styles.heading} id={`${id}-title`}>{breakAt < 0 ? title : <>{title.slice(0, breakAt)}<br className={styles.desktopBreak} />{title.slice(breakAt)}</>}</h2> : null}
+      {description ? <p className={styles.description}>{description}</p> : null}
       <ul className={styles.grid}>
         {items.map((item, index) => (
           <li className={styles.card} key={`${item.title}-${index}`}>

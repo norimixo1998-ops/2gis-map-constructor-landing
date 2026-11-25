@@ -4,6 +4,7 @@
   color: #fff;
   font-family: var(--font-suisse), Arial, sans-serif;
 }
+.eyebrow { margin: 0 0 32px; color: #9bea5a; font-size: 16px; font-weight: 500; line-height: 24px; }
 
 :global(#main-values) + .section { margin-top: 120px; }
 
@@ -14,6 +15,10 @@
   line-height: 52px;
   letter-spacing: -0.01em;
 }
+.desktopBreak { display: none; }
+@media (min-width: 1080px) { .desktopBreak { display: initial; } }
+.section:has(.description) .heading { margin-bottom: var(--section-heading-description-gap); }
+.description { margin: 0 0 var(--section-heading-content-gap); color: #fff; font-size: 16px; line-height: 24px; }
 
 .grid {
   display: grid;
@@ -81,6 +86,7 @@
 @media (max-width: 699.98px) {
   .section { margin-block: 64px; }
   :global(#main-values) + .section { margin-top: 64px; }
+  .eyebrow { margin-bottom: 24px; }
   .heading { margin-bottom: var(--section-heading-content-gap); font-size: 30px; line-height: 38px; }
   .grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
   .media { aspect-ratio: 328 / 220; }

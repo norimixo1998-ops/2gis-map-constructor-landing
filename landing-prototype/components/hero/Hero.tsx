@@ -29,6 +29,7 @@ export type HeroMedia = { kind: "placeholder"; label: string } | HeroMediaBase &
 
 type HeroBase = {
   eyebrow?: string;
+  eyebrowIconSrc?: string;
   title: string;
   titleBreakAfter?: string; // optional soft wrap hint; does not force a line break
   description: string;
@@ -64,7 +65,7 @@ function HeroImage({ media }: { media: HeroMedia }) {
   );
 }
 
-export function Hero({ eyebrow, title, titleBreakAfter, description, actions, media }: HeroProps) {
+export function Hero({ eyebrow, eyebrowIconSrc, title, titleBreakAfter, description, actions, media }: HeroProps) {
   const breakIndex = titleBreakAfter ? title.indexOf(titleBreakAfter) : -1;
   const titleContent = breakIndex >= 0 && titleBreakAfter ? (
     <>
@@ -79,7 +80,7 @@ export function Hero({ eyebrow, title, titleBreakAfter, description, actions, me
       <div className={styles.layout}>
         <div className={styles.copy}>
           <div className={styles.text}>
-            {eyebrow ? <p className={styles.eyebrow}>{eyebrow}</p> : null}
+            {eyebrow ? <p className={styles.eyebrow}>{eyebrowIconSrc ? <img src={publicAsset(eyebrowIconSrc)} alt="" width="24" height="24" aria-hidden="true" /> : null}{eyebrow}</p> : null}
             <h1>{titleContent}</h1>
             <p>{description}</p>
           </div>

@@ -30,6 +30,7 @@ type TextFieldProps = {
   phonePrefix?: boolean;
   multiline?: boolean;
   onCountryChange?: () => void;
+  idPrefix?: string;
 };
 
 const assetPath = publicAsset("/images/lead-form/");
@@ -165,10 +166,10 @@ function isFieldValid(target: HTMLInputElement | HTMLSelectElement | HTMLTextAre
   return target.checkValidity();
 }
 
-function TextField({
-  name, label, error, invalid, disabled, required, type = "text", autoComplete, inputMode, phonePrefix, multiline, onCountryChange,
+export function TextField({
+  name, label, error, invalid, disabled, required, type = "text", autoComplete, inputMode, phonePrefix, multiline, onCountryChange, idPrefix = "lead",
 }: TextFieldProps) {
-  const errorId = `lead-${name}-error`;
+  const errorId = `${idPrefix}-${name}-error`;
   const control = multiline ? (
     <textarea
       name={name}

@@ -43,6 +43,7 @@
 }
 
 .summaryRow { margin-top: var(--section-heading-content-gap); }
+.summaryRow:has(p) { margin-top: var(--section-heading-description-gap); }
 
 .copy p {
   margin: 0;
@@ -173,6 +174,7 @@
   .headingWrap { padding-right: 0; }
   .copy h2 { font-size: 30px; line-height: 38px; }
   .summaryRow { margin-top: var(--section-heading-content-gap); }
+  .summaryRow:has(p) { margin-top: var(--section-heading-description-gap); }
   .framedCopy .summaryRow { align-items: stretch; }
   .framedCopy .action { width: 100%; }
   .media:not(.framed) img { max-height: min(320px, 85vw); }

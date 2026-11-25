@@ -15,9 +15,10 @@ export type MainValuesProps = {
   items: MainValueItem[];
   title?: string;
   id?: string;
+  orientation?: "vertical" | "horizontal";
 };
 
-export function MainValues({ items, title, id = "main-values" }: MainValuesProps) {
+export function MainValues({ items, title, id = "main-values", orientation = "vertical" }: MainValuesProps) {
   const listRef = useRef<HTMLUListElement>(null);
   const carousel = useCardCarousel(styles.dragging);
   const [position, setPosition] = useState(0);
@@ -39,7 +40,7 @@ export function MainValues({ items, title, id = "main-values" }: MainValuesProps
   }
 
   return (
-    <section className={styles.section} id={id} aria-labelledby={title ? `${id}-title` : undefined} aria-label={title ? undefined : "Преимущества"}>
+    <section className={`${styles.section} ${orientation === "horizontal" ? styles.horizontal : ""}`} id={id} aria-labelledby={title ? `${id}-title` : undefined} aria-label={title ? undefined : "Ключевые тезисы"}>
       {title || sliding ? (
         <div className={styles.heading}>
           {title ? <h2 id={`${id}-title`}>{title}</h2> : <span />}

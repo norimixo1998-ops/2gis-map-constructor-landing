@@ -55,7 +55,7 @@ try {
 
     const inset = width < 700 ? 20 : 48;
     const frameInset = width < 700 ? 5 : 12;
-    const descriptionGap = width <= 768 ? 36 : 48;
+    const descriptionGap = 20;
     const close = (a, b) => Math.abs(a - b) < 1;
     if (
       response.status() !== 200 || errors.length || !result.title || result.scrollWidth > width ||

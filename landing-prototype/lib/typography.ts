@@ -28,6 +28,7 @@ const structuralFields = new Set([
   "placement",
   "position",
   "layout",
+  "orientation",
   "animation",
   "ambientGlow",
   "className",

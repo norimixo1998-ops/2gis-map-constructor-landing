@@ -17,21 +17,26 @@ export type StartWorkItem = ({
 
 export type StartWorkProps = {
   title: string;
+  eyebrow?: string;
+  description?: string;
   items: StartWorkItem[];
   id?: string;
   action?: { label: string; href: string; target?: "_blank" | "_self" };
   cardTextStyle?: "regular18";
+  desktopColumns?: 2 | 3 | 4;
 };
 
-export function StartWork({ title, items, id = "start-work", action, cardTextStyle }: StartWorkProps) {
+export function StartWork({ title, eyebrow, description, items, id = "start-work", action, cardTextStyle, desktopColumns }: StartWorkProps) {
   const carousel = useCardCarousel(styles.dragging);
   if (items.length === 0) return null;
 
-  const columns = items.length <= 4 ? items.length : 3;
+  const columns = desktopColumns ?? (items.length <= 4 ? items.length : 3);
 
   return (
-    <section className={`${styles.section} ${cardTextStyle === "regular18" ? styles.regular18 : ""}`} id={id} aria-labelledby={`${id}-title`}>
+    <section className={`${styles.section} ${description ? styles.hasDescription : ""} ${cardTextStyle === "regular18" ? styles.regular18 : ""}`} id={id} aria-labelledby={`${id}-title`}>
+      {eyebrow ? <p className={styles.eyebrow}>{eyebrow}</p> : null}
       <h2 id={`${id}-title`}>{title}</h2>
+      {description ? <p className={styles.description}>{description}</p> : null}
       <ul
         className={`${styles.list} ${carousel.isDragging ? styles.dragging : ""}`}
         style={{ "--card-columns": columns } as CSSProperties}
