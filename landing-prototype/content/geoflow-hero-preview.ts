@@ -108,12 +108,12 @@ export const workTools: IconFeatureNumbersProps = {
     {
       title: "Веб-панель администратора",
       description: "Загрузка заказов, настройка расчёта и контроль на карте.",
-      iconSrc: "/images/icon-feature-cards/point-bottom-left-to-top-right-fill.svg",
+      iconSrc: "/images/icon-feature-cards/image-stroke.svg",
     },
     {
       title: "Мобильное приложение сотрудника",
       description: "Маршрут, список точек и задачи курьера на Android 10 и выше.",
-      iconSrc: "/images/icon-feature-cards/navigation-cursor-north-stroke.svg",
+      iconSrc: "/images/icon-feature-cards/point-top-right-to-bottom-left-fill.svg",
     },
     {
       title: "Публичный API",
