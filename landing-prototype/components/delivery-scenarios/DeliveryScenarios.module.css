@@ -34,7 +34,7 @@
 @media (max-width: 1099px) {
   .panels { height: auto; flex-direction: column; }
   .panel, .active { flex: none; }
-  .trigger, .active .trigger { position: relative; visibility: visible; display: flex; min-height: 72px; flex-direction: row; align-items: center; justify-content: flex-start; padding: 16px 20px; pointer-events: auto; }
+  .trigger, .active .trigger { position: relative; visibility: visible; display: flex; min-height: 72px; flex-direction: row; align-items: flex-start; justify-content: flex-start; padding: 16px 20px; pointer-events: auto; }
   .verticalTitle { display: none; }
   .horizontalTitle { display: block; flex: 1; font-size: 20px; font-weight: 500; line-height: 24px; }
   .chevron { display: grid; width: 24px; height: 24px; flex: none; place-items: center; align-self: center; transition: transform .2s; }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { publicAsset } from "../../lib/public-asset";
 import styles from "./DeliveryScenarios.module.css";
 
 export type DeliveryScenario = { title: string; short: string; color: string; situation: string; automation: string };
@@ -20,7 +21,7 @@ export function DeliveryScenarios({ id = "delivery-scenarios", title, titleBreak
           <span className={styles.number}>{String(index + 1).padStart(2, "0")}</span>
           <span className={styles.verticalTitle}>{item.title}</span>
           <span className={styles.horizontalTitle}>{item.title}</span>
-          <span className={styles.chevron} aria-hidden="true"><img src="/icons/header/chevron-down-small-stroke.svg" alt="" /></span>
+          <span className={styles.chevron} aria-hidden="true"><img src={publicAsset("/icons/header/chevron-down-small-stroke.svg")} alt="" /></span>
         </button>
         <div className={styles.body} id={`${id}-scenario-${index}`} inert={selected !== index}>
           <div className={styles.bodyInner}>
