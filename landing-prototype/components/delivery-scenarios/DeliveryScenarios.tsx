@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { publicAsset } from "../../lib/public-asset";
 import styles from "./DeliveryScenarios.module.css";
 
@@ -9,6 +9,26 @@ export type DeliveryScenariosProps = { id?: string; title: string; titleBreakBef
 
 export function DeliveryScenarios({ id = "delivery-scenarios", title, titleBreakBefore, description, items }: DeliveryScenariosProps) {
   const [active, setActive] = useState(0);
+  const titleRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const [singleLineTitles, setSingleLineTitles] = useState<boolean[]>([]);
+
+  useLayoutEffect(() => {
+    const measure = () => {
+      const next = items.map((_, index) => {
+        const element = titleRefs.current[index];
+        if (!element || element.offsetHeight === 0) return false;
+        const lineHeight = Number.parseFloat(getComputedStyle(element).lineHeight);
+        return element.getBoundingClientRect().height <= lineHeight + 1;
+      });
+      setSingleLineTitles((current) => current.length === next.length && current.every((value, index) => value === next[index]) ? current : next);
+    };
+
+    const observer = new ResizeObserver(measure);
+    titleRefs.current.slice(0, items.length).forEach((element) => { if (element) observer.observe(element); });
+    measure();
+    return () => observer.disconnect();
+  }, [items]);
+
   if (items.length === 0) return null;
   const selected = Math.min(active, items.length - 1);
   const breakAt = titleBreakBefore ? title.indexOf(titleBreakBefore) : -1;
@@ -17,10 +37,10 @@ export function DeliveryScenarios({ id = "delivery-scenarios", title, titleBreak
     {description ? <p className={styles.description}>{description}</p> : null}
     <div className={styles.panels}>
       {items.map((item, index) => <article className={`${styles.panel} ${selected === index ? styles.active : ""}`} key={`${index}-${item.title}`} style={{ "--accent": item.color } as React.CSSProperties}>
-        <button className={styles.trigger} type="button" onClick={() => setActive(index)} aria-expanded={selected === index} aria-controls={`${id}-scenario-${index}`}>
+        <button className={`${styles.trigger} ${selected !== index && singleLineTitles[index] ? styles.singleLine : ""}`} type="button" onClick={() => setActive(index)} aria-expanded={selected === index} aria-controls={`${id}-scenario-${index}`}>
           <span className={styles.number}>{String(index + 1).padStart(2, "0")}</span>
           <span className={styles.verticalTitle}>{item.title}</span>
-          <span className={styles.horizontalTitle}>{item.title}</span>
+          <span className={styles.horizontalTitle} ref={(element) => { titleRefs.current[index] = element; }}>{item.title}</span>
           <span className={styles.chevron} aria-hidden="true"><img src={publicAsset("/icons/header/chevron-down-small-stroke.svg")} alt="" /></span>
         </button>
         <div className={styles.body} id={`${id}-scenario-${index}`} inert={selected !== index}>

@@ -15,12 +15,40 @@ try {
     if (await triggers.first().getAttribute("aria-expanded") !== "true") throw new Error(`${width}: first scenario is not open initially`);
     const firstAccent = await section.locator("article").first().evaluate(element => getComputedStyle(element).getPropertyValue("--accent").trim());
     if (firstAccent !== "#12951a") throw new Error(`${width}: first scenario does not use primary color`);
-    await triggers.nth(3).click();
-    if (await triggers.nth(3).getAttribute("aria-expanded") !== "true") throw new Error(`${width}: tab did not open`);
+    if (width < 1100) {
+      const alignment = await section.evaluate((element) => {
+        const errors = [];
+        let singleLineCount = 0;
+        let multiLineCount = 0;
+        for (const button of element.querySelectorAll("button[aria-expanded='false']")) {
+          const title = button.querySelector("[class*='horizontalTitle']");
+          const number = button.querySelector("[class*='number']");
+          const chevron = button.querySelector("[class*='chevron']");
+          const oneLine = title.offsetHeight <= Number.parseFloat(getComputedStyle(title).lineHeight) + 1;
+          if (oneLine) {
+            singleLineCount++;
+            const middle = button.getBoundingClientRect().top + button.getBoundingClientRect().height / 2;
+            for (const part of [title, number, chevron]) {
+              const rect = part.getBoundingClientRect();
+              if (Math.abs(rect.top + rect.height / 2 - middle) > 1) errors.push(`${title.textContent}: not centered`);
+            }
+          } else {
+            multiLineCount++;
+            if (Math.abs(number.offsetTop - title.offsetTop) > 1 || Math.abs(chevron.offsetTop - title.offsetTop) > 1) errors.push(`${title.textContent}: not top aligned`);
+          }
+        }
+        return { singleLineCount, multiLineCount, errors };
+      });
+      if (alignment.errors.length || !alignment.singleLineCount || (width <= 550 && !alignment.multiLineCount)) throw new Error(`${width}: collapsed title alignment ${JSON.stringify(alignment)}`);
+    }
+    await triggers.nth(2).click();
+    if (await triggers.nth(2).getAttribute("aria-expanded") !== "true") throw new Error(`${width}: distributor scenario did not open`);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
     if (overflow) throw new Error(`${width}: horizontal page overflow`);
-    const body = section.locator("#delivery-scenarios-scenario-3");
+    const body = section.locator("#delivery-scenarios-scenario-2");
     if (!(await body.isVisible())) throw new Error(`${width}: active scenario content hidden`);
+    const scenarioCopy = await body.locator("h3, [class*='detail'] p").allTextContents();
+    if (scenarioCopy.map((text) => text.replace(/\u00a0/g, " ")).join("|") !== "Дистрибьюторы|Товар нужно забрать у производителя и развезти по торговым точкам. У каждой — своё время приёмки.|Сервис рассчитывает маршрут от производителя до конечных точек с учётом времени доставки") throw new Error(`${width}: distributor copy ${JSON.stringify(scenarioCopy)}`);
     if (width >= 1100) await page.waitForTimeout(550);
     const typography = await page.evaluate(() => {
       const section = document.querySelector("#delivery-scenarios");

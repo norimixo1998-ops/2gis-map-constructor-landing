@@ -21,11 +21,14 @@
 .navigation { gap: 24px; color: rgb(255 255 255 / 64%); font-size: 16px; line-height: 24px; white-space: nowrap; }
 .navigation a { color: inherit; text-decoration: none; }
 .navigation a:hover { color: #fff; }
-.navigation a:focus-visible, .action:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.navigation a:focus-visible, .action:focus-visible, .menuToggle:focus-visible, .menuClose:focus-visible, .menuNavigation a:focus-visible, .menuAction:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 .action { display: inline-flex; min-height: 48px; flex: none; align-items: center; justify-content: center; padding: 12px 16px; border-radius: 12px; background: rgb(255 255 255 / 12%); color: #fff; font-size: 16px; font-weight: 500; line-height: 24px; text-decoration: none; white-space: nowrap; }
 .action:hover { background: var(--button-secondary-hover); color: #fff; }
 .mobileControls { display: none; }
+.menuToggle, .menuClose { display: grid; width: 36px; height: 36px; flex: none; place-items: center; padding: 0; border: 0; background: transparent; color: #fff; cursor: pointer; }
+.menuOverlay { display: none; }
 .sticky { position: fixed; border-radius: 0 0 16px 16px; box-shadow: 0 12px 16px rgb(25 32 37 / 36%); }
+.sticky [data-garland-lit] { opacity: 0; pointer-events: none; }
 .space { height: 80px; }
 
 @media (max-width: 1199px) and (min-width: 992px) {
@@ -36,15 +39,36 @@
   .action { padding-inline: 12px; }
 }
 
-@media (max-width: 991px) {
+@media (min-width: 769px) and (max-width: 991px) {
+  .row, .desktopControls { gap: 12px; }
+  .logo { width: 121px; height: auto; }
+  .badge { display: none; }
+  .navigation { gap: 12px; font-size: 14px; }
+  .action { padding-inline: 12px; font-size: 14px; }
+}
+
+@media (max-width: 768px) {
   .header { min-height: 80px; background: transparent; }
   .inner { width: 100%; }
-  .row { height: 64px; min-height: 0; margin-top: 16px; padding-inline: 16px; }
+  .row { height: 64px; min-height: 0; gap: 8px; margin-top: 16px; padding-inline: 16px; }
+  .brand { flex: 1; min-width: 0; gap: 8px; }
   .logo { width: 121px; height: auto; }
-  .badge, .desktopControls { display: none; }
+  .badge { flex: 0 1 auto; min-width: 0; padding: 6px 8px; font-size: 11px; line-height: 14px; white-space: normal; }
+  .desktopControls { display: none; }
   .mobileControls { display: flex; align-items: center; }
   .menuIcon { display: block; width: 36px; height: 36px; }
   .sticky { background: #192025; }
+  .menuOverlay { position: fixed; inset: 0; z-index: 2; display: block; height: 100dvh; overflow-y: auto; background: #192025; }
+  .menuContent { display: flex; min-height: 100%; flex-direction: column; padding: 16px 16px 32px; }
+  .menuTop { display: flex; height: 64px; flex: none; align-items: center; justify-content: space-between; }
+  .menuClose { position: relative; }
+  .menuClose::before, .menuClose::after { content: ""; position: absolute; width: 24px; height: 2px; border-radius: 2px; background: currentColor; transform: rotate(45deg); }
+  .menuClose::after { transform: rotate(-45deg); }
+  .menuNavigation { display: flex; flex-direction: column; gap: 8px; margin-top: 48px; }
+  .menuNavigation a { display: flex; min-height: 56px; align-items: center; color: #fff; font-size: 24px; font-weight: 500; line-height: 32px; text-decoration: none; }
+  .menuNavigation a:hover { color: rgb(255 255 255 / 64%); }
+  .menuAction { display: flex; min-height: 56px; align-items: center; justify-content: center; margin-top: 32px; padding: 12px 16px; border-radius: 12px; background: rgb(255 255 255 / 12%); color: #fff; font-size: 16px; font-weight: 500; line-height: 24px; text-align: center; text-decoration: none; }
+  .menuAction:hover { background: var(--button-secondary-hover); }
 }
 
 @media (prefers-reduced-motion: reduce) { .header { transition: none; } }

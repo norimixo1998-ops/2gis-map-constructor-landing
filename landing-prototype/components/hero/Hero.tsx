@@ -19,7 +19,6 @@ export type HeroVisualSource = {
 type HeroMediaBase = {
   desktop: HeroVisualSource;
   mobile?: HeroVisualSource; // absent: desktop file and placement are reused
-  animation?: "float";
 };
 
 export type HeroMedia = { kind: "placeholder"; label: string } | HeroMediaBase & (
@@ -56,7 +55,7 @@ function HeroImage({ media }: { media: HeroMedia }) {
   } as CSSProperties;
 
   return (
-    <picture className={`${styles.picture} ${media.animation === "float" ? styles.float : ""}`}>
+    <picture className={styles.picture}>
       {media.mobile && (
         <source media={`(max-width: ${breakpoint - 1}px)`} srcSet={publicAsset(media.mobile.src)} />
       )}

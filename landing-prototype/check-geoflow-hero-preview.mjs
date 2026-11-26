@@ -35,7 +35,7 @@ try {
           badge: header?.textContent.includes("2ГИС Геопоток: Логистика"),
           nav: [...(nav?.querySelectorAll("a, span") ?? [])].map((item) => item.textContent),
           navVisible: nav ? getComputedStyle(nav).display !== "none" && getComputedStyle(nav.parentElement).display !== "none" : false,
-          menuVisible: menu ? getComputedStyle(menu.parentElement).display !== "none" : false,
+          menuVisible: menu ? getComputedStyle(menu.parentElement.parentElement).display !== "none" : false,
           menuLoaded: menu?.naturalWidth > 0,
           languageCount: header?.querySelectorAll('img[src*="language"]')?.length ?? 0,
           actionHeight: Math.round(action?.getBoundingClientRect().height ?? 0),
@@ -107,7 +107,7 @@ try {
         const cards = [...(section?.querySelectorAll("li") ?? [])];
         const note = section?.querySelector("aside");
         return {
-          afterWorkflow: section?.previousElementSibling?.id === "workflow",
+          afterDeliveryScenarios: section?.previousElementSibling?.id === "delivery-scenarios",
           title: section?.querySelector("h2")?.textContent,
           headingWidth: section?.querySelector("h2")?.getBoundingClientRect().width,
           introCount: section?.querySelectorAll(":scope > p").length,
@@ -123,7 +123,7 @@ try {
         return {
           afterCapabilities: section?.previousElementSibling?.id === "capabilities",
           title: section?.querySelector("h2")?.textContent,
-          questions: [...section.querySelectorAll("button[aria-expanded]")].map((button) => ({ text: button.textContent.trim(), expanded: button.getAttribute("aria-expanded") })),
+          questions: [...section.querySelectorAll("button[aria-expanded]")].map((button) => ({ text: button.textContent.trim(), answer: button.nextElementSibling?.textContent.trim(), expanded: button.getAttribute("aria-expanded") })),
         };
       })(),
       headerCount: document.querySelectorAll("body > header").length,
@@ -142,39 +142,68 @@ try {
     ];
     const expectedSteps = ["Загрузите заказы", "Рассчитайте маршруты", "Передайте план курьерам", "Следите за выполнением"];
     const expectedStepTexts = [
-      "Добавьте адреса через веб-панель или публичный API, укажите время доставки и особенности заказа.",
-      "Система распределит точки с учётом временных окон заказов, параметров груза, навыков курьеров, параметров транспорта, параметров складов и способа оптимизации.",
-      "Каждый сотрудник увидит свой порядок адресов и задачи в мобильном приложении.",
-      "Веб-панель показывает маршруты и статус задач на карте в течение рабочего дня.",
+      "Добавьте адреса через веб-панель или публичный API, укажите время доставки и особенности заказа",
+      "Система распределит точки с учётом временных окон заказов, параметров груза, навыков курьеров, параметров транспорта, параметров складов и способа оптимизации",
+      "Каждый сотрудник увидит свой порядок адресов и задачи в мобильном приложении",
+      "Веб-панель показывает маршруты и статус задач на карте в течение рабочего дня",
     ];
     const expectedCapabilities = [
       ["Веб-панель администратора", "Управляйте маршрутами и загрузкой курьеров, отслеживайте точки доставки и порядок их посещения на карте. Настраивайте временные окна и контролируйте статус задач в реальном времени."],
       ["Приложение курьера", "Получайте готовую последовательность адресов на рабочий день и детальный список задач для каждой точки. Удобный мобильный интерфейс поможет эффективно выполнять работу без лишних действий. Доступно на Android (10 и выше) и iOS."],
     ];
     const expectedMobileImages = ["Web-logistics-mobile-2.png", "Web-logistics-mobile.png"];
-    if (!result.capabilities.afterWorkTools || result.capabilities.eyebrow || plain(result.capabilities.title) !== "Логист работает в браузере, курьер в приложении" || plain(result.capabilities.description) !== "Планирование и контроль остаются в веб-панели, маршрут сотрудника всегда под рукой." || result.capabilities.headingToDescription !== 20 || result.capabilities.descriptionToCards !== (width <= 768 ? 36 : 48) || result.capabilities.cards.length !== 2 || result.capabilities.cards.some((card, index) => plain(card.title) !== expectedCapabilities[index][0] || plain(card.description) !== expectedCapabilities[index][1] || !card.imageLoaded || !card.imageAlt || card.imageClipped || (width < 700 && !card.imageSrc?.endsWith(expectedMobileImages[index]))) || result.capabilities.columns !== (width < 700 ? 1 : 2)) {
+    const expectedFaq = [
+      ["Что будет после окончания акции?", "Вы можете приобрести полный доступ, чтобы продолжить работу, или просматривать ретроспективные данные."],
+      ["Что делать, если нужно больше 5 курьеров?", "Свяжитесь с менеджером 2ГИС по контактам, указанным в личном кабинете. Менеджер поможет обсудить возможное решение для вашей команды."],
+      ["Где посмотреть, сколько времени осталось до окончания акции?", "Оставшийся срок участия отображается в личном кабинете вашего профиля."],
+      ["Как узнать цену и купить полный доступ?", "Обратитесь к команде менеджеров 2ГИС. Они расскажут о тарифах, помогут выбрать подходящий вариант и при необходимости подготовят коммерческое предложение. Контакты менеджера доступны в личном кабинете."],
+      ["Что входит в акционный доступ?", "Доступ не более чем для 5 агентов-курьеров и одного главного веб-пользователя. Количество построений маршрутов не ограничено. Одна компания может участвовать в акции один раз."],
+      ["До какого числа действует акция?", "Акция действует до 28 февраля 2027. Оставшееся время участия можно посмотреть в личном кабинете."],
+      ["Что делать, если не получается решить задачу или нужна дополнительная функция?", "Продукт создавался с учётом разных процессов компаний. Если ваш сценарий не удалось настроить, обратитесь в техническую поддержку. Команда поможет разобраться в задаче и обсудить возможное решение вашей бизнес-потребности. Контакты поддержки находятся в профиле компании."],
+      ["Как добавить заказы?", "Адреса и задачи можно загрузить через веб-панель или передать через публичный API."],
+      ["Нужна ли интеграция с учётной системой?", "Для начала работы можно использовать веб-панель. Передачу заказов из учётной системы можно настроить через публичный API."],
+      ["На каких устройствах работает приложение курьера?", "Приложение курьера работает на Android 10 и выше, а также на iOS."],
+    ];
+    if (!result.capabilities.afterWorkTools || result.capabilities.eyebrow || plain(result.capabilities.title) !== "Логист работает в браузере, курьер в приложении" || plain(result.capabilities.description) !== "Планирование и контроль остаются в веб-панели, маршрут сотрудника всегда под рукой" || result.capabilities.headingToDescription !== 20 || result.capabilities.descriptionToCards !== (width <= 768 ? 36 : 48) || result.capabilities.cards.length !== 2 || result.capabilities.cards.some((card, index) => plain(card.title) !== expectedCapabilities[index][0] || plain(card.description) !== expectedCapabilities[index][1] || !card.imageLoaded || !card.imageAlt || card.imageClipped || (width < 700 && !card.imageSrc?.endsWith(expectedMobileImages[index]))) || result.capabilities.columns !== (width < 700 ? 1 : 2)) {
       throw new Error(`${name}: capabilities ${JSON.stringify(result.capabilities)}`);
     }
     const expectedTools = [
-      ["Веб-панель администратора", "Загрузка заказов, настройка расчёта и контроль на карте."],
-      ["Мобильное приложение сотрудника", "Маршрут, список точек и задачи курьера на Android 10 и выше."],
+      ["Веб-панель администратора", "Загрузка заказов, настройка расчёта и контроль на карте"],
+      ["Мобильное приложение сотрудника", "Маршрут, список точек и задачи курьера на Android 10 и выше"],
       ["Публичный API", "Передача заказов из вашей учётной системы. Настройка обмена выполняется отдельно."],
     ];
-    if (!result.workTools.afterWorkflow || plain(result.workTools.title) !== "Рабочие инструменты для логиста и курьеров" || result.workTools.introCount !== 0 || (width >= 1200 && result.workTools.headingWidth > 801) || result.workTools.cards.length !== 3 || result.workTools.cards.some((card, index) => plain(card.title) !== expectedTools[index][0] || plain(card.description) !== expectedTools[index][1] || !card.iconLoaded || !card.iconBelowText || card.background !== "rgb(40, 49, 54)" || (width < 700 && (card.padding !== "20px" || card.titleSize !== "20px" || card.titleLine !== "24px" || card.descriptionSize !== "16px" || card.descriptionLine !== "24px"))) || result.workTools.metrics.length !== 2 || result.workTools.metrics[0].value !== "350" || plain(result.workTools.metrics[0].label) !== "задач в одном маршрутном плане" || result.workTools.metrics[1].value !== "200" || plain(result.workTools.metrics[1].label) !== "агентов в одном маршруте" || plain(result.workTools.note) !== "В рамках акции доступ предоставляется до 5 агентам-курьерам" || (width >= 700 && (result.workTools.cards[0].y !== result.workTools.cards[1].y || result.workTools.cards[2].y <= result.workTools.cards[0].y || Math.abs(result.workTools.cards[2].width - (result.workTools.cards[0].width + result.workTools.cards[1].width + 32)) > 1)) || (width < 700 && !(result.workTools.cards[0].y < result.workTools.cards[1].y && result.workTools.cards[1].y < result.workTools.cards[2].y && result.workTools.cards[2].y < result.workTools.noteY)) || (width >= 1200 && Math.abs(result.workTools.noteX - (result.workTools.cards[2].x + result.workTools.cards[2].width + 100)) > 1)) {
+    if (!result.workTools.afterDeliveryScenarios || plain(result.workTools.title) !== "Рабочие инструменты для логиста и курьеров" || result.workTools.introCount !== 0 || (width >= 1200 && result.workTools.headingWidth > 801) || result.workTools.cards.length !== 3 || result.workTools.cards.some((card, index) => plain(card.title) !== expectedTools[index][0] || plain(card.description) !== expectedTools[index][1] || !card.iconLoaded || !card.iconBelowText || card.background !== "rgb(40, 49, 54)" || (width < 700 && (card.padding !== "20px" || card.titleSize !== "20px" || card.titleLine !== "24px" || card.descriptionSize !== "16px" || card.descriptionLine !== "24px"))) || result.workTools.metrics.length !== 2 || result.workTools.metrics[0].value !== "350" || plain(result.workTools.metrics[0].label) !== "задач в одном маршрутном плане" || result.workTools.metrics[1].value !== "200" || plain(result.workTools.metrics[1].label) !== "агентов в одном маршруте" || plain(result.workTools.note) !== "В рамках акции доступ предоставляется до 5 агентам-курьерам" || (width >= 700 && (result.workTools.cards[0].y !== result.workTools.cards[1].y || result.workTools.cards[2].y <= result.workTools.cards[0].y || Math.abs(result.workTools.cards[2].width - (result.workTools.cards[0].width + result.workTools.cards[1].width + 32)) > 1)) || (width < 700 && !(result.workTools.cards[0].y < result.workTools.cards[1].y && result.workTools.cards[1].y < result.workTools.cards[2].y && result.workTools.cards[2].y < result.workTools.noteY)) || (width >= 1200 && Math.abs(result.workTools.noteX - (result.workTools.cards[2].x + result.workTools.cards[2].width + 100)) > 1)) {
       throw new Error(`${name}: work tools ${JSON.stringify(result.workTools)}`);
     }
     const [badgeType, navType, actionType] = result.header.typography;
-    if (result.header.dividerHeight !== "1px" || result.header.dividerColor !== "rgba(255, 255, 255, 0.16)" || result.header.badgeGradient.opacity !== "0.16" || !result.header.badgeGradient.background.includes("rgba(255, 255, 255, 0.48)") || !result.header.badgeGradient.background.includes("rgba(255, 255, 255, 0.08)") || result.header.typography.some((style) => !style.family.includes("suisse")) || badgeType.weight !== "500" || badgeType.size !== "12px" || badgeType.lineHeight !== "16px" || navType.weight !== "400" || navType.size !== "16px" || navType.lineHeight !== "24px" || result.header.navColor !== "rgba(255, 255, 255, 0.64)" || actionType.weight !== "500" || actionType.size !== "16px" || actionType.lineHeight !== "24px" || (width > 991 && (result.header.actionHeight !== 48 || result.header.actionColor !== result.header.heroSecondaryColor))) {
+    if (result.header.dividerHeight !== "1px" || result.header.dividerColor !== "rgba(255, 255, 255, 0.16)" || result.header.badgeGradient.opacity !== "0.16" || !result.header.badgeGradient.background.includes("rgba(255, 255, 255, 0.48)") || !result.header.badgeGradient.background.includes("rgba(255, 255, 255, 0.08)") || result.header.typography.some((style) => !style.family.includes("suisse")) || badgeType.weight !== "500" || badgeType.size !== (width <= 768 ? "11px" : "12px") || badgeType.lineHeight !== (width <= 768 ? "14px" : "16px") || navType.weight !== "400" || navType.size !== (width >= 769 && width <= 991 ? "14px" : "16px") || navType.lineHeight !== "24px" || result.header.navColor !== "rgba(255, 255, 255, 0.64)" || actionType.weight !== "500" || actionType.size !== (width >= 769 && width <= 991 ? "14px" : "16px") || actionType.lineHeight !== "24px" || (width > 768 && (result.header.actionHeight !== 48 || result.header.actionColor !== result.header.heroSecondaryColor))) {
       throw new Error(`${name}: campaign header styling ${JSON.stringify(result.header)}`);
     }
-    if (response?.status() !== 200 || result.header.count !== 1 || result.header.height !== 80 || result.header.spacerHeight !== 80 || !result.header.logoLoaded || !result.header.badge || result.header.languageCount !== 0 || result.header.heroTopPadding !== (width <= 991 ? 40 : 80) || (width <= 991 ? !result.header.menuVisible || !result.header.menuLoaded || result.header.navVisible : result.header.menuVisible || !result.header.navVisible || result.header.nav.join() !== "Акция,Как работает,Кому подходит,Вопросы") || plain(result.title) !== "Маршруты на завтра без вечернего ручного планирования" || result.tag !== "Новогодний сезон доставки" || !result.tagIconLoaded || result.tagGeometry.height !== 40 || result.tagGeometry.gap !== "4px" || result.tagGeometry.padding !== "8px 12px" || result.tagGeometry.radius !== "12px" || result.tagGeometry.color !== "rgb(59, 182, 67)" || result.tagGeometry.background !== "rgba(25, 170, 30, 0.12)" || result.tagGeometry.blur !== "blur(40px)" || result.buttons.length !== 2 || !result.imageLoaded || result.keyPoints.length !== 3 || result.keyPoints.some((card, i) => plain(card.title) !== expectedKeyPoints[i][0] || plain(card.description) !== expectedKeyPoints[i][1] || !card.iconLoaded || card.direction !== "row") || result.heroToCards !== (width <= 991 ? 64 : 80) || (width >= 900 && result.keyPoints.some((card) => card.height !== result.keyPoints[0].height)) || plain(result.workflow.title) !== "От списка заказов до маршрута в телефоне" || result.workflow.intro.length !== 1 || result.workflow.eyebrowCount !== 0 || plain(result.workflow.intro[0]) !== "Логист готовит план на завтра. Курьеры начинают день с распределёнными адресами." || result.workflow.headingToDescription !== 20 || result.workflow.descriptionToCards !== (width <= 768 ? 36 : 48) || result.workflow.descriptionStyle.fontSize !== "16px" || result.workflow.descriptionStyle.lineHeight !== "24px" || result.workflow.descriptionStyle.color !== "rgb(255, 255, 255)" || (width >= 900 && result.workflow.columns !== 2) || result.workflow.cards.length !== 4 || result.workflow.cards.some((card, i) => plain(card.heading) !== expectedSteps[i] || plain(card.text) !== expectedStepTexts[i] || card.number !== String(i + 1).padStart(2, "0") || card.clipped) || !result.faq.afterCapabilities || plain(result.faq.title) !== "Вопросы и ответы" || result.faq.questions.length !== 5 || result.faq.questions.some((question, i) => plain(question.text) !== `Заголовок вопроса ${i + 1}` || question.expanded !== (i === 0 ? "true" : "false")) || (width >= 1200 && result.h2TooWide.length) || result.footerCount || result.overflow) {
+    if (response?.status() !== 200 || result.header.count !== 1 || result.header.height !== 80 || result.header.spacerHeight !== 80 || !result.header.logoLoaded || !result.header.badge || result.header.languageCount !== 0 || result.header.heroTopPadding !== (width <= 991 ? 40 : 80) || (width <= 768 ? !result.header.menuVisible || !result.header.menuLoaded || result.header.navVisible : result.header.menuVisible || !result.header.navVisible || result.header.nav.join() !== "Акция,Как работает,Кому подходит,Вопросы") || plain(result.title) !== "Маршруты на завтра без вечернего ручного планирования" || result.tag !== "Новогодний сезон доставки" || !result.tagIconLoaded || result.tagGeometry.height !== 40 || result.tagGeometry.gap !== "4px" || result.tagGeometry.padding !== "8px 12px" || result.tagGeometry.radius !== "12px" || result.tagGeometry.color !== "rgb(59, 182, 67)" || result.tagGeometry.background !== "rgba(25, 170, 30, 0.12)" || result.tagGeometry.blur !== "blur(40px)" || result.buttons.length !== 2 || !result.imageLoaded || result.keyPoints.length !== 3 || result.keyPoints.some((card, i) => plain(card.title) !== expectedKeyPoints[i][0] || plain(card.description) !== expectedKeyPoints[i][1] || !card.iconLoaded || card.direction !== "row") || result.heroToCards !== (width <= 991 ? 64 : 80) || (width >= 900 && result.keyPoints.some((card) => card.height !== result.keyPoints[0].height)) || plain(result.workflow.title) !== "От списка заказов до маршрута в телефоне" || result.workflow.intro.length !== 1 || result.workflow.eyebrowCount !== 0 || plain(result.workflow.intro[0]) !== "Логист готовит план на завтра. Курьеры начинают день с распределёнными адресами." || result.workflow.headingToDescription !== 20 || result.workflow.descriptionToCards !== (width <= 768 ? 36 : 48) || result.workflow.descriptionStyle.fontSize !== "16px" || result.workflow.descriptionStyle.lineHeight !== "24px" || result.workflow.descriptionStyle.color !== "rgb(255, 255, 255)" || (width >= 900 && result.workflow.columns !== 2) || result.workflow.cards.length !== 4 || result.workflow.cards.some((card, i) => plain(card.heading) !== expectedSteps[i] || plain(card.text) !== expectedStepTexts[i] || card.number !== String(i + 1).padStart(2, "0") || card.clipped) || !result.faq.afterCapabilities || plain(result.faq.title) !== "Вопросы и ответы" || result.faq.questions.length !== expectedFaq.length || result.faq.questions.some((question, i) => plain(question.text) !== expectedFaq[i][0] || plain(question.answer) !== expectedFaq[i][1] || question.expanded !== (i === 0 ? "true" : "false")) || (width >= 1200 && result.h2TooWide.length) || result.footerCount || result.overflow) {
       throw new Error(`${name}: ${JSON.stringify({ status: response?.status(), ...result })}`);
     }
+    const audience = await page.locator("#audience-scenarios").evaluate((section) => ({
+      afterKeyPoints: section.previousElementSibling?.id === "key-points",
+      title: section.querySelector("h2")?.textContent,
+      titleWhiteSpace: getComputedStyle(section.querySelector("h2")).whiteSpace,
+      description: section.querySelector("h2 + p")?.textContent,
+      panelTitle: section.querySelector("h3")?.textContent,
+      tags: [...section.querySelectorAll("li")].map((item) => item.textContent),
+      actions: section.querySelectorAll("a, button").length,
+      media: section.querySelector("[class*='media']")?.textContent,
+      mediaBottomGap: Math.round(section.querySelector("[class*='panel']").getBoundingClientRect().bottom - section.querySelector("[class*='media']").getBoundingClientRect().bottom),
+    }));
+    const expectedAudienceTags = ["Планирование и перепланирование маршрутов", "Мобильное приложение с навигатором для курьеров", "Выгрузка построенных маршрутов в Excel", "Сравнение плана и факта"];
+    if (!audience.afterKeyPoints || plain(audience.title) !== "Команде доступ. Заказам маршрут. Вечеру праздник." || audience.titleWhiteSpace !== "normal" || plain(audience.description) !== "Подключите небольшую команду к 2ГИС ГеоПоток: Логистика и подготовьте маршруты следующего рабочего дня" || plain(audience.panelTitle) !== "Что входит" || audience.tags.length !== 4 || audience.tags.some((tag, index) => plain(tag) !== expectedAudienceTags[index]) || audience.actions !== 0 || audience.mediaBottomGap !== 0) throw new Error(`${name}: audience ${JSON.stringify(audience)}`);
     await page.screenshot({ path: join(output, `geoflow-hero-${name}.png`), fullPage: true });
+    await page.evaluate(() => { const section = document.querySelector("#audience-scenarios"); window.scrollTo(0, section.getBoundingClientRect().top + scrollY - 100); });
+    await page.screenshot({ path: join(output, `geoflow-audience-${name}.png`) });
     const headerState = () => page.evaluate(() => {
       const header = document.querySelector("body > header");
       return { mode: header.dataset.headerMode, position: getComputedStyle(header).position, top: Math.round(header.getBoundingClientRect().top) };
     });
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.waitForTimeout(80);
     await page.evaluate(() => window.scrollTo(0, 170));
     await page.waitForTimeout(80);
     const beforeThreshold = await headerState();
@@ -191,7 +220,7 @@ try {
     if (beforeThreshold.mode !== "top" || beforeThreshold.position !== "absolute" || afterThreshold.mode !== "sticky" || afterThreshold.position !== "fixed" || afterThreshold.top !== 0 || down.mode !== "sticky" || down.top !== 0 || up.mode !== "sticky" || up.top !== 0) {
       throw new Error(`${name}: header scroll behavior ${JSON.stringify({ beforeThreshold, afterThreshold, down, up })}`);
     }
-    console.log(`${name}: ${JSON.stringify(result)}`);
+    console.log(`${name}: OK`);
     await page.close();
   }
 } finally {

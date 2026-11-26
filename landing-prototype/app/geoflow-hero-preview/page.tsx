@@ -8,11 +8,12 @@ import { ImageFeatureCards } from "../../components/image-feature-cards/ImageFea
 import { IconFeatureNumbers } from "../../components/icon-feature-numbers/IconFeatureNumbers";
 import { DeliveryScenarios } from "../../components/delivery-scenarios/DeliveryScenarios";
 import { OptionalCtaForm } from "../../components/optional-cta-form/OptionalCtaForm";
-import { capabilities, connectForm, deliveryScenarios, faq, hero, keyPoints, workTools, workflow } from "../../content/geoflow-hero-preview";
+import { AudienceScenarios } from "../../components/audience-scenarios/AudienceScenarios";
+import { audienceScenarios, capabilities, connectForm, deliveryScenarios, faq, hero, keyPoints, workTools, workflow } from "../../content/geoflow-hero-preview";
 import { typographContent } from "../../lib/typography";
 import styles from "./page.module.css";
 
-const copy = typographContent({ hero, keyPoints, workflow, deliveryScenarios, capabilities, workTools, faq, connectForm });
+const copy = typographContent({ hero, keyPoints, audienceScenarios, workflow, deliveryScenarios, capabilities, workTools, faq, connectForm });
 
 export const metadata: Metadata = {
   title: "Маршруты на завтра — акция ГеоПотока",
@@ -21,5 +22,5 @@ export const metadata: Metadata = {
 };
 
 export default function GeoflowHeroPreviewPage() {
-  return <><CampaignHeader /><main className={styles.page}><div className={styles.heroStage}><Hero {...copy.hero} /></div><MainValues {...copy.keyPoints} /><StartWork {...copy.workflow} /><DeliveryScenarios {...copy.deliveryScenarios} /><IconFeatureNumbers {...copy.workTools} /><ImageFeatureCards {...copy.capabilities} /><Faq {...copy.faq} /><OptionalCtaForm {...copy.connectForm} /></main></>;
+  return <><CampaignHeader holidayGarland /><main className={styles.page}><div className={styles.heroStage}><Hero {...copy.hero} /></div><MainValues {...copy.keyPoints} /><AudienceScenarios {...copy.audienceScenarios} /><StartWork {...copy.workflow} /><DeliveryScenarios {...copy.deliveryScenarios} /><IconFeatureNumbers {...copy.workTools} /><ImageFeatureCards {...copy.capabilities} /><Faq {...copy.faq} /><OptionalCtaForm {...copy.connectForm} /></main></>;
 }

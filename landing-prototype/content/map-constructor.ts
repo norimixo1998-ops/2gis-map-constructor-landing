@@ -22,7 +22,6 @@ export const hero: HeroProps = {
   media: {
     kind: "meaningful",
     alt: "Объёмная иллюстрация карты с метками и маршрутами",
-    animation: "float",
     desktop: { src: "/images/hero/constructor-desktop.png", placement: "contain" },
     mobile: { src: "/images/hero/constructor-mobile.png", placement: "contain" },
   },

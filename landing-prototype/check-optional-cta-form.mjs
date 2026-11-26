@@ -6,9 +6,9 @@ const { chromium } = require("C:/Users/Legion/.cache/codex-runtimes/codex-primar
 const browser = await chromium.launch({ headless: true, executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe" });
 
 try {
-  for (const width of [375, 768, 1024, 1440]) {
+  for (const width of [375, 390, 430, 768, 1024, 1440]) {
     const page = await browser.newPage({ viewport: { width, height: 900 }, deviceScaleFactor: 1 });
-    const response = await page.goto("http://127.0.0.1:3001/geoflow-hero-preview");
+    const response = await page.goto(`http://127.0.0.1:${process.env.PORT ?? "3000"}/geoflow-hero-preview`);
     await page.evaluate(() => document.fonts.ready);
     const result = await page.locator("#connect").evaluate((section) => {
       const heading = section.querySelector("h2").getBoundingClientRect();
@@ -19,6 +19,7 @@ try {
       const descriptionStyle = getComputedStyle(description);
       return {
         headingGap: paragraph.top - heading.bottom,
+        formGap: form.top - paragraph.bottom,
         bottomGap: form.bottom - intro.bottom,
         descriptionSize: descriptionStyle.fontSize,
         descriptionColor: descriptionStyle.color,
@@ -28,6 +29,12 @@ try {
       };
     });
     await page.locator("#connect").screenshot({ path: `preview-checks/optional-cta-form-${width}.png` });
+    if (width === 375) {
+      await page.locator("#connect button[type=submit]").click();
+      const invalid = await page.locator("#connect [role=alert]").count();
+      const focused = await page.evaluate(() => document.activeElement?.getAttribute("name"));
+      if (invalid < 2 || focused !== "fullName") throw new Error(`mobile validation: ${JSON.stringify({ invalid, focused })}`);
+    }
     if (width === 1440) {
       await page.locator("#delivery-scenarios h2").screenshot({ path: "preview-checks/delivery-scenarios-heading-1440.png" });
       await page.locator("#capabilities h2").screenshot({ path: "preview-checks/capabilities-heading-1440.png" });
@@ -39,7 +46,7 @@ try {
       });
       if (Math.abs(errorAlignment.offset) > 1 || errorAlignment.errors < 2) throw new Error(`error alignment: ${JSON.stringify(errorAlignment)}`);
     }
-    if (response?.status() !== 200 || Math.abs(result.headingGap - 20) > 1 || (width >= 1080 && Math.abs(result.bottomGap) > 1) || result.descriptionSize !== "16px" || result.descriptionColor !== "rgb(255, 255, 255)" || result.fieldCount !== 4 || result.anchorCount < 2 || result.overflow) {
+    if (response?.status() !== 200 || Math.abs(result.headingGap - (width < 768 ? 12 : 20)) > 1 || (width < 1080 && Math.abs(result.formGap - (width <= 768 ? 36 : 48)) > 1) || (width >= 1080 && Math.abs(result.bottomGap) > 1) || result.descriptionSize !== "16px" || result.descriptionColor !== "rgb(255, 255, 255)" || result.fieldCount !== 4 || result.anchorCount < 2 || result.overflow) {
       throw new Error(`${width}px: ${JSON.stringify(result)}`);
     }
     console.log(`${width}px: ${JSON.stringify(result)}`);

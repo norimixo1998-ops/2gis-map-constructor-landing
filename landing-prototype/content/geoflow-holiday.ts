@@ -18,7 +18,6 @@ export const hero: HeroProps = {
     alt: "Объёмная иллюстрация карты и маршрута ГеоПотока",
     desktop: { src: "/images/hero/logistics-desktop.png", placement: "contain" },
     mobile: { src: "/images/hero/logistics-mobile.png", placement: "contain" },
-    animation: "float",
   },
 };
 

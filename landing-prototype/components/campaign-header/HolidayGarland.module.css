@@ -1,0 +1,72 @@
+.garland {
+  --wire-color: #8b999a;
+  --wire-width: 1.5px;
+  position: absolute;
+  top: 70px;
+  right: 0;
+  left: 0;
+  height: 58px;
+  z-index: 2;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
+
+.desktopLights, .mobileLights { display: block; width: 100%; height: 55px; overflow: visible; }
+.mobileLights { display: none; }
+.wire { fill: none; stroke: var(--wire-color); stroke-width: var(--wire-width); vector-effect: non-scaling-stroke; }
+.socket { fill: #aab5a7; }
+.glass { fill: var(--bulb-color); opacity: .28; transition: opacity 350ms ease, filter 350ms ease; }
+.glint { fill: none; stroke: #fff; stroke-linecap: round; stroke-width: 1.4; opacity: .22; transition: opacity 350ms ease; }
+.lit .glass { opacity: 1; filter: drop-shadow(0 0 6px var(--bulb-color)) drop-shadow(0 0 10px var(--bulb-color)); animation: twinkle var(--pulse-duration) ease-in-out var(--pulse-delay) infinite; }
+.lit .glint { opacity: .8; }
+
+@keyframes twinkle {
+  0% { opacity: .55; }
+  22% { opacity: .96; }
+  48% { opacity: .7; }
+  71% { opacity: 1; }
+  100% { opacity: .58; }
+}
+
+.pull {
+  position: absolute;
+  top: 24px;
+  right: calc(8.333333% - 34px);
+  display: flex;
+  width: 68px;
+  height: 140px;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+}
+.pullCord { width: var(--wire-width); height: 64px; flex: none; background: var(--wire-color); transition: height 220ms ease; }
+.pullOrnament { display: block; width: 44px; height: 44px; margin-top: -1px; overflow: hidden; border-radius: 50%; background: transparent; transition: background 200ms ease; }
+.pullIcon { display: block; width: 44px; height: 44px; }
+.pulled .pullCord { height: 76px; }
+.pulled .pullOrnament, .pull:focus-visible .pullOrnament { background: rgb(255 255 255 / 14%); }
+.pull:focus-visible { outline: 2px solid #fff; outline-offset: 2px; border-radius: 20px; }
+
+@media (max-width: 599px) {
+  .pullOrnament { backdrop-filter: blur(10px); }
+}
+
+@media (max-width: 991px) {
+  .desktopLights { display: none; }
+  .mobileLights { display: block; }
+  .pull { top: 8px; right: calc(20% - 34px); }
+}
+
+@media (min-width: 600px) and (max-width: 991px) {
+  .desktopLights { display: block; }
+  .mobileLights { display: none; }
+  .pull { top: 24px; right: calc(8.333333% - 34px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .garland, .glass, .glint, .pullCord, .pullOrnament { transition: none; }
+  .lit .glass { animation: none; }
+}

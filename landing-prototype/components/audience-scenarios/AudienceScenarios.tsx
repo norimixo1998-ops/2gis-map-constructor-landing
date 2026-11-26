@@ -1,3 +1,4 @@
+import { publicAsset } from "../../lib/public-asset";
 import styles from "./AudienceScenarios.module.css";
 
 export type AudienceScenariosProps = {
@@ -6,7 +7,7 @@ export type AudienceScenariosProps = {
   description?: string;
   panelTitle?: string;
   items: string[];
-  image?: { src: string; alt: string };
+  image?: { desktop: string; mobile?: string; alt: string };
 };
 
 /** Optional B03 block. The brief decides whether it appears on a page. */
@@ -29,7 +30,9 @@ export function AudienceScenarios({ id = "audiences", title, description, panelT
           </ul>
         </div>
         <div className={styles.media}>
-          {image ? <img src={image.src} alt={image.alt} /> : <span>Изображение</span>}
+          {image ? <img className={styles.desktopImage} src={publicAsset(image.desktop)} alt={image.alt} /> : null}
+          {image?.mobile ? <img className={styles.mobileImage} src={publicAsset(image.mobile)} alt={image.alt} /> : null}
+          {!image ? <span>Изображение</span> : !image.mobile ? <span className={styles.mobilePlaceholder}>Изображение</span> : null}
         </div>
       </div>
     </section>
