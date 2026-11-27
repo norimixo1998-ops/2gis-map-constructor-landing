@@ -80,7 +80,7 @@ export function CampaignHeader({ holidayGarland = false }: { holidayGarland?: bo
           <div className={styles.row}>
             <div className={styles.brand}>
               <img className={styles.logo} src={publicAsset("/brand/logo-2gis.svg")} alt="2ГИС" />
-              <span className={styles.badge}>2ГИС Геопоток: Логистика</span>
+              <span className={styles.badge}>2ГИС Геопоток</span>
             </div>
             <div className={styles.desktopControls}>
               <nav className={styles.navigation} aria-label="Навигация по лендингу">

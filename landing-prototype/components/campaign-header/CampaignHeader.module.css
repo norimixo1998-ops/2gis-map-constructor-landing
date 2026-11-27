@@ -39,15 +39,7 @@
   .action { padding-inline: 12px; }
 }
 
-@media (min-width: 769px) and (max-width: 991px) {
-  .row, .desktopControls { gap: 12px; }
-  .logo { width: 121px; height: auto; }
-  .badge { display: none; }
-  .navigation { gap: 12px; font-size: 14px; }
-  .action { padding-inline: 12px; font-size: 14px; }
-}
-
-@media (max-width: 768px) {
+@media (max-width: 991px) {
   .header { min-height: 80px; background: transparent; }
   .inner { width: 100%; }
   .row { height: 64px; min-height: 0; gap: 8px; margin-top: 16px; padding-inline: 16px; }

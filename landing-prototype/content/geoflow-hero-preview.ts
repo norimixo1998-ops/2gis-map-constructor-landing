@@ -5,15 +5,15 @@ import type { FaqProps } from "../components/faq/Faq";
 import type { ImageFeatureCardsProps } from "../components/image-feature-cards/ImageFeatureCards";
 import type { IconFeatureNumbersProps } from "../components/icon-feature-numbers/IconFeatureNumbers";
 import type { DeliveryScenariosProps } from "../components/delivery-scenarios/DeliveryScenarios";
-import type { OptionalCtaFormProps } from "../components/optional-cta-form/OptionalCtaForm";
+import type { IntermediateCtaProps } from "../components/intermediate-cta/IntermediateCta";
 import type { AudienceScenariosProps } from "../components/audience-scenarios/AudienceScenarios";
 
 export const hero: HeroProps = {
-  eyebrow: "Новогодний сезон доставки",
+  eyebrow: "Геопоток бесплатно до конца февраля",
   eyebrowIconSrc: "/icons/geoflow-holiday/snowflake-stroke.svg",
-  title: "Маршруты на завтра без вечернего ручного планирования",
+  title: "Доставка на завтра без ручного планирования",
   titleBreakAfter: "завтра",
-  description: "Соберите заказы за день, задайте время доставки и получите готовые маршруты на завтра за 5 минут",
+  description: "Соберите заказы, при необходимости задайте время доставки и получите готовые маршруты на завтра, неделю, месяц вперёд за 5 минут",
   actions: [
     { kind: "primary", label: "Подключить курьеров", href: "#connect" },
     { kind: "secondary", label: "Посмотреть, как считается маршрут", href: "#workflow" },
@@ -31,15 +31,15 @@ export const keyPoints: MainValuesProps = {
   orientation: "horizontal",
   items: [
     { title: "Срок акции", description: "До 28 февраля 2027 года", iconSrc: "/images/benefits/main-values/clock-blue.png" },
-    { title: "До 5 курьеров", description: "И главный пользователь", iconSrc: "/images/benefits/main-values/courier.png" },
+    { title: "До 5 курьеров", description: "Вместе с диспетчером", iconSrc: "/images/benefits/main-values/courier.png" },
     { title: "Без ограничений", description: "На количество маршрутов", iconSrc: "/images/benefits/main-values/gear.png" },
   ],
 };
 
 export const audienceScenarios: AudienceScenariosProps = {
   id: "audience-scenarios",
-  title: "Команде доступ. Заказам маршрут. Вечеру праздник.",
-  description: "Подключите небольшую команду к 2ГИС ГеоПоток: Логистика и подготовьте маршруты следующего рабочего дня",
+  title: "Подключите команду и планируйте маршруты заранее",
+  description: "Подключитесь к 2ГИС Геопотоку, подготовьте маршрут следующего рабочего дня/недели/месяца",
   panelTitle: "Что входит",
   items: [
     "Планирование и перепланирование маршрутов",
@@ -57,7 +57,7 @@ export const audienceScenarios: AudienceScenariosProps = {
 export const workflow: StartWorkProps = {
   id: "workflow",
   title: "От списка заказов до маршрута в телефоне",
-  description: "Логист готовит план на завтра. Курьеры начинают день с распределёнными адресами.",
+  description: "Логист готовит план на завтра, курьеры начинают день с распределенными задачами.",
   desktopColumns: 2,
   items: [
     {
@@ -81,19 +81,20 @@ export const workflow: StartWorkProps = {
 
 export const deliveryScenarios: DeliveryScenariosProps = {
   id: "delivery-scenarios",
-  title: "Сценарии для доставки, где важны адреса и время",
+  title: "Сценарий для доставки, где важно выполнить задачу вовремя",
   titleBreakBefore: "где",
-  description: "Сценарии для небольших команд, которые сейчас распределяют заказы в таблицах, мессенджерах и по телефону",
+  description: "Сценарии для команд, которые сейчас распределяют заказы в таблицах, мессенджерах и по телефону",
   items: [
-    { title: "Интернет-магазины с собственной доставкой", short: "Магазины", color: "#12951a", situation: "Вечером заказы нужно распределить по районам", automation: "Утром каждый курьер получает готовый маршрут" },
-    { title: "Подарки и праздничная атрибутика", short: "Подарки", color: "#f4776e", situation: "В пиковый день адресов больше, а подарок нужен к точному времени", automation: "Маршрут заранее учитывает временные окна" },
-    { title: "Дистрибьюторы", short: "Дистрибуция", color: "#ffbf45", situation: "Товар нужно забрать у производителя и развезти по торговым точкам. У каждой — своё время приёмки.", automation: "Сервис рассчитывает маршрут от производителя до конечных точек с учётом времени доставки" },
-    { title: "Документы и полиграфия", short: "Полиграфия", color: "#65aaff", situation: "Оригиналы и тиражи нужно передать в офисы до конца рабочего дня", automation: "Маршрут строится по дедлайнам получателей, а не по порядку заказов" },
-    { title: "Строительные и хозяйственные магазины", short: "Стройка", color: "#a892ff", situation: "В фургон помещается не всё: важно, что и в каком порядке везти", automation: "Точки группируются по объёму заказа и району доставки" },
-    { title: "Зоомагазины и ветаптеки", short: "Зоо", color: "#ef75b0", situation: "Корм заказывают регулярно, по одним и тем же адресам", automation: "Повторные доставки ставятся в маршрут в один клик" },
-    { title: "Цветы и флористика", short: "Цветы", color: "#40c4b3", situation: "Букет нужен к часу, а получателя может не быть дома", automation: "Временные окна и запас на вручение закладываются в маршрут" },
-    { title: "Фермерские продукты и подписки", short: "Ферма", color: "#a5d65b", situation: "Каждую неделю — одни и те же клиенты в разных районах", automation: "Регулярные маршруты сохраняются и повторяются по расписанию" },
-    { title: "Аптеки и медтовары", short: "Аптеки", color: "#59bed4", situation: "Часть заказов срочные, часть — плановые на день", automation: "Срочные точки поднимаются в начало маршрута автоматически" },
+    { title: "Интернет-магазины с собственной доставкой", color: "#12951a", situation: "Вечером заказы нужно распределить по районам", automation: "Постройте маршруты, чтобы утром каждый курьер получил свой план" },
+    { title: "Подарки и праздничная атрибутика", color: "#f4776e", situation: "В пиковый день адресов больше, а подарок нужен к точному времени", automation: "Задайте время доставки — маршрут учтёт временные окна" },
+    { title: "Дистрибьюторы", color: "#ffbf45", situation: "Товар нужно забрать у производителя и развезти по торговым точкам. У каждой — своё время приёмки", automation: "Рассчитайте маршрут от производителя до торговых точек с учётом времени доставки" },
+    { title: "Документы и полиграфия", color: "#65aaff", situation: "Оригиналы и тиражи нужно передать в офисы до конца рабочего дня", automation: "Укажите сроки доставки для каждого получателя при построении маршрута" },
+    { title: "Строительные и хозяйственные магазины", color: "#a892ff", situation: "В фургон помещается не всё: важно, что и в каком порядке везти", automation: "Группируйте точки по объёму заказа и району доставки" },
+    { title: "Зоомагазины и ветаптеки", color: "#ef75b0", situation: "Корм заказывают регулярно, по одним и тем же адресам", automation: "Добавляйте повторные доставки в маршрут в один клик" },
+    { title: "Цветы и флористика", color: "#40c4b3", situation: "Букет нужен к часу, а получателя может не быть дома", automation: "Задайте временное окно и запас времени на вручение при построении маршрута" },
+    { title: "Фермерские продукты и подписки", color: "#a5d65b", situation: "Каждую неделю — одни и те же клиенты в разных районах", automation: "Сохраните регулярные маршруты и повторяйте их по расписанию" },
+    { title: "Аптеки и медтовары", color: "#59bed4", situation: "Часть заказов срочные, часть — плановые на день", automation: "Поставьте срочные точки в начало маршрута" },
+    { title: "Коммунальные службы и управляющие компании", color: "#f4a261", situation: "В течение дня поступили срочные заявки. Нужно определить ответственных.", automation: "Перепланирование списка задач с учётом доступных исполнителей и отправка им уведомлений об изменениях." },
   ],
 };
 
@@ -112,7 +113,7 @@ export const capabilities: ImageFeatureCardsProps = {
     },
     {
       title: "Приложение курьера",
-      description: "Получайте готовую последовательность адресов на рабочий день и детальный список задач для каждой точки. Удобный мобильный интерфейс поможет эффективно выполнять работу без лишних действий. Доступно на Android (10 и выше) и iOS.",
+      description: "Получайте готовую последовательность адресов на рабочий день и детальный список задач для каждой точки. Удобный мобильный интерфейс поможет эффективно выполнять работу без лишних действий.",
       imageSrc: "/images/image-feature-cards/Web-logistics-desktop.png",
       mobileImageSrc: "/images/image-feature-cards/Web-logistics-mobile.png",
       imageAlt: "Маршрут курьера на карте в мобильном приложении",
@@ -131,7 +132,7 @@ export const workTools: IconFeatureNumbersProps = {
     },
     {
       title: "Мобильное приложение сотрудника",
-      description: "Маршрут, список точек и задачи курьера на Android 10 и выше",
+      description: "Маршрут, список точек и задачи курьера на Android 10 и iOS",
       iconSrc: "/images/icon-feature-cards/point-top-right-to-bottom-left-fill.svg",
     },
     {
@@ -144,7 +145,7 @@ export const workTools: IconFeatureNumbersProps = {
     { value: "350", label: "задач в одном маршрутном плане" },
     { value: "200", label: "агентов в одном маршруте" },
   ],
-  note: "В рамках акции доступ предоставляется до 5 агентам-курьерам",
+  note: "В рамках акции доступ предоставляется до пяти исполнителей (курьеров)",
 };
 
 export const faq: FaqProps = {
@@ -165,9 +166,19 @@ export const faq: FaqProps = {
   ],
 };
 
-export const connectForm: OptionalCtaFormProps = {
+export const connectCta: IntermediateCtaProps = {
   id: "connect",
   title: "Подготовьте маршруты следующего рабочего дня",
   description: "Оставьте рабочие контакты, чтобы обсудить подключение команды к 2ГИС ГеоПоток: Логистика",
-  submitLabel: "Подключить курьеров",
+  primaryAction: {
+    label: "Подключить курьеров",
+    href: "https://geoflow.2gis.ru/auth/register?utm_content=landing_page&utm_source=dev.2gis-geoflow&utm_medium=dev.2gis-geoflow&utm_campaign=dev.2gis-geoflow",
+    target: "_blank",
+  },
+  image: {
+    desktop: "/images/intermediate-cta/illustration-desktop.png",
+    mobile: "/images/intermediate-cta/illustration-mobile.png",
+    alt: "",
+    fit: "contain",
+  },
 };

@@ -4,7 +4,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { publicAsset } from "../../lib/public-asset";
 import styles from "./DeliveryScenarios.module.css";
 
-export type DeliveryScenario = { title: string; short: string; color: string; situation: string; automation: string };
+export type DeliveryScenario = { title: string; color: string; situation: string; automation: string };
 export type DeliveryScenariosProps = { id?: string; title: string; titleBreakBefore?: string; description?: string; items: DeliveryScenario[] };
 
 export function DeliveryScenarios({ id = "delivery-scenarios", title, titleBreakBefore, description, items }: DeliveryScenariosProps) {
@@ -45,18 +45,15 @@ export function DeliveryScenarios({ id = "delivery-scenarios", title, titleBreak
         </button>
         <div className={styles.body} id={`${id}-scenario-${index}`} inert={selected !== index}>
           <div className={styles.bodyInner}>
-            <span className={styles.counter}>Сценарий {String(index + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}</span>
             <h3>{item.title}</h3>
             <div className={styles.detail}><span>Ситуация</span><p>{item.situation}</p></div>
-            <div className={styles.detail}><span>Автоматизация</span><p>{item.automation}</p></div>
+            <div className={styles.detail}><span>Как мы решаем</span><p>{item.automation}</p></div>
           </div>
         </div>
       </article>)}
     </div>
     <div className={styles.navigation} aria-label="Переключить сценарий">
-      <span className={styles.progress}>{String(selected + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}</span>
       <div className={styles.dots}>{items.map((item, index) => <button key={`${index}-${item.title}`} type="button" className={index === selected ? styles.selectedDot : ""} onClick={() => setActive(index)} aria-label={`Показать сценарий: ${item.title}`} aria-current={index === selected ? "true" : undefined}><span /></button>)}</div>
-      <span className={styles.currentName}>{items[selected].short}</span>
     </div>
   </section>;
 }

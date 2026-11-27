@@ -9,11 +9,9 @@ try {
     const page = await browser.newPage({ viewport: { width, height: 900 }, deviceScaleFactor: 1 });
     const response = await page.goto(`http://127.0.0.1:${process.env.PORT ?? "3000"}/geoflow-hero-preview`, { waitUntil: "networkidle" });
     const garland = page.locator("[data-garland-lit]");
-    const pull = garland.getByRole("button", { name: "Зажечь новогоднюю гирлянду" });
-    if (response?.status() !== 200 || await garland.count() !== 1 || await pull.getAttribute("aria-pressed") !== "false") throw new Error(`${width}: garland missing or initially lit`);
-    const offOpacity = await garland.locator("svg:first-child g path").first().evaluate((node) => getComputedStyle(node).opacity);
-    if (offOpacity !== "0.28") throw new Error(`${width}: off bulbs are not dimmed (${offOpacity})`);
-    await page.screenshot({ path: `preview-checks/holiday-garland-off-${width}.png`, clip: { x: 0, y: 0, width, height: 520 } });
+    const pull = garland.getByRole("button", { name: "Погасить новогоднюю гирлянду" });
+    if (response?.status() !== 200 || await garland.count() !== 1 || await garland.getAttribute("data-garland-lit") !== "true" || await pull.getAttribute("aria-pressed") !== "true") throw new Error(`${width}: garland missing or initially unlit`);
+    await page.screenshot({ path: `preview-checks/holiday-garland-on-${width}.png`, clip: { x: 0, y: 0, width, height: 520 } });
     await pull.hover();
     await page.waitForTimeout(300);
     const hover = await page.evaluate(() => {
@@ -23,14 +21,20 @@ try {
       const ornament = button.querySelector("img").parentElement;
       return { lit: garland.getAttribute("data-garland-lit"), pressed: button.getAttribute("aria-pressed"), cordHeight: cord.getBoundingClientRect().height, background: getComputedStyle(ornament).backgroundColor, blur: getComputedStyle(ornament).backdropFilter };
     });
-    if (hover.lit !== "false" || hover.pressed !== "false" || hover.cordHeight < 75 || hover.background !== "rgba(255, 255, 255, 0.14)" || (width < 600 ? hover.blur !== "blur(10px)" : hover.blur !== "none")) throw new Error(`${width}: hover ${JSON.stringify(hover)}`);
+    if (hover.lit !== "true" || hover.pressed !== "true" || hover.cordHeight < 75 || hover.background !== "rgba(255, 255, 255, 0.14)" || (width < 600 ? hover.blur !== "blur(10px)" : hover.blur !== "none")) throw new Error(`${width}: hover ${JSON.stringify(hover)}`);
     await page.screenshot({ path: `preview-checks/holiday-garland-hover-${width}.png`, clip: { x: 0, y: 0, width, height: 520 } });
     await page.mouse.move(0, 0);
-    if (await garland.getAttribute("data-garland-lit") !== "false") throw new Error(`${width}: hover lit the garland`);
+    if (await garland.getAttribute("data-garland-lit") !== "true") throw new Error(`${width}: hover changed the garland`);
     await pull.click();
-    if (await garland.getAttribute("data-garland-lit") !== "true" || await garland.getByRole("button", { name: "Погасить новогоднюю гирлянду" }).getAttribute("aria-pressed") !== "true") throw new Error(`${width}: lights did not turn on`);
+    if (await garland.getAttribute("data-garland-lit") !== "false" || await garland.getByRole("button", { name: "Зажечь новогоднюю гирлянду" }).getAttribute("aria-pressed") !== "false") throw new Error(`${width}: lights did not turn off`);
     await page.mouse.move(0, 0);
-    if (await garland.getAttribute("data-garland-lit") !== "true") throw new Error(`${width}: click did not keep lights on after hover`);
+    if (await garland.getAttribute("data-garland-lit") !== "false") throw new Error(`${width}: click did not keep lights off after hover`);
+    await page.waitForFunction(() => getComputedStyle(document.querySelector("[data-garland-lit] svg:first-child g path")).opacity === "0.28");
+    const offOpacity = await garland.locator("svg:first-child g path").first().evaluate((node) => getComputedStyle(node).opacity);
+    if (offOpacity !== "0.28") throw new Error(`${width}: off bulbs are not dimmed (${offOpacity})`);
+    await page.screenshot({ path: `preview-checks/holiday-garland-off-${width}.png`, clip: { x: 0, y: 0, width, height: 520 } });
+    await garland.getByRole("button", { name: "Зажечь новогоднюю гирлянду" }).click();
+    if (await garland.getAttribute("data-garland-lit") !== "true") throw new Error(`${width}: lights did not turn back on`);
     await garland.locator("button").hover();
     await page.waitForTimeout(500);
     const layout = await page.evaluate(() => {
@@ -71,16 +75,16 @@ try {
   await other.close();
   const reduced = await browser.newPage({ reducedMotion: "reduce" });
   await reduced.goto(`http://127.0.0.1:${process.env.PORT ?? "3000"}/geoflow-hero-preview`);
-  await reduced.getByRole("button", { name: "Зажечь новогоднюю гирлянду" }).click();
+  if (await reduced.locator("[data-garland-lit]").getAttribute("data-garland-lit") !== "true") throw new Error("reduced motion: garland not initially lit");
   const reducedStyle = await reduced.locator("[data-garland-lit] svg:first-child g path").first().evaluate((node) => ({ animation: getComputedStyle(node).animationName, opacity: getComputedStyle(node).opacity }));
   if (reducedStyle.animation !== "none" || reducedStyle.opacity !== "1") throw new Error(`reduced motion: ${JSON.stringify(reducedStyle)}`);
   await reduced.close();
   const touch = await browser.newPage({ viewport: { width: 375, height: 900 }, hasTouch: true, isMobile: true });
   await touch.goto(`http://127.0.0.1:${process.env.PORT ?? "3000"}/geoflow-hero-preview`);
-  await touch.getByRole("button", { name: "Зажечь новогоднюю гирлянду" }).tap();
-  if (await touch.locator("[data-garland-lit]").getAttribute("data-garland-lit") !== "true") throw new Error("touch: tap did not turn lights on");
   await touch.getByRole("button", { name: "Погасить новогоднюю гирлянду" }).tap();
   if (await touch.locator("[data-garland-lit]").getAttribute("data-garland-lit") !== "false") throw new Error("touch: tap did not turn lights off");
+  await touch.getByRole("button", { name: "Зажечь новогоднюю гирлянду" }).tap();
+  if (await touch.locator("[data-garland-lit]").getAttribute("data-garland-lit") !== "true") throw new Error("touch: tap did not turn lights back on");
   await touch.close();
 } finally {
   await browser.close();

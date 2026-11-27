@@ -19,7 +19,7 @@ function Bulb({ x, y, index }: { x: number; y: number; index: number }) {
 }
 
 export function HolidayGarland() {
-  const [isOn, setIsOn] = useState(false);
+  const [isOn, setIsOn] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
 
   return (

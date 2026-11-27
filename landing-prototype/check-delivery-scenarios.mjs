@@ -11,7 +11,7 @@ try {
     const section = page.locator("#delivery-scenarios");
     const triggers = section.locator("button[aria-expanded]");
     const count = await triggers.count();
-    if (response?.status() !== 200 || count !== 9) throw new Error(`${width}: page or scenarios missing (status ${response?.status()}, found ${count}, title ${await page.title()})`);
+    if (response?.status() !== 200 || count !== 10) throw new Error(`${width}: page or scenarios missing (status ${response?.status()}, found ${count}, title ${await page.title()})`);
     if (await triggers.first().getAttribute("aria-expanded") !== "true") throw new Error(`${width}: first scenario is not open initially`);
     const firstAccent = await section.locator("article").first().evaluate(element => getComputedStyle(element).getPropertyValue("--accent").trim());
     if (firstAccent !== "#12951a") throw new Error(`${width}: first scenario does not use primary color`);
@@ -45,10 +45,18 @@ try {
     if (await triggers.nth(2).getAttribute("aria-expanded") !== "true") throw new Error(`${width}: distributor scenario did not open`);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
     if (overflow) throw new Error(`${width}: horizontal page overflow`);
+    const scale = await section.evaluate((element) => {
+      const panels = element.querySelector("[class*='panels']").getBoundingClientRect();
+      const navigation = element.querySelector("[class*='navigation']");
+      const dots = navigation.querySelector("[class*='dots']");
+      const bounds = dots.getBoundingClientRect();
+      return { left: bounds.left - panels.left, right: panels.right - bounds.right, buttons: dots.querySelectorAll("button").length, children: navigation.children.length, text: navigation.textContent.trim() };
+    });
+    if (Math.abs(scale.left) > 1 || Math.abs(scale.right) > 1 || scale.buttons !== count || scale.children !== 1 || scale.text) throw new Error(`${width}: scale alignment ${JSON.stringify(scale)}`);
     const body = section.locator("#delivery-scenarios-scenario-2");
     if (!(await body.isVisible())) throw new Error(`${width}: active scenario content hidden`);
     const scenarioCopy = await body.locator("h3, [class*='detail'] p").allTextContents();
-    if (scenarioCopy.map((text) => text.replace(/\u00a0/g, " ")).join("|") !== "Дистрибьюторы|Товар нужно забрать у производителя и развезти по торговым точкам. У каждой — своё время приёмки.|Сервис рассчитывает маршрут от производителя до конечных точек с учётом времени доставки") throw new Error(`${width}: distributor copy ${JSON.stringify(scenarioCopy)}`);
+    if (scenarioCopy.map((text) => text.replace(/\u00a0/g, " ")).join("|") !== "Дистрибьюторы|Товар нужно забрать у производителя и развезти по торговым точкам. У каждой — своё время приёмки|Рассчитайте маршрут от производителя до торговых точек с учётом времени доставки") throw new Error(`${width}: distributor copy ${JSON.stringify(scenarioCopy)}`);
     if (width >= 1100) await page.waitForTimeout(550);
     const typography = await page.evaluate(() => {
       const section = document.querySelector("#delivery-scenarios");
@@ -68,10 +76,19 @@ try {
       const lastRect = inner?.lastElementChild?.getBoundingClientRect();
       return { title: style(title)?.fontSize, titleWeight: style(title)?.fontWeight, openTitle: style(openTitle)?.fontSize, openWeight: style(openTitle)?.fontWeight, situation: style(situation)?.fontSize, automation: style(automation)?.fontSize, label: style(label)?.fontSize, families: [title, openTitle, situation, automation, label].map(element => style(element)?.fontFamily ?? ""), topGap: outerRect && firstRect ? firstRect.top - outerRect.top : null, bottomGap: outerRect && lastRect ? outerRect.bottom - lastRect.bottom : null, chevron: chevron?.getAttribute("src"), chevronLoaded: Boolean(chevron?.complete && chevron.naturalWidth), numberTitleTopGap: number && title ? number.getBoundingClientRect().top - title.getBoundingClientRect().top : null, chevronTitleTopGap: chevron?.parentElement && title ? chevron.parentElement.offsetTop - title.offsetTop : null, text: section?.textContent ?? "" };
     });
-    if (typography.text.includes("МАРШРУТ ДНЯ") || typography.text.includes("Вечерняя разнарядка")) throw new Error(`${width}: removed content remains`);
+    if (typography.text.includes("МАРШРУТ ДНЯ") || typography.text.includes("Вечерняя разнарядка") || /Сценарий \d{2} \/ \d{2}/.test(typography.text)) throw new Error(`${width}: removed content remains`);
     if (typography.openTitle !== "24px" || typography.openWeight !== "500" || typography.situation !== "16px" || typography.automation !== "16px" || typography.label !== "14px" || typography.families.some(family => !family.toLowerCase().includes("suisse"))) throw new Error(`${width}: detail typography ${JSON.stringify(typography)}`);
     if (width < 1100 && (typography.title !== "20px" || typography.titleWeight !== "500" || !typography.chevron?.endsWith("/icons/header/chevron-down-small-stroke.svg") || !typography.chevronLoaded || typography.numberTitleTopGap === null || Math.abs(typography.numberTitleTopGap) > 1 || typography.chevronTitleTopGap === null || Math.abs(typography.chevronTitleTopGap) > 1)) throw new Error(`${width}: accordion typography or top alignment ${JSON.stringify(typography)}`);
     if (width >= 1100) {
+      const collapsedLayout = await section.evaluate(element => {
+        const panels = element.querySelector("[class*='panels']").getBoundingClientRect();
+        return [...element.querySelectorAll("article")].filter(article => !article.querySelector("button[aria-expanded='true']")).map(article => {
+          const bounds = article.getBoundingClientRect();
+          const title = article.querySelector("[class*='verticalTitle']");
+          return { title: title.textContent, inside: bounds.left >= panels.left - 1 && bounds.right <= panels.right + 1, clipped: title.scrollHeight > title.clientHeight + 1 };
+        });
+      });
+      if (collapsedLayout.length !== 9 || collapsedLayout.some(panel => !panel.inside || panel.clipped)) throw new Error(`${width}: collapsed scenario layout ${JSON.stringify(collapsedLayout)}`);
       for (let index = 0; index < count; index++) {
         await triggers.nth(index).click();
         await page.waitForTimeout(550);
@@ -87,7 +104,10 @@ try {
         if (layout.top === null || layout.bottom === null || Math.abs(layout.top - 24) > 2 || layout.bottom < 23 || layout.padding.some(value => value !== "24px")) throw new Error(`${width}: scenario ${index + 1} spacing ${JSON.stringify(layout)}`);
       }
     }
-    console.log(`${width}px: 9 scenarios, switching and layout OK`);
+    if (await triggers.last().getAttribute("aria-expanded") !== "true") await triggers.last().click();
+    const lastCopy = await section.locator(`#delivery-scenarios-scenario-9 h3, #delivery-scenarios-scenario-9 [class*='detail'] p`).allTextContents();
+    if (await triggers.last().getAttribute("aria-expanded") !== "true" || lastCopy.map(text => text.replace(/\u00a0/g, " ")).join("|") !== "Коммунальные службы и управляющие компании|В течение дня поступили срочные заявки. Нужно определить ответственных.|Перепланирование списка задач с учётом доступных исполнителей и отправка им уведомлений об изменениях.") throw new Error(`${width}: tenth scenario ${JSON.stringify(lastCopy)}`);
+    console.log(`${width}px: 10 scenarios, switching and layout OK`);
     await page.close();
   }
 } finally {

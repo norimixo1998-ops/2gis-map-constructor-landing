@@ -27,21 +27,17 @@ export function IntermediateCta({
 }: IntermediateCtaProps) {
   return (
     <section className={styles.section} id={id} aria-labelledby={`${id}-title`}>
-      <div className={styles.card}>
+      <div className={`${styles.card} ${image ? "" : styles.noImage}`}>
         <div className={styles.copy}>
           <h2 id={`${id}-title`}>{title}</h2>
           {description && <p>{description}</p>}
         </div>
-        <div className={`${styles.visual} ${image?.fit === "contain" ? styles.contain : ""}`}>
-          {image ? (
+        {image ? <div className={`${styles.visual} ${image.fit === "contain" ? styles.contain : ""}`}>
             <picture>
               {image.mobile && <source media="(max-width: 899px)" srcSet={publicAsset(image.mobile)} />}
               <img src={publicAsset(image.desktop)} alt={image.alt} />
             </picture>
-          ) : (
-            <span className={styles.placeholder} aria-hidden="true">Изображение</span>
-          )}
-        </div>
+        </div> : null}
         <div className={styles.actions}>
           {primaryAction.disabled ? (
             <button className={`${styles.action} ${styles.primary}`} type="button" disabled>
