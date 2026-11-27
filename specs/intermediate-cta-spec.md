@@ -20,7 +20,7 @@
 
 ## Контракт компонента
 
-Реализация — `landing-prototype/components/intermediate-cta/IntermediateCta.tsx` и CSS Module рядом. Данные страницы — `landing-prototype/content/geoflow-logistics-preview.ts`; место блока задаёт `landing-prototype/app/page.tsx`.
+Реализация — `landing-prototype/components/intermediate-cta/IntermediateCta.tsx` и CSS Module рядом. Данные маршрутов находятся в `landing-prototype/content/map-constructor.ts`, `geoflow-holiday.ts` и `geoflow-hero-preview.ts`; место блока задают соответствующие файлы `app/page.tsx`.
 
 - `id?: string` — якорь, по умолчанию `intermediate-cta`.
 - `title: string` — заголовок из ТЗ. Строки переносятся естественно; ручной перенос не обязателен.
@@ -40,7 +40,7 @@
 { title: "Заголовок", description: "Описание", primaryAction: { label: "Начать", href: "#lead-form" }, secondaryAction: { label: "Подробнее", href: "/details" }, image }
 ```
 
-В текущем предпросмотре подписи и описание — макетные, обе ссылки ведут к `#lead-form`; для нового лендинга их нужно заменить утверждённым содержанием и целевыми URL.
+Примеры выше показывают возможные сочетания полей, а не данные текущей акции. На `/geoflow-hero-preview` передан один внешний адрес регистрации и отдельные иллюстрации для десктопа и мобильного экрана; на `/geoflow-holiday` кнопка пока отключена.
 
 ## Геометрия и рост текста
 

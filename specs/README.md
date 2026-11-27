@@ -20,3 +20,5 @@
 | S14 | Горизонтальная панель | [horizontal-panel-spec.md](horizontal-panel-spec.md) |
 
 Отдельно описаны общие [Header](header-spec.md), [Footer](footer-spec.md), [упрощённый Header для отдельных лендингов](campaign-header-spec.md), [состояния кнопок](button-states-spec.md), [ИИ-чат](ai-chat-handoff.md) и [сборка акции «ГеоПоток: Логистика»](geoflow-holiday-blocks-spec.md). Они не добавляют новых типов в каталог.
+
+Паспорт сборки акции относится к раннему маршруту `/geoflow-holiday`. Фактический состав новой сборки `/geoflow-hero-preview` приведён в [каталоге секций](landing-blocks-spec.md) и [README приложения](../landing-prototype/README.md); тексты — в [`content/geoflow-hero-preview.ts`](../landing-prototype/content/geoflow-hero-preview.ts).
